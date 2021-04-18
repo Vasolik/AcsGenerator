@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PublishTrimmed>true</PublishTrimmed>
+        <PublishReadyToRun>true</PublishReadyToRun>
+        <DebugType>embedded</DebugType>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <AssemblyName>AcsGenerator</AssemblyName>
+        <RootNamespace>Vipl.AcsGenerator</RootNamespace>
+        <Authors>Vipl</Authors>
+        <Copyright>@Vaso Peras-Likodric</Copyright>
+        <Company>Vipl</Company>
+        <Product>Vipl</Product>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="visual_groups.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="trait.txt" />
+      <Content Include="trait.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="settings.txt" />
+      <Content Include="layout.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="groups.txt" />
+      <Content Include="groups.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="dropdown.txt" />
+      <Content Include="dropdown.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>
