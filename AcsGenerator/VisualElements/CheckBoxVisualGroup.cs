@@ -6,64 +6,64 @@ namespace Vipl.AcsGenerator.VisualElements
     {
         public virtual string Variable { get; protected init; }
         protected abstract string  GetGroupGuiElement(string style);
-	    
+        
         public abstract SimpleCheckBoxVisualElement[] Elements { get; }
         // ReSharper disable once CoVariantArrayConversion
         public ISimpleVisualElement[] CastedElements => Elements;
         public  string GetGuiElement(string style) =>
             $@"flowcontainer = {{ 
-	direction = vertical
-	spacing = 5
+    direction = vertical
+    spacing = 5
     {GetGroupGuiElement(style).Intend(1)}
-	{ Elements.Select(t => t.GetGuiElement($"{style}_moved")).Join(1)}
+    { Elements.Select(t => t.GetGuiElement($"{style}_moved")).Join(1)}
 }}";
 
         public virtual string ScriptedGui =>
-	        Elements.Select(e => e.ScriptedGui).Join() + "\n" +ScriptedGuiForThisElement;
+            Elements.Select(e => e.ScriptedGui).Join() + "\n" +ScriptedGuiForThisElement;
         private string ScriptedGuiForThisElement =>
             $@"{Variable}_negative = {{
     is_shown = {{
-		AND = {{
-			{CastedElements.Select(e => e.VariableNoCondition).Join(3)}
-		}}
+        AND = {{
+            {CastedElements.Select(e => e.VariableNoCondition).Join(3)}
+        }}
     }}
 }}
 {Variable}_none = {{
     is_shown = {{
-		NOR = {{
-			{CastedElements.Select(e => e.HasVariableCondition).Join(3)}
-		}}
+        NOR = {{
+            {CastedElements.Select(e => e.HasVariableCondition).Join(3)}
+        }}
     }}
 }}
 {Variable} = {{
  
     is_shown = {{
-		AND = {{
-			{CastedElements.Select(e => e.VariableYesCondition).Join(3)}
-		}} 
+        AND = {{
+            {CastedElements.Select(e => e.VariableYesCondition).Join(3)}
+        }} 
     }} 
         
     effect = {{
-		acs_save_undo_0_filters = yes
+        acs_save_undo_0_filters = yes
         if = {{
             limit = {{ 
-				NOR = {{
-					{CastedElements.Select(e => e.HasVariableCondition).Join(5)}
-				}}
-			}}
-			{CastedElements.Select(e => e.SetVariableYesScript).Join(3)}
+                NOR = {{
+                    {CastedElements.Select(e => e.HasVariableCondition).Join(5)}
+                }}
+            }}
+            {CastedElements.Select(e => e.SetVariableYesScript).Join(3)}
         }}
         else = {{
             if = {{
                 limit = {{
-					AND = {{
-						{CastedElements.Select(e => e.VariableYesCondition).Join(6)}
-					}}
-				}}
-				{CastedElements.Select(e => e.SetVariableNoScript).Join(4)}
+                    AND = {{
+                        {CastedElements.Select(e => e.VariableYesCondition).Join(6)}
+                    }}
+                }}
+                {CastedElements.Select(e => e.SetVariableNoScript).Join(4)}
             }}
             else = {{
-				{CastedElements.Select(e => e.ClearVariableScript).Join(3)}
+                {CastedElements.Select(e => e.ClearVariableScript).Join(3)}
             }}
 
         }}

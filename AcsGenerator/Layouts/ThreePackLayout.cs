@@ -28,9 +28,9 @@ namespace Vipl.AcsGenerator.Layouts
    
         public string GuiElement =>
             $@"flowcontainer = {{
-	{Elements[0].GetGuiElement("left_third").Intend(1)}
-	{Elements[1].GetGuiElement("left_third").Intend(1)}
-	{Elements[2].GetGuiElement("right_third").Intend(1)}
+    {Elements[0].GetGuiElement("left_third").Intend(1)}
+    {Elements[1].GetGuiElement("left_third").Intend(1)}
+    {Elements[2].GetGuiElement("right_third").Intend(1)}
 }}";
 
         public string ScriptedGui =>

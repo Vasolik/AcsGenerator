@@ -25,17 +25,17 @@ namespace Vipl.AcsGenerator
 
         public string Trigger => 
             @$"{Name} = {{
-	AND = {{
-		OR = {{
-			AND = {{
+    AND = {{
+        OR = {{
+            AND = {{
                 {Traits.Select(t => t.NotSelectedTrigger).Join(4)}
-			}}
+            }}
             {Traits.Select(t => t.PositiveTrigger).Join(3)}
-		}}
-		NOR = {{
+        }}
+        NOR = {{
             {Traits.Select(t => t.InvertedNegativeTrigger).Join(3)}
-		}}
-	}}
+        }}
+    }}
 }}";
 
         public string FlagGenerator =>

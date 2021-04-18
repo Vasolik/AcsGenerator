@@ -23,10 +23,10 @@ namespace Vipl.AcsGenerator
         public string Name { get; }
 
         public string Trigger => @$"{Variable} = {{
-	OR = {{
-		{PositiveTrigger.Intend(2)}
-		{NegativeTrigger.Intend(2)}
-	}}
+    OR = {{
+        {PositiveTrigger.Intend(2)}
+        {NegativeTrigger.Intend(2)}
+    }}
 }}";
 
         public string PositiveTrigger =>
@@ -58,8 +58,8 @@ $@"AND = {{
 
         public string NotSelectedTrigger =>
 @$"OR = {{
-	{((ISimpleVisualElement)this).DontHaveVariableCondition}
-	{((ISimpleVisualElement)this).VariableNoCondition}
+    {((ISimpleVisualElement)this).DontHaveVariableCondition}
+    {((ISimpleVisualElement)this).VariableNoCondition}
 }}";
 
         public string DontHaveTrigger =>

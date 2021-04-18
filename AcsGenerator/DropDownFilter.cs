@@ -28,7 +28,7 @@ namespace Vipl.AcsGenerator
         public string DefaultCheck => $"global_var:{Variable} = {DefaultValue}";
 
         public string ResetValue
-	        => $"set_global_variable = {{ name = {Variable} value = {DefaultValue} }}";
+            => $"set_global_variable = {{ name = {Variable} value = {DefaultValue} }}";
 
         public string GetSlotCheck(int slot, string slotPrefix = "")
         {

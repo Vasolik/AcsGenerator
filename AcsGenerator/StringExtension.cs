@@ -7,7 +7,7 @@ namespace Vipl.AcsGenerator
     {
         public static string Intend(this string value, int count, bool first = false)
         {
-            var indent = string.Join("", Enumerable.Repeat("\t", count));
+            var indent = string.Join("", Enumerable.Repeat("    ", count));
             return (first ? indent: "") + value.Replace("\n", "\n" + indent);
         }
         public static string[] Tokenized(this string value, bool allWhite = false, string separators = "\n\r")

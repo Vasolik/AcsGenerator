@@ -15,14 +15,14 @@ namespace Vipl.AcsGenerator.Layouts
         }
         public StarLayout(string row)
         {
-	        var starLayoutRegex = new Regex("^(?<top>\\w+)\\s+(?<left>\\w+)\\s+(?<right>\\w+)");
-	        var rowInfo = starLayoutRegex.Match(row);
-	        if (!rowInfo.Success)
-		        throw new Exception("Invalid layout file");
-	 
-	        Top = Trait.All[rowInfo.Groups["top"].Value];
-	        Left = Trait.All[rowInfo.Groups["left"].Value];
-	        Right = Trait.All[rowInfo.Groups["right"].Value];
+            var starLayoutRegex = new Regex("^(?<top>\\w+)\\s+(?<left>\\w+)\\s+(?<right>\\w+)");
+            var rowInfo = starLayoutRegex.Match(row);
+            if (!rowInfo.Success)
+                throw new Exception("Invalid layout file");
+     
+            Top = Trait.All[rowInfo.Groups["top"].Value];
+            Left = Trait.All[rowInfo.Groups["left"].Value];
+            Right = Trait.All[rowInfo.Groups["right"].Value];
         }
         
 
@@ -32,30 +32,30 @@ namespace Vipl.AcsGenerator.Layouts
         public IVisualElement Right { get; }
         public string GuiElement =>
             $@"widget = {{
-	allow_outside = yes
-	size = {{ 555 35 }}
-	flowcontainer = {{ 
-		position = {{ 0 -100 }}
-		direction = vertical
-		{Top.GetGuiElement("top").Intend(2)}
-		flowcontainer = {{ 
-			{Left.GetGuiElement("right").Intend(3)}
-			{Right.GetGuiElement("left").Intend(3)}
-		}}
-	}}
+    allow_outside = yes
+    size = {{ 555 35 }}
+    flowcontainer = {{ 
+        position = {{ 0 -100 }}
+        direction = vertical
+        {Top.GetGuiElement("top").Intend(2)}
+        flowcontainer = {{ 
+            {Left.GetGuiElement("right").Intend(3)}
+            {Right.GetGuiElement("left").Intend(3)}
+        }}
+    }}
 }}";
         public string ScriptedGui => 
             Top.ScriptedGui + Environment.NewLine + Left.ScriptedGui + Environment.NewLine + Right.ScriptedGui;
         
         public Trait[] Traits
-	        => Left.Traits.AsEnumerable()
-		        .Concat(Right.Traits)
-		        .Concat(Top.Traits)
-		        .ToArray();
+            => Left.Traits.AsEnumerable()
+                .Concat(Right.Traits)
+                .Concat(Top.Traits)
+                .ToArray();
         public string[] Localizations
-	        => Top.Localizations
-		        .Concat(Left.Localizations)
-		        .Concat(Right.Localizations)
-		        .ToArray();
+            => Top.Localizations
+                .Concat(Left.Localizations)
+                .Concat(Right.Localizations)
+                .ToArray();
     }
 }
