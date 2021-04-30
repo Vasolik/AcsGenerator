@@ -16,18 +16,14 @@ namespace Vipl.AcsGenerator
             Name = name;
             All[name] = this;
         }
+        public Trait()
+        {
+        }
 
         public static IDictionary<string, Trait> All { get; } = new Dictionary<string, Trait>();
         
         public List<string> HiddenTraits { get;  }
         public string Name { get; }
-
-        public string Trigger => @$"{Variable} = {{
-    OR = {{
-        {PositiveTrigger.Intend(2)}
-        {NegativeTrigger.Intend(2)}
-    }}
-}}";
 
         public string PositiveTrigger =>
 $@"AND = {{
@@ -40,11 +36,6 @@ $@"AND = {{
     {HasTrigger.Intend(1)}
 }}";
 
-        public string NegativeTrigger =>
-$@"AND = {{
-    {((ISimpleVisualElement)this).VariableNoCondition}
-    {DontHaveTrigger.Intend(1)}
-}}";
         private string MultiHasTrigger => 
 @$"OR = {{
     has_trait = {Name}
@@ -56,14 +47,8 @@ $@"AND = {{
     {HiddenTraits.Select(t => $"has_trait = {t}").Join(1)}
 }}";
 
-        public string NotSelectedTrigger =>
-@$"OR = {{
-    {((ISimpleVisualElement)this).DontHaveVariableCondition}
-    {((ISimpleVisualElement)this).VariableNoCondition}
-}}";
-
         public string DontHaveTrigger =>
-            HiddenTraits.Any() ? MultiDontHaveTrigger : $"has_trait = {Name}";
+            HiddenTraits.Any() ? MultiDontHaveTrigger : $"NOT = {{ has_trait = {Name} }}";
 
         public string HasTrigger =>
             HiddenTraits.Any() ? MultiHasTrigger : $"has_trait = {Name}";
@@ -79,13 +64,28 @@ $@"acs_trait_item_{style} = {{
     }}
 }}";
         public string FlagGenerator =>
-            @$"if = {{
-    limit = {{ {(this as ISimpleVisualElement).HasVariableCondition} }}
+@$"if = {{
+    limit = {{ 
+        {(this as ISimpleVisualElement).VariableYesCondition.Intend(2)}
+     }}
     add_to_global_variable_list = {{ name = acs_active_filter_list target = flag:{Name} }}
+    change_global_variable = {{ name = acs_active_filters_count add = 1 }}  
+}}
+else_if = {{
+    limit = {{ 
+        {(this as ISimpleVisualElement).VariableNoCondition.Intend(2)} 
+    }}
+    add_to_global_variable_list = {{ name = acs_active_filter_list target = flag:{Name}_negative }}
     change_global_variable = {{ name = acs_active_filters_count add = 1 }}  
 }}";
 
-        public string Switch => $"flag:{Name} = {{ {Variable} = yes }}";
+        public string Switch => 
+$@"flag:{Name} = {{ 
+    {HasTrigger.Intend(1)} 
+}}
+flag:{Name}_negative = {{ 
+    {DontHaveTrigger.Intend(1)} 
+}}";
         
         public override Trait[] Traits => new [] {this};
         public override string[] Localizations => new string[0];

@@ -11,6 +11,17 @@ namespace Vipl.AcsGenerator
 
         static void Main(string[] args)
         {
+            if (Directory.Exists(ModFolder))
+            {
+                Directory.Delete(ModFolder, true);
+            }
+            Directory.CreateDirectory($"{ModFolder}common/scripted_triggers");
+            Directory.CreateDirectory($"{ModFolder}common/scripted_guis");
+            Directory.CreateDirectory($"{ModFolder}common/scripted_effects");
+            Directory.CreateDirectory($"{ModFolder}common/script_values");
+            Directory.CreateDirectory($"{ModFolder}gui");
+            Directory.CreateDirectory($"{ModFolder}localization/english");
+            Directory.CreateDirectory("report");
 
             var listOfTraits = File.OpenText("trait.txt").ReadToEnd().Tokenized();
             
@@ -19,20 +30,6 @@ namespace Vipl.AcsGenerator
             VisualOrganisationGroup.Parse(File.ReadAllText("layout.txt"));
             DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));
             
-            Directory.Delete(ModFolder, true);
-            Directory.CreateDirectory($"{ModFolder}common/scripted_triggers");
-            Directory.CreateDirectory($"{ModFolder}common/scripted_guis");
-            Directory.CreateDirectory($"{ModFolder}common/scripted_effects");
-            Directory.CreateDirectory($"{ModFolder}common/script_values");
-            Directory.CreateDirectory($"{ModFolder}gui");
-            Directory.CreateDirectory($"{ModFolder}localization/english");
-            Directory.CreateDirectory("report");
-            
-            
-            foreach (var organisationGroup in LogicalOrganisationGroup.All)
-            {
-                organisationGroup.GenerateTriggers(ModFolder);
-            }
     
             File.WriteAllText($"{ModFolder}/common/scripted_triggers/acs_big_switch.txt",LogicalOrganisationGroup.Switch, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}/common/scripted_effects/acs_filter_flag_generate.txt",LogicalOrganisationGroup.FlagGenerator, new System.Text.UTF8Encoding(true));

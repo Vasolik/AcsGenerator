@@ -16,8 +16,8 @@ namespace Vipl.AcsGenerator.SaveLoad
             DefaultSlot = new SaveSlot(allSavable, -1);
             Slots.AddRange(Enumerable.Range(0, 13)
                 .Select(i => new SaveSlot(allSavable, i)));
-            UndoSlots.AddRange(Enumerable.Range(0, 101)
-                .Select(i => new UndoSlot(allSavable, i, i == 100 )));
+            UndoSlots.AddRange(Enumerable.Range(0, 1)
+                .Select(i => new UndoSlot(allSavable, i, i == 0  )));
         }
 
         public static string SelectedSlot

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using Vipl.AcsGenerator.Layouts;
 
 namespace Vipl.AcsGenerator
@@ -22,6 +23,9 @@ namespace Vipl.AcsGenerator
             Name = name;
             Localization = localization;
             All.Add(this);
+        }
+        public VisualOrganisationGroup()
+        {
         }
 
         public IList<ILayout> Layouts { get; } = new List<ILayout>();
@@ -61,11 +65,13 @@ namespace Vipl.AcsGenerator
                 });
                 
             }
+  
+            new XmlSerializer(typeof(List<VisualOrganisationGroup>)).Serialize(File.OpenWrite("./report/test.xml"), All);
         }
 
-        public string Variable { get; private set; }
-        public string Name { get; private set; }
-        public string Localization { get; private set; }
+        public string Variable { get; }
+        public string Name { get;  set; }
+        public string Localization { get;  set; }
 
         public Trait[] Traits =>
             Layouts.SelectMany(l => l.Traits).ToArray();

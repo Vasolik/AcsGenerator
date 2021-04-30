@@ -81,17 +81,6 @@ namespace Vipl.AcsGenerator
                 }
             }
         }
-
-        public void GenerateTriggers(string path)
-        {
-            
-            using var file = new StreamWriter($"{path}common/scripted_triggers/{Name}.txt",false, new System.Text.UTF8Encoding(true));
-            foreach (var logicalGroup in Elements)
-            {
-                file.WriteLine(logicalGroup.Trigger);
-            }
-        }
-
         public static string FlagGenerator =>
 $@"acs_filter_flag_generate = {{
     clear_global_variable_list = acs_active_filter_list
