@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Vipl.AcsGenerator.SaveLoad;
 
 namespace Vipl.AcsGenerator.VisualElements
 {
@@ -7,9 +8,8 @@ namespace Vipl.AcsGenerator.VisualElements
         public virtual string Variable { get; protected init; }
         protected abstract string  GetGroupGuiElement(string style);
         
-        public abstract SimpleCheckBoxVisualElement[] Elements { get; }
+        protected abstract SimpleCheckBoxVisualElement[] Elements { get; }
         // ReSharper disable once CoVariantArrayConversion
-        public ISimpleVisualElement[] CastedElements => Elements;
         public  string GetGuiElement(string style) =>
             $@"flowcontainer = {{ 
     direction = vertical
@@ -20,57 +20,235 @@ namespace Vipl.AcsGenerator.VisualElements
 
         public virtual string ScriptedGui =>
             Elements.Select(e => e.ScriptedGui).Join() + "\n" +ScriptedGuiForThisElement;
-        private string ScriptedGuiForThisElement =>
+
+        protected string ScriptedGuiForThisElement => IsSmallGroup ? ScriptedGuiForThisElementForSmallGroup : ScriptedGuiForThisElementForLargeGroup;
+        private string ScriptedGuiForThisElementForLargeGroup => IsSameSizeAsLogical ? ScriptedGuiForThisElementForLargeGroupSameAsLogical : ScriptedGuiForThisElementForLargeGroupDifferentAsLogical;
+        
+        private bool IsSmallGroup => LogicalOwner.IsSmall;
+        private bool IsSameSizeAsLogical => LogicalOwner.Elements.Count == Elements.Length;
+        private LogicalGroup LogicalOwner => Elements[0].LogicalOwner;
+        private string ScriptedGuiForThisElementForSmallGroup =>
             $@"{Variable}_negative = {{
     is_shown = {{
-        AND = {{
-            {CastedElements.Select(e => e.VariableNoCondition).Join(3)}
-        }}
+        any_in_global_list = {{
+            variable = {MainSavable.Instance.ListVariable}
+            {LogicalOwner.FullNegativeFlag} = this
+        }} 
     }}
 }}
 {Variable}_none = {{
     is_shown = {{
-        NOR = {{
-            {CastedElements.Select(e => e.HasVariableCondition).Join(3)}
+        NOT = {{
+            any_in_global_list = {{
+                variable = {MainSavable.Instance.ListVariable}
+                OR = {{
+                    {LogicalOwner.AllFlags.Select(flag => $"{flag} = this").Join(5)}
+                }}
+            }}           
         }}
     }}
 }}
 {Variable} = {{
  
     is_shown = {{
-        AND = {{
-            {CastedElements.Select(e => e.VariableYesCondition).Join(3)}
-        }} 
+        any_in_global_list = {{
+            variable = {MainSavable.Instance.ListVariable}
+            {LogicalOwner.FullPositiveFlag} = this
+        }}  
     }} 
         
     effect = {{
         acs_save_undo_0_filters = yes
         if = {{
             limit = {{ 
-                NOR = {{
-                    {CastedElements.Select(e => e.HasVariableCondition).Join(5)}
+                NOT = {{
+                    any_in_global_list = {{
+                        variable = {MainSavable.Instance.ListVariable}
+                        OR = {{
+                            {LogicalOwner.AllFlags.Select(flag => $"{flag} = this").Join(7)}
+                        }}
+                    }}           
                 }}
             }}
-            {CastedElements.Select(e => e.SetVariableYesScript).Join(3)}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullPositiveFlag} }}
         }}
         else = {{
             if = {{
                 limit = {{
-                    AND = {{
-                        {CastedElements.Select(e => e.VariableYesCondition).Join(6)}
+                    any_in_global_list = {{
+                        variable = {MainSavable.Instance.ListVariable}
+                        {LogicalOwner.FullPositiveFlag} = this
                     }}
                 }}
-                {CastedElements.Select(e => e.SetVariableNoScript).Join(4)}
+                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullPositiveFlag} }}
+                add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullNegativeFlag} }}
             }}
             else = {{
-                {CastedElements.Select(e => e.ClearVariableScript).Join(3)}
+                {LogicalOwner.AllFlags.Select(flag => $"remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {flag} }}").Join(4)}
             }}
-
         }}
         acs_auto_apply_sorting_and_filters = yes
     }}
 }}";
-
+        public string ScriptedGuiForThisElementForLargeGroupSameAsLogical =>
+            $@"{Variable}_negative = {{
+    is_shown = {{
+        any_in_global_list = {{
+            variable = {LogicalOwner.ListVariable}
+            OR = {{
+                {Elements.Select(e => $"{e.NegativeFlag} = this").Join(3)}
+            }}
+            count = {Elements.Length}
+        }} 
+    }}
+}}
+{Variable}_none = {{
+    is_shown = {{
+        NOT = {{
+            any_in_global_list = {{
+                variable = {LogicalOwner.ListVariable}
+                always = yes
+            }}           
+        }}
+    }}
+}}
+{Variable} = {{
+ 
+    is_shown = {{
+        any_in_global_list = {{
+            variable = {LogicalOwner.ListVariable}
+            OR = {{
+                {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
+            }}
+            count = {Elements.Length}
+        }}  
+    }} 
+        
+    effect = {{
+        acs_save_undo_0_filters = yes
+        if = {{
+            limit = {{ 
+                NOT = {{
+                    any_in_global_list = {{
+                        variable = {LogicalOwner.ListVariable}
+                        always = yes
+                    }}           
+                }}
+            }}
+            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(3)}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+        }}
+        else = {{
+            if = {{
+                limit = {{
+                    any_in_global_list = {{
+                        variable = {LogicalOwner.ListVariable}
+                        OR = {{
+                            {Elements.Select(e => $"{e.PositiveFlag} = this").Join(7)}
+                        }}
+                        count = {Elements.Length}
+                    }}
+                }}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+            }}
+            else = {{
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+            }}
+        }}
+        acs_auto_apply_sorting_and_filters = yes
+    }}
+}}";
+        
+                public string ScriptedGuiForThisElementForLargeGroupDifferentAsLogical =>
+            $@"{Variable}_negative = {{
+    is_shown = {{
+        any_in_global_list = {{
+            variable = {LogicalOwner.ListVariable}
+            OR = {{
+                {Elements.Select(e => $"{e.NegativeFlag} = this").Join(3)}
+            }}
+            count = {Elements.Length}
+        }} 
+    }}
+}}
+{Variable}_none = {{
+    is_shown = {{
+        NOT = {{
+            any_in_global_list = {{
+                variable = {LogicalOwner.ListVariable}
+                OR = {{
+                    {Elements.Select(e => $"{e.NegativeFlag} = this").Join(4)}
+                    {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
+                }}
+            }}
+        }}
+    }}
+}}
+{Variable} = {{
+ 
+    is_shown = {{
+        any_in_global_list = {{
+            variable = {LogicalOwner.ListVariable}
+            OR = {{
+                {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
+            }}
+            count = {Elements.Length}
+        }}  
+    }} 
+        
+    effect = {{
+        acs_save_undo_0_filters = yes
+        if = {{
+            limit = {{ 
+                NOT = {{
+                    any_in_global_list = {{
+                        variable = {LogicalOwner.ListVariable}
+                        OR = {{
+                            {Elements.Select(e => $"{e.NegativeFlag} = this").Join(6)}
+                            {Elements.Select(e => $"{e.PositiveFlag} = this").Join(6)}
+                        }}
+                    }}
+                }}
+            }}
+            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(3)}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+        }}
+        else = {{
+            if = {{
+                limit = {{
+                    any_in_global_list = {{
+                        variable = {LogicalOwner.ListVariable}
+                        OR = {{
+                            {Elements.Select(e => $"{e.PositiveFlag} = this").Join(7)}
+                        }}
+                        count = {Elements.Length}
+                    }}
+                }}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+            }}
+            else = {{
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+                if = {{
+                    limit = {{
+                        NOT = {{
+                            any_in_global_list = {{
+                                variable = {LogicalOwner.ListVariable}
+                                always = yes
+                            }}
+                        }}
+                    }}
+                    remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+                }}
+            }}
+        }}
+        acs_auto_apply_sorting_and_filters = yes
+    }}
+}}";
         public abstract Trait[] Traits { get; }
 
         public string CheckBoxFrameSelector

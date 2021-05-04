@@ -35,7 +35,7 @@ namespace Vipl.AcsGenerator.VisualElements
         public string Icon { get;  }
         protected override string GetGroupGuiElement(string style) 
             => ((ICustomCheckBoxVisualElement)this).GetCustomCheckBox(style);
-        public override SimpleCheckBoxVisualElement[] Elements { get; }
+        protected override SimpleCheckBoxVisualElement[] Elements { get; }
         public override Trait[] Traits => Elements.SelectMany(e => e.Traits).ToArray();
         public override string[] Localizations
             => new[] {$" {Variable}:0 {Localization}"}

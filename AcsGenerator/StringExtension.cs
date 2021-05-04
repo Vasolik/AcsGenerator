@@ -24,7 +24,7 @@ namespace Vipl.AcsGenerator
 
         public static string Join (this IEnumerable<string> values, int intend = 0,  bool first = false, string separator = "\n")
         {
-            return string.Join(separator, values).Intend(intend, first);
+            return string.Join(separator, values.Where(v => v is not null)).Intend(intend, first);
         }
        
     }

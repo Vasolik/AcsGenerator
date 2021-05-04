@@ -74,5 +74,9 @@ namespace Vipl.AcsGenerator.SaveLoad
         set_global_variable = {{ name = acs_auto_apply_sorting_and_filters value = yes }}
     }}
 }}";
+        public string MakeReducedListAndCount => 
+$@"acs_make_reduced_and_count = {{
+    {Items.Select(i => i.MakeReducedListAndCount).Join(1)}
+}}";    
     }
 }

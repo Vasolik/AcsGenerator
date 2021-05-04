@@ -27,7 +27,7 @@ namespace Vipl.AcsGenerator
             new ("learning", 5),
             new ("prowess", 6),
         }.ToDictionary(s=> s.Name, s => s));
-        public override SimpleCheckBoxVisualElement[] Elements => Traits.Clone() as SimpleCheckBoxVisualElement[] ;
+        protected override SimpleCheckBoxVisualElement[] Elements => Traits.Clone() as SimpleCheckBoxVisualElement[] ;
         public override Trait[] Traits { get; }
         public string Name { get; }
         public int Index { get; }

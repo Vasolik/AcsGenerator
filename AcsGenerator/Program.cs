@@ -31,8 +31,7 @@ namespace Vipl.AcsGenerator
             DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));
             
     
-            File.WriteAllText($"{ModFolder}/common/scripted_triggers/acs_big_switch.txt",LogicalOrganisationGroup.Switch, new System.Text.UTF8Encoding(true));
-            File.WriteAllText($"{ModFolder}/common/scripted_effects/acs_filter_flag_generate.txt",LogicalOrganisationGroup.FlagGenerator, new System.Text.UTF8Encoding(true));
+            File.WriteAllText($"{ModFolder}/common/scripted_effects/acs_big_switch.txt",LogicalOrganisationGroup.Switch, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}localization/english/acs_filter_trait_l_english.yml",VisualOrganisationGroup.CompleteLocalization, new System.Text.UTF8Encoding(true));
             VisualOrganisationGroup.GenerateGuiElement(ModFolder);
             VisualOrganisationGroup.GenerateScriptedGui(ModFolder);
@@ -45,6 +44,7 @@ namespace Vipl.AcsGenerator
             File.WriteAllText($"{ModFolder}common/scripted_effects/acs_load_undo.txt",SaveSlotGenerator.LoadFromUndo, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}common/scripted_effects/acs_save_undo.txt",SaveSlotGenerator.SaveToUndo, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}common/scripted_effects/acs_reset_filters.txt",SaveSlotGenerator.Reset, new System.Text.UTF8Encoding(true));
+            File.WriteAllText($"{ModFolder}common/scripted_effects/acs_make_reduced_and_count.txt",SaveSlotGenerator.MakeReducedListAndCount, new System.Text.UTF8Encoding(true));
             var reportFile = new StreamWriter("report/report.txt");
             reportFile.WriteLine("Not Used traits at all");
             reportFile.WriteLine( listOfTraits.Except(Trait.All.Keys).Join());

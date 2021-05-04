@@ -16,6 +16,7 @@ namespace Vipl.AcsGenerator
         public string Variable { get;  }
         public int DefaultValue { get; }
 
+        public string MakeReducedListAndCount => null;
         public static void Parse(string toParse)
         {
             foreach (var row in toParse.Tokenized())
@@ -31,9 +32,7 @@ namespace Vipl.AcsGenerator
             => $"set_global_variable = {{ name = {Variable} value = {DefaultValue} }}";
 
         public string GetSlotCheck(int slot, string slotPrefix = "")
-        {
-            return $"global_var:{Variable} = global_var:{this.MakeVariable(slot, slotPrefix)}";
-        }
+            => $"global_var:{Variable} = global_var:{this.MakeVariable(slot, slotPrefix)}";
         public string SaveToSlot(int slot, string slotPrefix = "", bool fromPrev = false)
             => $"set_global_variable = {{ name = {this.MakeVariable(slot, slotPrefix)} value = global_var:{this.MakePrevVariable(slot, slotPrefix, fromPrev)} }}";
 

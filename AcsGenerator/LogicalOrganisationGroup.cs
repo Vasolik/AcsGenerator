@@ -71,7 +71,8 @@ namespace Vipl.AcsGenerator
                         trait = new Trait(variable, name);
                         if (logicalGroup is not null)
                         {
-                            logicalGroup.Traits.Add(trait);
+                            trait.LogicalOwnerImplementation = logicalGroup;
+                            logicalGroup.Elements.Add(trait);
                         }
                         else
                         {
@@ -81,12 +82,6 @@ namespace Vipl.AcsGenerator
                 }
             }
         }
-        public static string FlagGenerator =>
-$@"acs_filter_flag_generate = {{
-    clear_global_variable_list = acs_active_filter_list
-    set_global_variable = {{ name = acs_active_filters_count value = 0  }} 
-    {All.SelectMany(o => o.Elements.Select(e => e.FlagGenerator)).Join(1)}
-}}";
 
         public static string Switch =>
 $@"acs_switch_filter = {{
@@ -96,7 +91,8 @@ $@"acs_switch_filter = {{
             {All.SelectMany(o => o.Elements.Select(e => e.Switch)).Join(3)}
         }}
     }}
-}}";
+}}
+{All.SelectMany(o => o.Elements.Select(e => e.SmallSwitchForLargeGroup)).Join()}";
 
 
     }
