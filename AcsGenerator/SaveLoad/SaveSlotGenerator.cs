@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Vipl.AcsGenerator.LogicalElements;
 
 namespace Vipl.AcsGenerator.SaveLoad
 {

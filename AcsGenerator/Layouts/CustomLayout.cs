@@ -36,7 +36,7 @@ namespace Vipl.AcsGenerator.Layouts
                 return CustomCheckBoxVisualGroup.All[t.Replace(":g", "")];
             }
 
-            return Trait.All[t];
+            return SimpleCheckBoxVisualElement.All[t];
         }
 
         public IVisualElement[] LeftElements { get; }

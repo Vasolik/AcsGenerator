@@ -26,7 +26,7 @@ namespace Vipl.AcsGenerator.Layouts
             Localization = rowInfo.Groups["localization"].Value;
             Elements = rowInfo.Groups["traits"].Value
                 .Tokenized(true)
-                .Select(x => Trait.All[x])
+                .Select(x => SimpleCheckBoxVisualElement.All[x])
                 .Cast<IVisualElement>()
                 .ToArray();
         }

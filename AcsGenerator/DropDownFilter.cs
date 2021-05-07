@@ -38,5 +38,7 @@ namespace Vipl.AcsGenerator
 
         public string LoadFromSlot(int slot, string slotPrefix = "", bool toPrev = false)
             => @$"set_global_variable = {{ name = {this.MakePrevVariable(slot, slotPrefix, toPrev)} value = global_var:{this.MakeVariable(slot, slotPrefix)} }}";
+
+        public bool HaveSomethingToSave => false;
     }
 }

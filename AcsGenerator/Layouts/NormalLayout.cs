@@ -19,8 +19,8 @@ namespace Vipl.AcsGenerator.Layouts
             var rowInfo = normalLayoutRegex.Match(row);
             if (!rowInfo.Success)
                 throw new Exception("Invalid layout file");
-            Left = Trait.All[rowInfo.Groups["left"].Value];
-            Right = Trait.All[rowInfo.Groups["right"].Value];
+            Left = SimpleCheckBoxVisualElement.All[rowInfo.Groups["left"].Value];
+            Right = SimpleCheckBoxVisualElement.All[rowInfo.Groups["right"].Value];
         }
         public IVisualElement Left { get; }
         public IVisualElement Right { get; }

@@ -19,7 +19,7 @@ namespace Vipl.AcsGenerator.Layouts
             if(!rowInfo.Success)
                 throw new Exception("Invalid layout file");
             Elements = row.Tokenized(true)
-                .Select(x => Trait.All[x])
+                .Select(x => SimpleCheckBoxVisualElement.All[x])
                 .Cast<IVisualElement>()
                 .ToArray();
         }

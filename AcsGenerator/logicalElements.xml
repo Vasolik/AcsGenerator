@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Main id="Main">
+    <CheckBox variable="acs_filter_trait_any_sinful" >
+        <Icon>"gfx/interface/icons/acs_any_sinful.dds"</Icon>
+        <Localisation>"Any sinful"</Localisation>
+        <PositiveTrigger>num_sinful_traits = { value > 0 faith = scope:acs_filter_faith }</PositiveTrigger>
+        <NegativeTrigger>num_sinful_traits = { value = 0 faith = scope:acs_filter_faith }</NegativeTrigger>
+    </CheckBox>
+    <CheckBox variable="acs_filter_trait_any_virtuous" >
+        <Icon>"gfx/interface/icons/acs_any_virtuous.dds"</Icon>
+        <Localisation>"Any virtuous"</Localisation>
+        <PositiveTrigger>num_virtuous_traits = { value > 0 faith = scope:acs_filter_faith }</PositiveTrigger>
+        <NegativeTrigger>num_virtuous_traits = { value = 0 faith = scope:acs_filter_faith }</NegativeTrigger>
+    </CheckBox>
+
+    <CheckBox variable="acs_filter_trait_any_sinful_by_their_standard" >
+        <Icon>"gfx/interface/icons/acs_any_sinful.dds"</Icon>
+        <Localisation>"Any sinful by their standard"</Localisation>
+        <PositiveTrigger>num_sinful_traits > 0</PositiveTrigger>
+        <NegativeTrigger>num_sinful_traits = 0</NegativeTrigger>
+    </CheckBox>
+    <CheckBox variable="acs_filter_trait_any_virtuous_by_their_standard" >
+        <Icon>"gfx/interface/icons/acs_any_virtuous.dds"</Icon>
+        <Localisation>"Any virtuous by their standard"</Localisation>
+        <PositiveTrigger>num_virtuous_traits > 0</PositiveTrigger>
+        <NegativeTrigger>num_virtuous_traits = 0</NegativeTrigger>
+    </CheckBox>
+
+    <CheckBox variable="acs_filter_trait_any_bad_genetic" >
+        <Icon>"gfx/interface/icons/acs_any_bad_genetic.dds"</Icon>
+        <Localisation>"Any bad genetic"</Localisation>
+        <PositiveTrigger>num_of_bad_genetic_traits > 0</PositiveTrigger>
+        <NegativeTrigger>num_of_bad_genetic_traits = 0</NegativeTrigger>
+    </CheckBox>
+    <CheckBox variable="acs_filter_trait_any_good_genetic" >
+        <Icon>"gfx/interface/icons/acs_any_good_genetic.dds"</Icon>
+        <Localisation>"Any good genetic"</Localisation>
+        <PositiveTrigger>num_of_good_genetic_traits > 0</PositiveTrigger>
+        <NegativeTrigger>num_of_good_genetic_traits = 0</NegativeTrigger>
+    </CheckBox>
+
+    <CheckBox variable="acs_filter_trait_any_commander" >
+        <Icon>"gfx/interface/icons/acs_any_commander.dds"</Icon>
+        <Localisation>"Any commander"</Localisation>
+        <PositiveTrigger>number_of_commander_traits > 0</PositiveTrigger>
+        <NegativeTrigger>number_of_commander_traits = 0</NegativeTrigger>
+    </CheckBox>
+
+    <CheckBox variable="acs_filter_trait_any_lifestyle" >
+        <Icon>"gfx/interface/icons/acs_any_lifestyle.dds"</Icon>
+        <Localisation>"Any lifestyle"</Localisation>
+        <PositiveTrigger>number_of_lifestyle_traits > 0</PositiveTrigger>
+        <NegativeTrigger>number_of_lifestyle_traits = 0</NegativeTrigger>
+    </CheckBox>
+
+    <CheckBox variable="acs_filter_trait_any_infamous" >
+        <Icon>"gfx/interface/icons/acs_any_crime.dds"</Icon>
+        <Localisation>"Any infamous"</Localisation>
+        <PositiveTrigger>OR = { 
+    has_trait = adulterer
+    has_trait = fornicator
+    has_trait = murderer
+    has_trait = deviant
+    has_trait = cannibal
+    has_trait = sodomite
+    has_trait = kinslayer
+    has_trait = incestuous
+    has_trait = witch
+    has_trait = excommunicated
+}</PositiveTrigger>
+        <NegativeTrigger>NOR = {
+    has_trait = adulterer
+    has_trait = fornicator
+    has_trait = murderer
+    has_trait = deviant
+    has_trait = cannibal
+    has_trait = sodomite
+    has_trait = kinslayer
+    has_trait = incestuous
+    has_trait = witch
+    has_trait = excommunicated
+}</NegativeTrigger>
+    </CheckBox>
+    <CheckBox variable="acs_filter_trait_any_diseases" >
+        <Icon>"gfx/interface/icons/acs_any_crime.dds"</Icon>
+        <Localisation>"Any diseases"</Localisation>
+        <PositiveTrigger>OR = {
+    has_trait = ill
+    has_trait = bubonic_plague
+    has_trait = cancer
+    has_trait = consumption
+    has_trait = great_pox
+    has_trait = gout_ridden
+    has_trait = leper
+    has_trait = lovers_pox
+    has_trait = pneumonic
+    has_trait = smallpox
+    has_trait = typhus
+    has_trait = early_great_pox
+    }</PositiveTrigger>
+        <NegativeTrigger>NOR = {
+    has_trait = ill
+    has_trait = bubonic_plague
+    has_trait = cancer
+    has_trait = consumption
+    has_trait = great_pox
+    has_trait = gout_ridden
+    has_trait = leper
+    has_trait = lovers_pox
+    has_trait = pneumonic
+    has_trait = smallpox
+    has_trait = typhus
+    has_trait = early_great_pox
+    }</NegativeTrigger>
+    </CheckBox>
+
+
+</Main>

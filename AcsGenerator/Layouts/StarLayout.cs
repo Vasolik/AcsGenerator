@@ -20,9 +20,9 @@ namespace Vipl.AcsGenerator.Layouts
             if (!rowInfo.Success)
                 throw new Exception("Invalid layout file");
      
-            Top = Trait.All[rowInfo.Groups["top"].Value];
-            Left = Trait.All[rowInfo.Groups["left"].Value];
-            Right = Trait.All[rowInfo.Groups["right"].Value];
+            Top = SimpleCheckBoxVisualElement.All[rowInfo.Groups["top"].Value];
+            Left = SimpleCheckBoxVisualElement.All[rowInfo.Groups["left"].Value];
+            Right = SimpleCheckBoxVisualElement.All[rowInfo.Groups["right"].Value];
         }
         
 

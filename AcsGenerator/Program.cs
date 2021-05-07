@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Xml;
+using Vipl.AcsGenerator.LogicalElements;
 using Vipl.AcsGenerator.SaveLoad;
 using Vipl.AcsGenerator.VisualElements;
 
@@ -26,6 +28,9 @@ namespace Vipl.AcsGenerator
             var listOfTraits = File.OpenText("trait.txt").ReadToEnd().Tokenized();
             
             LogicalOrganisationGroup.Parse(File.ReadAllText("groups.txt"));
+            var logicalElementsDocument = new XmlDocument();
+            logicalElementsDocument.Load("logicalElements.xml");
+            LogicalOrganisationGroup.Parse(logicalElementsDocument);
             CustomCheckBoxVisualGroup.Parse( File.ReadAllText("visual_groups.txt"));
             VisualOrganisationGroup.Parse(File.ReadAllText("layout.txt"));
             DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));

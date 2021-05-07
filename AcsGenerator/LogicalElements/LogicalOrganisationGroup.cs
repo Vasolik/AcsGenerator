@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
+using Vipl.AcsGenerator.SaveLoad;
+using Vipl.AcsGenerator.VisualElements;
 
-namespace Vipl.AcsGenerator
+namespace Vipl.AcsGenerator.LogicalElements
 {
     public class LogicalOrganisationGroup
     {
         public static readonly IList<LogicalOrganisationGroup> All = new List<LogicalOrganisationGroup>();
         public IList<ILogicalElement> Elements { get; }
-        public LogicalOrganisationGroup(string name)
+        private LogicalOrganisationGroup()
         {
-            Name = name;
             All.Add(this);
             Elements = new List<ILogicalElement>();
 
         }
 
-        public string Name { get; }
-        
         public static void Parse(string toParse)
         {
             var tokens = toParse.Tokenized(true);
             
             LogicalOrganisationGroup logicalOrganisationGroup = null;
-            LogicalGroup logicalGroup = null; 
+            CheckboxLogicalGroup checkboxLogicalGroup = null; 
             var prefix = "";
             string lgPrefix = null;
             Trait trait = null;
@@ -40,21 +39,21 @@ namespace Vipl.AcsGenerator
                 {
                     case '+':
                         prefix = name;
-                        logicalOrganisationGroup = new LogicalOrganisationGroup(name);
+                        logicalOrganisationGroup = new LogicalOrganisationGroup();
                         break;
                     case '/':
                         prefix = token.Substring(1);
                         break;
                     case '=':
-                        logicalGroup = new LogicalGroup($"{prefix}_{name}");
+                        checkboxLogicalGroup = new CheckboxLogicalGroup($"{prefix}_{name}");
                         lgPrefix = null;
-                        logicalOrganisationGroup?.Elements.Add(logicalGroup);
+                        logicalOrganisationGroup?.Elements.Add(checkboxLogicalGroup);
                         break;
                     case '-':
                         lgPrefix = name;
                         break;
                     case '*' :
-                        logicalGroup = null;
+                        checkboxLogicalGroup = null;
                         lgPrefix = null;
                         break;
                     case '!':
@@ -69,18 +68,36 @@ namespace Vipl.AcsGenerator
 
                         variable += "_" + name;
                         trait = new Trait(variable, name);
-                        if (logicalGroup is not null)
+                        if (checkboxLogicalGroup is not null)
                         {
-                            trait.LogicalOwnerImplementation = logicalGroup;
-                            logicalGroup.Elements.Add(trait);
+                            trait.Owner = checkboxLogicalGroup;
+                            checkboxLogicalGroup.Elements.Add(trait);
                         }
                         else
                         {
+                            trait.Owner = MainSavable.Instance;
                             logicalOrganisationGroup?.Elements.Add(trait);
                         }
                         break;
                 }
             }
+        }
+
+        public static void Parse(XmlDocument document)
+        { 
+            var group = new LogicalOrganisationGroup();
+            foreach (var element in document.GetElementsByTagName("Main").OfType<XmlElement>().First()!.ChildNodes.OfType<XmlElement>())
+            {
+                switch (element.Name)
+                {
+                    case "CheckBox":
+                        group.Elements.Add( new SimpleCustomCheckBoxVisualElement(element.GetAttribute("variable"), element["Icon"]!.InnerText, element["Localisation"]!.InnerText, element["PositiveTrigger"]!.InnerText, element["NegativeTrigger"]!.InnerText){Owner = MainSavable.Instance});
+                        
+                        break;
+                }
+
+            }
+
         }
 
         public static string Switch =>
@@ -92,7 +109,7 @@ $@"acs_switch_filter = {{
         }}
     }}
 }}
-{All.SelectMany(o => o.Elements.Select(e => e.SmallSwitchForLargeGroup)).Join()}";
+{All.SelectMany(o => o.Elements.OfType<ISavable>().Select(e => e.SmallSwitchForLargeGroup)).Join()}";
 
 
     }

@@ -59,6 +59,10 @@
       <Content Include="dropdown.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="logicalElements.xml" />
+      <Content Include="logicalElements.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

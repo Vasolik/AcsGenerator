@@ -1,4 +1,11 @@
-﻿=physical:6pack "[GetTrait( 'beauty_bad_1' ).GetTraitCategoryLabel]"
+﻿=any_trait_of_kind:n "Trait groups"
+acs_filter_trait_any_sinful acs_filter_trait_any_virtuous
+acs_filter_trait_any_sinful_by_their_standard acs_filter_trait_any_virtuous_by_their_standard
+acs_filter_trait_any_bad_genetic acs_filter_trait_any_good_genetic
+acs_filter_trait_any_commander acs_filter_trait_any_lifestyle 
+acs_filter_trait_any_infamous acs_filter_trait_any_diseases
+
+=physical:6pack "[GetTrait( 'beauty_bad_1' ).GetTraitCategoryLabel]"
 beauty_bad_3 beauty_bad_2 beauty_bad_1 beauty_good_1 beauty_good_2 beauty_good_3 acs_beauty "Beauty"
 intellect_bad_3 intellect_bad_2 intellect_bad_1 intellect_good_1 intellect_good_2 intellect_good_3 acs_intellect "Intellect"
 physique_bad_3 physique_bad_2 physique_bad_1 physique_good_1 physique_good_2 physique_good_3 acs_physique "Physique"

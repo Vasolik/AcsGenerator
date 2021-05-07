@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Vipl.AcsGenerator.LogicalElements;
 using Vipl.AcsGenerator.SaveLoad;
 
 namespace Vipl.AcsGenerator.VisualElements
@@ -26,12 +27,12 @@ namespace Vipl.AcsGenerator.VisualElements
         
         private bool IsSmallGroup => LogicalOwner.IsSmall;
         private bool IsSameSizeAsLogical => LogicalOwner.Elements.Count == Elements.Length;
-        private LogicalGroup LogicalOwner => Elements[0].LogicalOwner;
+        private CheckboxLogicalGroup LogicalOwner => Elements[0].CheckBoxLogicalOwner;
         private string ScriptedGuiForThisElementForSmallGroup =>
             $@"{Variable}_negative = {{
     is_shown = {{
         any_in_global_list = {{
-            variable = {MainSavable.Instance.ListVariable}
+            variable = {MainSavable.Instance.ListVariable()}
             {LogicalOwner.FullNegativeFlag} = this
         }} 
     }}
@@ -40,7 +41,7 @@ namespace Vipl.AcsGenerator.VisualElements
     is_shown = {{
         NOT = {{
             any_in_global_list = {{
-                variable = {MainSavable.Instance.ListVariable}
+                variable = {MainSavable.Instance.ListVariable()}
                 OR = {{
                     {LogicalOwner.AllFlags.Select(flag => $"{flag} = this").Join(5)}
                 }}
@@ -52,7 +53,7 @@ namespace Vipl.AcsGenerator.VisualElements
  
     is_shown = {{
         any_in_global_list = {{
-            variable = {MainSavable.Instance.ListVariable}
+            variable = {MainSavable.Instance.ListVariable()}
             {LogicalOwner.FullPositiveFlag} = this
         }}  
     }} 
@@ -63,28 +64,28 @@ namespace Vipl.AcsGenerator.VisualElements
             limit = {{ 
                 NOT = {{
                     any_in_global_list = {{
-                        variable = {MainSavable.Instance.ListVariable}
+                        variable = {MainSavable.Instance.ListVariable()}
                         OR = {{
                             {LogicalOwner.AllFlags.Select(flag => $"{flag} = this").Join(7)}
                         }}
                     }}           
                 }}
             }}
-            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullPositiveFlag} }}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.FullPositiveFlag} }}
         }}
         else = {{
             if = {{
                 limit = {{
                     any_in_global_list = {{
-                        variable = {MainSavable.Instance.ListVariable}
+                        variable = {MainSavable.Instance.ListVariable()}
                         {LogicalOwner.FullPositiveFlag} = this
                     }}
                 }}
-                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullPositiveFlag} }}
-                add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.FullNegativeFlag} }}
+                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.FullPositiveFlag} }}
+                add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.FullNegativeFlag} }}
             }}
             else = {{
-                {LogicalOwner.AllFlags.Select(flag => $"remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {flag} }}").Join(4)}
+                {LogicalOwner.AllFlags.Select(flag => $"remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {flag} }}").Join(4)}
             }}
         }}
         acs_auto_apply_sorting_and_filters = yes
@@ -94,7 +95,7 @@ namespace Vipl.AcsGenerator.VisualElements
             $@"{Variable}_negative = {{
     is_shown = {{
         any_in_global_list = {{
-            variable = {LogicalOwner.ListVariable}
+            variable = {LogicalOwner.ListVariable()}
             OR = {{
                 {Elements.Select(e => $"{e.NegativeFlag} = this").Join(3)}
             }}
@@ -106,7 +107,7 @@ namespace Vipl.AcsGenerator.VisualElements
     is_shown = {{
         NOT = {{
             any_in_global_list = {{
-                variable = {LogicalOwner.ListVariable}
+                variable = {LogicalOwner.ListVariable()}
                 always = yes
             }}           
         }}
@@ -116,7 +117,7 @@ namespace Vipl.AcsGenerator.VisualElements
  
     is_shown = {{
         any_in_global_list = {{
-            variable = {LogicalOwner.ListVariable}
+            variable = {LogicalOwner.ListVariable()}
             OR = {{
                 {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
             }}
@@ -130,32 +131,32 @@ namespace Vipl.AcsGenerator.VisualElements
             limit = {{ 
                 NOT = {{
                     any_in_global_list = {{
-                        variable = {LogicalOwner.ListVariable}
+                        variable = {LogicalOwner.ListVariable()}
                         always = yes
                     }}           
                 }}
             }}
-            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(3)}
-            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(3)}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.Flag} }}
         }}
         else = {{
             if = {{
                 limit = {{
                     any_in_global_list = {{
-                        variable = {LogicalOwner.ListVariable}
+                        variable = {LogicalOwner.ListVariable()}
                         OR = {{
                             {Elements.Select(e => $"{e.PositiveFlag} = this").Join(7)}
                         }}
                         count = {Elements.Length}
                     }}
                 }}
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
-                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable()} target = {e.NegativeFlag} }}").Join(4)}
             }}
             else = {{
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
-                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.NegativeFlag} }}").Join(4)}
+                remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.Flag} }}
             }}
         }}
         acs_auto_apply_sorting_and_filters = yes
@@ -166,7 +167,7 @@ namespace Vipl.AcsGenerator.VisualElements
             $@"{Variable}_negative = {{
     is_shown = {{
         any_in_global_list = {{
-            variable = {LogicalOwner.ListVariable}
+            variable = {LogicalOwner.ListVariable()}
             OR = {{
                 {Elements.Select(e => $"{e.NegativeFlag} = this").Join(3)}
             }}
@@ -178,7 +179,7 @@ namespace Vipl.AcsGenerator.VisualElements
     is_shown = {{
         NOT = {{
             any_in_global_list = {{
-                variable = {LogicalOwner.ListVariable}
+                variable = {LogicalOwner.ListVariable()}
                 OR = {{
                     {Elements.Select(e => $"{e.NegativeFlag} = this").Join(4)}
                     {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
@@ -191,7 +192,7 @@ namespace Vipl.AcsGenerator.VisualElements
  
     is_shown = {{
         any_in_global_list = {{
-            variable = {LogicalOwner.ListVariable}
+            variable = {LogicalOwner.ListVariable()}
             OR = {{
                 {Elements.Select(e => $"{e.PositiveFlag} = this").Join(4)}
             }}
@@ -205,7 +206,7 @@ namespace Vipl.AcsGenerator.VisualElements
             limit = {{ 
                 NOT = {{
                     any_in_global_list = {{
-                        variable = {LogicalOwner.ListVariable}
+                        variable = {LogicalOwner.ListVariable()}
                         OR = {{
                             {Elements.Select(e => $"{e.NegativeFlag} = this").Join(6)}
                             {Elements.Select(e => $"{e.PositiveFlag} = this").Join(6)}
@@ -213,36 +214,36 @@ namespace Vipl.AcsGenerator.VisualElements
                     }}
                 }}
             }}
-            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(3)}
-            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+            {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(3)}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.Flag} }}
         }}
         else = {{
             if = {{
                 limit = {{
                     any_in_global_list = {{
-                        variable = {LogicalOwner.ListVariable}
+                        variable = {LogicalOwner.ListVariable()}
                         OR = {{
                             {Elements.Select(e => $"{e.PositiveFlag} = this").Join(7)}
                         }}
                         count = {Elements.Length}
                     }}
                 }}
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
-                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"add_to_global_variable_list = {{ name = {LogicalOwner.ListVariable()} target = {e.NegativeFlag} }}").Join(4)}
             }}
             else = {{
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.PositiveFlag} }}").Join(4)}
-                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable} target = {e.NegativeFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.PositiveFlag} }}").Join(4)}
+                {Elements.Select(e => $"remove_list_global_variable = {{ name = {LogicalOwner.ListVariable()} target = {e.NegativeFlag} }}").Join(4)}
                 if = {{
                     limit = {{
                         NOT = {{
                             any_in_global_list = {{
-                                variable = {LogicalOwner.ListVariable}
+                                variable = {LogicalOwner.ListVariable()}
                                 always = yes
                             }}
                         }}
                     }}
-                    remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable} target = {LogicalOwner.Flag} }}
+                    remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {LogicalOwner.Flag} }}
                 }}
             }}
         }}

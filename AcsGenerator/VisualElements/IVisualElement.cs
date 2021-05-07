@@ -1,4 +1,6 @@
-﻿namespace Vipl.AcsGenerator.VisualElements
+﻿using System.Collections.Generic;
+
+namespace Vipl.AcsGenerator.VisualElements
 {
    
     public interface IVisualElement : ILocalizable
@@ -7,5 +9,8 @@
         string GetGuiElement(string style);
         string ScriptedGui { get; }
         Trait[] Traits { get; }
+       
     }
+    
+    
 }
