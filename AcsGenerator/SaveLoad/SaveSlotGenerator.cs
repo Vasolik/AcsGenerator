@@ -9,7 +9,8 @@ namespace Vipl.AcsGenerator.SaveLoad
         public static List<SaveSlot> Slots { get; } = new();
         public static List<UndoSlot> UndoSlots { get; } = new();
         public static IEnumerable<SaveSlot> SlotsWithDefault => new[] {DefaultSlot}.Concat(Slots);
-        public static SaveSlot DefaultSlot { get; private set;} 
+        public static SaveSlot DefaultSlot { get; private set;}
+        
         public static void GenerateSaveSlot()
         {
             var allSavableList = DropDownFilter.All
@@ -29,7 +30,7 @@ namespace Vipl.AcsGenerator.SaveLoad
     {SlotsWithDefault.Select(s => s.IsSlotUsed).Join(1)}
 }}";
 
-        private static int UndoCount => 100;
+        private static int UndoCount => 5;
         public static string SaveToSlots => Slots.Select(s => s.SaveToSlot).Join();
         public static string LoadFromSlots => Slots.Select(s => s.LoadFromSlot).Join();
         public static string SaveToUndo => UndoSlots.Select(s => s.SaveToSlot).Join();

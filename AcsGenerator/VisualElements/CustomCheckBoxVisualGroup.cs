@@ -36,6 +36,19 @@ namespace Vipl.AcsGenerator.VisualElements
         protected override string GetGroupGuiElement(string style) 
             => ((ICustomCheckBoxVisualElement)this).GetCustomCheckBox(style);
         protected override SimpleCheckBoxVisualElement[] Elements { get; }
+        
+        public string MajorDigit => this.GetDigit(LogicalOwner.Index / 40);
+        public string MinorDigit => this.GetDigit(LogicalOwner.Index % 40);
+        public override string GetSetScopes(int value) =>
+            LogicalOwner.IsSmall ? GetSetScopeForSmallGroups(value) : GetSetScopeForLargeGroups(value);
+        
+        public string GetSetScopeForLargeGroups(int value ) => $"GuiScope.SetRoot( {this.GetDigit(value)} ).End";
+        public string GetSetScopeForSmallGroups(int value ) => 
+            $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
+            $".AddScope( 'major_digit' , {MajorDigit} )" +
+            $".AddScope( 'minor_digit' , {MinorDigit} )" +
+            ".End";
+
         public override Trait[] Traits => Elements.SelectMany(e => e.Traits).ToArray();
         public override string[] Localizations
             => new[] {$" {Variable}:0 {Localization}"}

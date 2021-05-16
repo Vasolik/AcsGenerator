@@ -6,8 +6,8 @@
     {
         public string NegativeTrigger { get; }
         public string PositiveTrigger { get; }
-        public string PositiveFlag { get; }
-        public string NegativeFlag { get; }
+        public int PositiveIndex { get; }
+        public int NegativeIndex { get; }
     }
 
 }

@@ -29,7 +29,6 @@ $@"flowcontainer = {{
     {Left.GetGuiElement("left").Intend(1)}
     {Right.GetGuiElement("right").Intend(1)} 
 }}";
-        public string ScriptedGui => Left.ScriptedGui + Environment.NewLine + Right.ScriptedGui;
         public Trait[] Traits
             => Left.Traits.AsEnumerable().Concat(Right.Traits).ToArray();
 

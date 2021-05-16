@@ -1,4 +1,7 @@
-﻿namespace Vipl.AcsGenerator.SaveLoad
+﻿using System.Collections.Generic;
+using Vipl.AcsGenerator.LogicalElements;
+
+namespace Vipl.AcsGenerator.SaveLoad
 {
     public interface ISavable
     {
@@ -14,6 +17,10 @@
         public string MakeReducedListAndCount { get; }
         string SmallSwitchForLargeGroup => null;
         bool IsMain => false;
+        public List<ILogicalElement> Elements { get; }
+        
+        public static List<ISavable> All { get; } = new();
+        string ScriptedGuiName { get;  }
     }
     public class MainSavable : ISavable
     {
@@ -26,42 +33,40 @@
         public string Variable => "acs_active_filter";
         public string DefaultCheck => 
 $@"NOT = {{
-    any_in_global_list = {{
+    any_in_list = {{
         variable = {this.ListVariable()}
         always = yes
     }} 
 }}";
-        public string ResetValue => $@"clear_global_variable_list = {this.ListVariable()}";
+        public string ResetValue => $@"clear_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
-$@"any_in_global_list = {{
+$@"any_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
-    any_in_global_list = {{
-        variable = {this.ListVariable()}
-        prev = this
-    }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} this = scope:slot_value }} }}
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)
-            => $@"clear_global_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
-every_in_global_list = {{
+            => $@"clear_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
+every_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
-    add_to_global_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = this }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ add_to_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }} }}
 }}";
         public string SaveToSlot(int slot, string slotPrefix = "", bool toPrev = false)
-            => $@"clear_global_variable_list = {this.MakeListVariable(slot, slotPrefix)}
-every_in_global_list = {{
+            => $@"clear_variable_list = {this.MakeListVariable(slot, slotPrefix)}
+every_in_list = {{
     variable = {this.MakePrevListVariable(slot, slotPrefix, toPrev)}
-    add_to_global_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = this }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ add_to_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} }}
 }}";
-        public string MakeReducedListAndCount =>
-$@"set_global_variable = {{ name = {this.CountVariable()} value = 0  }} 
-every_in_global_list = {{
-    variable = {this.ListVariable()}
-    change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
-}}
-set_variable = {{ name = {this.CountVariable()} value = global_var:{this.CountVariable()}  }}";
+        public string MakeReducedListAndCount =>  "";
         
         public bool HaveSomethingToSave => true;
+
+        public List<ILogicalElement> Elements { get; } = new ();
+
+        public string ScriptedGuiName => "acs_filter_simple_checkbox";
     }
 
     public static class SavableExtensions

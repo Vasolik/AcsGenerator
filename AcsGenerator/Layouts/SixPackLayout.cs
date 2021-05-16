@@ -62,8 +62,6 @@ namespace Vipl.AcsGenerator.Layouts
         }}
     }}
 }}";
-        public string ScriptedGui =>
-            Elements.Select(e => e.ScriptedGui).Join();
         public Trait[] Traits
             => Elements.SelectMany(e => e.Traits).ToArray();
         

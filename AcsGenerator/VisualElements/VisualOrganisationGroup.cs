@@ -95,8 +95,7 @@ $@"types acs_filter_trait_{Name}_group_types {{
 }}";
 
 
-        public string ScriptedGui =>    
-            Layouts.Select(e => e.ScriptedGui).Join();
+
 
         public string[] Localizations
             => new[] {$" {Variable}:0 {Localization}"}
@@ -113,13 +112,7 @@ $@"types acs_filter_trait_{Name}_group_types {{
                 File.WriteAllText($"{path}gui/acs_filter_trait_{visualOrganisation.Name}.gui",visualOrganisation.GuiElement, new System.Text.UTF8Encoding(true));
             }
         }
-        public static void GenerateScriptedGui(string path)
-        {
-            foreach (var visualOrganisation in All)
-            {
-                File.WriteAllText($"{path}common/scripted_guis/acs_filter_trait_{visualOrganisation.Name}.txt",visualOrganisation.ScriptedGui, new System.Text.UTF8Encoding(true));
-            }
-        }
+
         
         public static void GenerateGuiCall()
         {

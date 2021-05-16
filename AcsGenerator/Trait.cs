@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Vipl.AcsGenerator.LogicalElements;
-using Vipl.AcsGenerator.SaveLoad;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator
 {
     [DebuggerDisplay("{" + nameof(Name) + "} - {" + nameof(Variable) + "}")]
-    public sealed class Trait : SimpleCheckBoxVisualElement, ICheckboxLogicalElement
+    public sealed class Trait : SimpleCheckBoxVisualElement
     {
         public Trait(string variable, string name)
             : base(name)
@@ -42,19 +40,18 @@ namespace Vipl.AcsGenerator
             HiddenTraits.Any() ? MultiHasTrigger : $"has_trait = {Name}";
 
         public override string GetGuiElement(string style) =>
-            $@"acs_trait_item_{style} = {{ 
+            $@"acs_trait_item_{style} = {{
+    datacontext = ""[GetScriptedGui( '{ScriptedGuiName}' )]""
     blockoverride ""acs_trait_item_action"" {{
-        onclick = ""[GetScriptedGui( '{Variable}' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]""
         datacontext = ""[GetTrait( '{Name}' )]""
+        onclick = ""[ScriptedGui.Execute( {GetSetScopes(0)} )]""
+        
     }}
     blockoverride ""acs_checkbox_state"" {{
         {CheckBoxFrameSelector}
     }}
 }}";
-        public override string PositiveFlag => $"flag:{Name}";
-        public override string NegativeFlag => $"flag:{Name}_negative";
-
-
+        
         public override Trait[] Traits => new[] {this};
         public override string[] Localizations => new string[0];
 

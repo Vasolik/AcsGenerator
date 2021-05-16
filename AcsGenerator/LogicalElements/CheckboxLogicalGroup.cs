@@ -8,60 +8,63 @@ namespace Vipl.AcsGenerator.LogicalElements
 
     public class CheckboxLogicalGroup : ILogicalElement, ISavable
     {
-
         public List<ICheckboxLogicalElement> Elements { get;  }
-
+        public string ScriptedGuiName => Elements.Count == 2
+            ? "acs_filter_2_group_checkbox"
+            : Elements.Count == 3
+                ? "acs_filter_3_group_checkbox"
+                : Variable;
+        List<ILogicalElement> ISavable.Elements => Elements.Cast<ILogicalElement>().ToList();
         public CheckboxLogicalGroup(string variable)
         {
             Variable = variable;
             Elements = new List<ICheckboxLogicalElement>();
         }
         
-        public string GetSwitchForCombo(int[] combo)
+        public string GetSwitchTriggerForCombo(int[] combo)
         {
-            if (combo.Any(x => x == 1))
-            {
-                var positiveElements = Elements.Where((_, i) => combo[i] == 1);
-                return 
-$@"{GetFlagForCombo(combo)} = {{
-    if = {{
-        limit = {{
-            OR = {{
-                {positiveElements.Select(e => e.PositiveTrigger).Join(4)}
-            }}
-        }}
-        change_global_variable = {{ name = acs_filter_passed add = 1 }} 
-    }}
-}}";
-            }
-            var negativeElements = Elements.Where((_, i) => combo[i] == 2);
             return 
-$@"{GetFlagForCombo(combo)} = {{
-    if = {{
-        limit = {{
-            OR = {{
-                {negativeElements.Select(e => e.NegativeTrigger).Join(4)}
-            }}
-        }}
-        change_global_variable = {{ name = acs_filter_passed add = 1 }} 
-    }}
+$@"{GetIndexForCombo(combo)} = {{
+    {GetTriggerForCombo(combo).Intend(1)}
 }}";
         }
         
+        public string GetTriggerForCombo(int[] combo)
+        {
+            if (combo.Any(x => x == 1))
+            {
+                var positiveElements = Elements.Where((_, i) => combo[i] == 1).ToArray();
+                return positiveElements.Length > 1 ?
+$@"OR = {{
+    {positiveElements.Select(e => e.PositiveTrigger).Join(1)}
+}}" 
+    : positiveElements[0].PositiveTrigger;
+            }
+            var negativeElements = Elements.Where((_, i) => combo[i] == 2).ToArray();
+            return negativeElements.Length > 1 ?
+$@"AND = {{
+    {negativeElements.Select(e => e.NegativeTrigger).Join(1)}
+}}" 
+    : negativeElements[0].NegativeTrigger;
+        }
+        
+        private int GetIndexForCombo(IReadOnlyCollection<int> combo)
+        {
+            return Index + combo.Select((x, i) => new {X = x, I = i + 1}).Sum( y => (int)Math.Pow(3, combo.Count - y.I) * y.X ) - 1;
+        }
+        
         public string MakeReducedListAndCount =>
-$@"clear_global_variable_list = {ListReducedVariable}
+$@"clear_variable_list = {ListReducedVariable}
 set_global_variable = {{ name = {this.CountVariable()} value = 0  }} 
-every_in_global_list = {{
+every_in_list = {{
     variable = {this.ListVariable()}
-    save_temporary_scope_as = temp
-    if = {{
-        limit = {{
-            OR = {{
-                {Elements.Select(e => $"{e.PositiveFlag} = scope:temp").Join(4)}
-            }}
+    save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+    dummy_male = {{ 
+        if = {{
+            limit = {{ acs_modulo_2 = 0 }}
+            add_to_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
+            change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
         }}
-        add_to_global_variable_list = {{ name = {ListReducedVariable} target = scope:temp }}
-        change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
     }}
 }}
 if = {{
@@ -74,127 +77,392 @@ if = {{
     limit = {{
         global_var:{this.CountVariable()} = 0
     }}
-    every_in_global_list = {{
+    every_in_list = {{
         variable = {this.ListVariable()}
-        save_temporary_scope_as = temp
-        if = {{
-            limit = {{
-                OR = {{
-                    {Elements.Select(e => $"{e.NegativeFlag} = scope:temp").Join(5)}
+        save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+        dummy_male = {{
+            if = {{
+                limit = {{ acs_modulo_2 = 1 }}
+                add_to_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
+                change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
+            }}
+        }}
+    }}
+}}";
+
+        public string SwitchTriggerForSmallGroup =>
+            AllFlagIndexes.Select(GetSwitchTriggerForCombo).Join();
+        public string SwitchTrigger => IsSmall ? SwitchTriggerForSmallGroup : SwitchTriggerForLargeGroup;
+       
+        
+        public string SwitchTriggerForLargeGroup => 
+            $@"{Index} = {{
+    save_temporary_scope_as = candidate2
+    dummy_male = {{
+        any_in_list = {{
+            variable = {ListReducedVariable}
+            save_temporary_scope_as = filter2
+            scope:candidate2 = {{
+                switch = {{
+                    trigger = scope:filter2
+                    {Elements.Select(e => e.SwitchTrigger).Join(5)}
                 }}
             }}
-            add_to_global_variable_list = {{ name = {ListReducedVariable} target = scope:temp }}
-            change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
+            count = global_var:{this.CountVariable()}
         }}
-    }}
-}}
-set_variable = {{ name = {this.CountVariable()} value = global_var:{this.CountVariable()}  }}";
-        public string SwitchForSmallGroup =>
-            AllFlagIndexes.Select(GetSwitchForCombo).Join();
-        public string Switch => IsSmall ? SwitchForSmallGroup : SwitchForLargeGroup;
-        public string SwitchForLargeGroup => 
-$@"{Flag} = {{
-    set_global_variable = {{ name = acs_filter_local_passed value = 0  }} 
-    every_in_global_list = {{
-        variable = {ListReducedVariable}
-        save_scope_as = filter_local_flag
-        {Variable} = {{ FILTER2 = scope:filter_local_flag CANDIDATE2 = prev }}
-    }}
-    if = {{ 
-        limit = {{  
-            AND = {{
-                global_var:acs_filter_local_passed = global_var:{this.CountVariable()}
-            }}
-        }}
-        change_global_variable = {{ name = acs_filter_passed add = 1 }}  
     }}
 }}";
         
-        public string SmallSwitchForLargeGroup => IsSmall ? null :
-$@"{Variable} = {{
-    $CANDIDATE2$ = {{
-        switch = {{
-            trigger = $FILTER2$
-            {Elements.Select(e => e.Switch).Join(3)}
-        }}
-    }}
-}}";
-        private int GetIndexOfElement(ICheckboxLogicalElement trait) => Elements.IndexOf(trait);
+
         private int[][] AllFlagIndexes =>
             Enumerable.Range(1, (int)Math.Pow(3, Elements.Count) - 1)
                 .Select(x => Enumerable.Range(0, Elements.Count).Select(y => x /(int)Math.Pow(3, y) % 3 ).ToArray())
+                .OrderBy(GetIndexForCombo)
                 .ToArray();
-        private string GetFlagForCombo(int[] combo)
-        {
-            return $"{Flag}_" + combo.Select(x => x switch
-            {
-                0 => "0",
-                1 => "p",
-                _ => "n"
-            }).Join(separator: "" );
-        }
-        public string[] GetFlags(ICheckboxLogicalElement trait, int value)
-            => AllFlagIndexes.Where(x => x[GetIndexOfElement(trait)] == value)
-                .Select(GetFlagForCombo)
-                .ToArray();
-        public string GetZeroFlag(ICheckboxLogicalElement element, int value)
-        {
-            var combo = new int[Elements.Count];
-            combo[GetIndexOfElement(element)] = value;
-            return GetFlagForCombo(combo);
-        }
-        public string[][] GetAllTransformation(ICheckboxLogicalElement element, int oldValue, int newValue)
-        {
-            var allOldCombos = AllFlagIndexes.Where(x => x[GetIndexOfElement(element)] == oldValue);
-            return allOldCombos.Select(c =>
-                {
-                    var newCombo = (int[])c.Clone();
-                    newCombo[GetIndexOfElement(element)] = newValue;
-                    return new[] {GetFlagForCombo(c), GetFlagForCombo(newCombo)};
-                }).Where(tp => tp[1] != GetZeroFlag(element, 0))
-                .ToArray();
-        }
-        public string[] AllFlags => AllFlagIndexes.Select(GetFlagForCombo).ToArray();
-        public string Flag => $"flag:{Variable}";
-        
+
         public string ListReducedVariable => $"{this.ListVariable()}_reduced";
-        public ISavable Owner => null;
+        public ISavable Owner => IsSmall ? MainSavable.Instance : null;
+        public int NumberOfFlagsNeeded => IsSmall ? (int)Math.Pow(3, Elements.Count) - 1 : 1;
         public string Variable { get; }
         public string DefaultCheck => IsSmall ? null :
 $@"NOT = {{
-    any_in_global_list = {{
+    any_in_list = {{
         variable = {this.ListVariable()}
         always = yes
     }} 
 }}";
-        public string ResetValue => IsSmall ? null : $@"clear_global_variable_list = {this.ListVariable()}";
+        public string ResetValue => IsSmall ? null : $@"clear_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
-            $@"any_in_global_list = {{
+            $@"any_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
-    any_in_global_list = {{
-        variable = {this.ListVariable()}
-        prev = this
-    }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} scope:slot_value = scope:slot_value }} }}
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)
-            => $@"clear_global_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
-every_in_global_list = {{
+            => $@"clear_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
+every_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
-    add_to_global_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = this }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ add_to_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }} }}
 }}";
         public string SaveToSlot(int slot, string slotPrefix = "", bool toPrev = false)
-            => $@"clear_global_variable_list = {this.MakeListVariable(slot, slotPrefix)}
-every_in_global_list = {{
+            => $@"clear_variable_list = {this.MakeListVariable(slot, slotPrefix)}
+every_in_list = {{
     variable = {this.MakePrevListVariable(slot, slotPrefix, toPrev)}
-    add_to_global_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = this }}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ add_to_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} }}
 }}";
 
         public bool IsSmall => Elements.Count < 4;
         
         bool ISavable.HaveSomethingToSave => !IsSmall;
-        public string FullPositiveFlag => GetFlagForCombo(Enumerable.Repeat(1, Elements.Count).ToArray());
-        public string FullNegativeFlag => GetFlagForCombo(Enumerable.Repeat(2, Elements.Count).ToArray());
+
+        private int _index;
+        public int Index
+        {
+            get => _index;
+            set
+            {
+                _index = value;
+                var i = 0;
+                foreach (var (element, j) in Elements.Select((e, j) => new Tuple<ILogicalElement, int>( e, j)))
+                {
+                    element.Index = _index + (IsSmall ? 0 : i);
+                    i += element.NumberOfFlagsNeeded;
+                    element.IndexInGroup = j;
+                }
+            } 
+        }
+        public int IndexInGroup { get; set; }
+
+        private string ScripterGuiForLargeGroups => 
+$@"{ScriptedGuiName} = {{
+    scope = province
+    saved_scopes = {{
+        major_digit
+        minor_digit
+    }}
+    is_shown = {{
+        dummy_male = {{
+            any_in_list = {{
+                variable = {this.ListVariable()}
+                save_temporary_scope_value_as = {{ name = offset value = -1 }}
+                this = acs_major_minor_index_offset
+            }}
+        }}
+
+    }}     
+    effect = {{
+        set_local_variable = {{ name = acs_start value = acs_major_minor }}
+        acs_simple_checkbox = {{ LIST = {this.ListVariable()} START = local_var:acs_start }}
+        dummy_male = {{
+            if = {{
+                limit = {{
+                    any_in_list = {{
+                        variable = {this.ListVariable()}
+                        always = yes
+                    }}
+                }}
+                add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+            }}
+            else = {{
+                remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+            }}
+        }}
+        acs_auto_apply_sorting_and_filters = yes
+    }}
+}}";
+        
+        private string ScripterGroupGuiForLargeGroups => 
+            $@"{ScriptedGuiName}_group = {{
+    scope = province
+    is_shown = {{
+        dummy_male = {{
+            trigger_if = {{
+                limit = {{ 
+                    root.var:index = 0
+                }}
+                NOT = {{
+                    any_in_list = {{
+                        variable = {this.ListVariable()}
+                        always = yes
+                    }}
+                }}    
+            }} 
+            trigger_else_if = {{
+                limit = {{ 
+                    root.var:index = 1
+                }}
+                any_in_list = {{
+                    variable =  {this.ListVariable()}
+                    save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+                    save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
+                    scope:to_test = 0
+                    count = {Elements.Count}
+                }}
+            }}
+            trigger_else = {{
+                 any_in_list = {{
+                    variable =  {this.ListVariable()}
+                    save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+                    save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
+                    scope:to_test = 1
+                    count = {Elements.Count}
+                }}
+            }}
+        }}
+        
+    }}     
+    effect = {{
+        dummy_male = {{
+            acs_save_undo_0_filters = yes
+            if = {{
+                limit = {{
+                    NOT = {{
+                        any_in_list = {{
+                            variable = {this.ListVariable()}
+                            always = yes
+                        }}
+                    }}
+                }}
+                set_local_variable = {{ name = acs_counter value = 0 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_counter < {Elements.Count * 2}
+                    }}
+                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 2 }}
+                }}
+                add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+            }}
+            else_if = {{
+                limit = {{
+                    any_in_list = {{
+                        variable =  {this.ListVariable()}
+                        save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+                        save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
+                        scope:to_test = 0
+                        count = {Elements.Count}
+                    }}
+                }}
+                set_local_variable = {{ name = acs_counter value = 0 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_counter < {Elements.Count * 2}
+                    }}
+                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                }}
+            }}
+            else = {{
+                set_local_variable = {{ name = acs_counter value = 0 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_counter < {Elements.Count * 2}
+                    }}
+                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                }}
+                remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+            }}
+            acs_auto_apply_sorting_and_filters = yes
+        }}
+    }}    
+}}";
+        
+        private string ScripterGroupGuiForEducationGeneral => 
+            $@"{ScriptedGuiName}_group = {{
+    scope = province
+    saved_scopes = {{
+        major_digit
+        minor_digit
+    }}
+    is_shown = {{
+        dummy_male = {{
+            trigger_if = {{
+                limit = {{ 
+                    root.var:index = 0
+                }}
+                NOT = {{
+                    any_in_list = {{
+                        variable = {this.ListVariable()}
+                        AND = {{
+                            this >= acs_major_minor
+                            save_temporary_scope_value_as = {{ name = offset value = 7 }}
+                            this <= acs_major_minor_offset
+                        }}
+                    }}
+                }}    
+            }} 
+            trigger_else_if = {{
+                limit = {{ 
+                    root.var:index = 1
+                }}
+                any_in_list = {{
+                    variable =  {this.ListVariable()}
+                    OR = {{
+                        this = acs_major_minor
+                        save_temporary_scope_value_as = {{ name = offset value = 2 }}
+                        this = acs_major_minor_offset
+                        save_temporary_scope_value_as = {{ name = offset value = 4 }}
+                        this = acs_major_minor_offset
+                        save_temporary_scope_value_as = {{ name = offset value = 6 }}
+                        this = acs_major_minor_offset
+                    }}
+                    count = 4
+                }}
+            }}
+            trigger_else = {{
+                 any_in_list = {{
+                    variable =  {this.ListVariable()}
+                    OR = {{
+                        save_temporary_scope_value_as = {{ name = offset value = 1 }}
+                        this = acs_major_minor_offset
+                        save_temporary_scope_value_as = {{ name = offset value = 3 }}
+                        this = acs_major_minor_offset
+                        save_temporary_scope_value_as = {{ name = offset value = 5 }}
+                        this = acs_major_minor_offset
+                        save_temporary_scope_value_as = {{ name = offset value = 7 }}
+                        this = acs_major_minor_offset
+                    }}
+                    count = 4
+                }}
+            }}
+        }}  
+    }}     
+    effect = {{
+        dummy_male = {{
+            acs_save_undo_0_filters = yes
+            if = {{
+                limit = {{
+                    NOT = {{
+                        any_in_list = {{
+                            variable = {this.ListVariable()}
+                            AND = {{
+                                this >= acs_major_minor
+                                save_temporary_scope_value_as = {{ name = offset value = 7 }}
+                                this <= acs_major_minor_offset
+                            }}
+                        }}
+                    }}
+                }}
+                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_total_left value = 4 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_total_left > 0
+                    }}
+                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 2 }}
+                    change_local_variable = {{ name = acs_total_left add = -1 }}
+                }}
+            }}
+            else_if = {{
+                limit = {{
+                    any_in_list = {{
+                        variable =  {this.ListVariable()}
+                        OR = {{
+                            this = acs_major_minor
+                            save_temporary_scope_value_as = {{ name = offset value = 2 }}
+                            this = acs_major_minor_offset
+                            save_temporary_scope_value_as = {{ name = offset value = 4 }}
+                            this = acs_major_minor_offset
+                            save_temporary_scope_value_as = {{ name = offset value = 6 }}
+                            this = acs_major_minor_offset
+                        }}
+                        count = 4
+                    }}
+                }}
+                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_total_left value = 4 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_total_left > 0
+                    }}
+                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                    change_local_variable = {{ name = acs_total_left add = -1 }}
+                }}
+            }}
+            else = {{
+                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_total_left value = 8 }}
+                while = {{
+                    limit = {{
+                        local_var:acs_total_left > 0
+                    }}
+                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                    change_local_variable = {{ name = acs_counter add = 1 }}
+                    change_local_variable = {{ name = acs_total_left add = -1 }}
+                }}
+            }}
+            dummy_male = {{
+                if = {{
+                    limit = {{
+                        any_in_list = {{
+                            variable = {this.ListVariable()}
+                            always = yes
+                        }}
+                    }}
+                    add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+                }}
+                else = {{
+                    remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+                }}
+            }}
+            acs_auto_apply_sorting_and_filters = yes
+        }}
+    }}
+}}";
+        public string ScriptedGui => IsSmall ? "" : ScripterGuiForLargeGroups + 
+            (Variable.Contains("education_general") ? "\n" + ScripterGroupGuiForEducationGeneral :
+                (Variable.Contains("education_martial") || Variable.Contains("born_status")  ? "\n" + ScripterGroupGuiForLargeGroups : ""));
     }
     
 }
+

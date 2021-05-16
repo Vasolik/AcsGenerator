@@ -55,10 +55,6 @@ namespace Vipl.AcsGenerator.Layouts
         {RightElements.Select(e => e.GetGuiElement("right")).Join(2)}
     }}
 }}";
-        public string ScriptedGui 
-            =>  LeftElements.Select(e => e.ScriptedGui).Join()
-               + "\n" + RightElements.Select(e => e.ScriptedGui).Join();
-        
         public string[] Localizations
             => LeftElements.SelectMany(e => e.Localizations)
                 .Concat(RightElements.SelectMany(e => e.Localizations)).ToArray();

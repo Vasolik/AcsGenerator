@@ -14,8 +14,7 @@
 
         public override string GetGuiElement(string style)
             => ((ICustomCheckBoxVisualElement) this).GetCustomCheckBox(style);
-        public override string PositiveFlag => $"flag:{Variable}";
-        public override string NegativeFlag => $"flag:{Variable}_negative";
+
 
         public override Trait[] Traits => new Trait[0];
         public override string[] Localizations

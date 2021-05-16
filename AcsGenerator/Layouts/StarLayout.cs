@@ -44,9 +44,6 @@ namespace Vipl.AcsGenerator.Layouts
         }}
     }}
 }}";
-        public string ScriptedGui => 
-            Top.ScriptedGui + Environment.NewLine + Left.ScriptedGui + Environment.NewLine + Right.ScriptedGui;
-        
         public Trait[] Traits
             => Left.Traits.AsEnumerable()
                 .Concat(Right.Traits)

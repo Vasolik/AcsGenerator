@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -45,6 +46,7 @@ namespace Vipl.AcsGenerator.LogicalElements
                         prefix = token.Substring(1);
                         break;
                     case '=':
+                        AddToAllSavable(checkboxLogicalGroup);
                         checkboxLogicalGroup = new CheckboxLogicalGroup($"{prefix}_{name}");
                         lgPrefix = null;
                         logicalOrganisationGroup?.Elements.Add(checkboxLogicalGroup);
@@ -53,6 +55,7 @@ namespace Vipl.AcsGenerator.LogicalElements
                         lgPrefix = name;
                         break;
                     case '*' :
+                        AddToAllSavable(checkboxLogicalGroup);
                         checkboxLogicalGroup = null;
                         lgPrefix = null;
                         break;
@@ -77,10 +80,22 @@ namespace Vipl.AcsGenerator.LogicalElements
                         {
                             trait.Owner = MainSavable.Instance;
                             logicalOrganisationGroup?.Elements.Add(trait);
+                            MainSavable.Instance.Elements.Add(trait);
                         }
                         break;
                 }
             }
+            AddToAllSavable(checkboxLogicalGroup);
+        }
+        private static void AddToAllSavable(CheckboxLogicalGroup checkboxLogicalGroup)
+        {
+            if (checkboxLogicalGroup == null)
+                return;
+            if (((ISavable)checkboxLogicalGroup).HaveSomethingToSave)
+            {
+                ISavable.All.Add(checkboxLogicalGroup);
+            }
+            MainSavable.Instance.Elements.Add(checkboxLogicalGroup);
         }
 
         public static void Parse(XmlDocument document)
@@ -91,25 +106,45 @@ namespace Vipl.AcsGenerator.LogicalElements
                 switch (element.Name)
                 {
                     case "CheckBox":
-                        group.Elements.Add( new SimpleCustomCheckBoxVisualElement(element.GetAttribute("variable"), element["Icon"]!.InnerText, element["Localisation"]!.InnerText, element["PositiveTrigger"]!.InnerText, element["NegativeTrigger"]!.InnerText){Owner = MainSavable.Instance});
+                        var checkbox = new SimpleCustomCheckBoxVisualElement(element.GetAttribute("variable"), element["Icon"]!.InnerText, element["Localisation"]!.InnerText, element["PositiveTrigger"]!.InnerText, element["NegativeTrigger"]!.InnerText) {Owner = MainSavable.Instance};
+                        MainSavable.Instance.Elements.Add(checkbox);
+                        group.Elements.Add(checkbox);
                         
                         break;
                 }
-
             }
-
         }
+        
+        public static void PrepareLogicalElements()
+        {
+            ISavable.All.Add(MainSavable.Instance);
+            Parse(File.ReadAllText("groups.txt"));
+            var logicalElementsDocument = new XmlDocument();
+            logicalElementsDocument.Load("logicalElements.xml");
+            Parse(logicalElementsDocument);
 
-        public static string Switch =>
+            foreach (var savable in ISavable.All)
+            {
+                var i = 0;
+                foreach (var (element, j) in savable.Elements.Select((x, j)=> new Tuple<ILogicalElement, int>(x, j) ))
+                {
+                    element.IndexInGroup = j;
+                    element.Index = i;
+                    i += element.NumberOfFlagsNeeded;
+                }
+            }
+        }
+        public static string ScriptedGui => ISavable.All.OfType<CheckboxLogicalGroup>().Select(g => g.ScriptedGui).Join();
+     
+        public static string SwitchTrigger =>
 $@"acs_switch_filter = {{
     $CANDIDATE$ = {{
         switch = {{
             trigger = $FILTER$
-            {All.SelectMany(o => o.Elements.Select(e => e.Switch)).Join(3)}
+            {All.SelectMany(o => o.Elements.Select(e => e.SwitchTrigger)).Join(3)}
         }}
     }}
-}}
-{All.SelectMany(o => o.Elements.OfType<ISavable>().Select(e => e.SmallSwitchForLargeGroup)).Join()}";
+}}";
 
 
     }

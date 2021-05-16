@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vipl.AcsGenerator.LogicalElements;
 using Vipl.AcsGenerator.SaveLoad;
 
 namespace Vipl.AcsGenerator
@@ -17,6 +18,8 @@ namespace Vipl.AcsGenerator
         public int DefaultValue { get; }
 
         public string MakeReducedListAndCount => null;
+        public List<ILogicalElement> Elements => null;
+        public string ScriptedGuiName => null;
         public static void Parse(string toParse)
         {
             foreach (var row in toParse.Tokenized())

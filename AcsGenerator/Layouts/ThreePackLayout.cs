@@ -32,10 +32,6 @@ namespace Vipl.AcsGenerator.Layouts
     {Elements[1].GetGuiElement("left_third").Intend(1)}
     {Elements[2].GetGuiElement("right_third").Intend(1)}
 }}";
-
-        public string ScriptedGui =>
-            Elements.Select(e => e.ScriptedGui).Join();
-        
         public string[] Localizations
             => Elements.SelectMany(e => e.Localizations).ToArray();
         public Trait[] Traits

@@ -27,19 +27,16 @@ namespace Vipl.AcsGenerator
 
             var listOfTraits = File.OpenText("trait.txt").ReadToEnd().Tokenized();
             
-            LogicalOrganisationGroup.Parse(File.ReadAllText("groups.txt"));
-            var logicalElementsDocument = new XmlDocument();
-            logicalElementsDocument.Load("logicalElements.xml");
-            LogicalOrganisationGroup.Parse(logicalElementsDocument);
+            LogicalOrganisationGroup.PrepareLogicalElements();
             CustomCheckBoxVisualGroup.Parse( File.ReadAllText("visual_groups.txt"));
             VisualOrganisationGroup.Parse(File.ReadAllText("layout.txt"));
             DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));
             
-    
-            File.WriteAllText($"{ModFolder}/common/scripted_effects/acs_big_switch.txt",LogicalOrganisationGroup.Switch, new System.Text.UTF8Encoding(true));
+            
+            File.WriteAllText($"{ModFolder}/common/scripted_triggers/acs_big_switch.txt",LogicalOrganisationGroup.SwitchTrigger, new System.Text.UTF8Encoding(true));
+            File.WriteAllText($"{ModFolder}/common/scripted_guis/acs_filter_large_groups.txt",LogicalOrganisationGroup.ScriptedGui, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}localization/english/acs_filter_trait_l_english.yml",VisualOrganisationGroup.CompleteLocalization, new System.Text.UTF8Encoding(true));
             VisualOrganisationGroup.GenerateGuiElement(ModFolder);
-            VisualOrganisationGroup.GenerateScriptedGui(ModFolder);
             VisualOrganisationGroup.GenerateGuiCall();
 
             SaveSlotGenerator.GenerateSaveSlot();
@@ -58,6 +55,7 @@ namespace Vipl.AcsGenerator
 
             reportFile.Close();
         }
+        
     }
 
 }

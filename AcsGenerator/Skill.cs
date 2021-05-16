@@ -28,16 +28,29 @@ namespace Vipl.AcsGenerator
             new ("prowess", 6),
         }.ToDictionary(s=> s.Name, s => s));
         protected override SimpleCheckBoxVisualElement[] Elements => Traits.Clone() as SimpleCheckBoxVisualElement[] ;
+        public override string GetSetScopes(int value) =>
+            Index == 6 ? GetSetScopeForProwess(value) : GetSetScopeForSmallGeneral(value);
+        
+        public string MajorDigit => this.GetDigit(Elements.Min(e => e.Index) / 40);
+        public string MinorDigit => this.GetDigit(Elements.Min(e => e.Index) % 40);
+        public string GetSetScopeForProwess(int value ) => $"GuiScope.SetRoot( {this.GetDigit(value)} ).End";
+        public string GetSetScopeForSmallGeneral(int value ) => 
+            $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
+            $".AddScope( 'major_digit' , {MajorDigit} )" +
+            $".AddScope( 'minor_digit' , {MinorDigit} )" +
+            ".End";
         public override Trait[] Traits { get; }
         public string Name { get; }
         public int Index { get; }
         public override string Variable => $"acs_filter_trait_education_{Name}";
         public override string[] Localizations
             => Elements.SelectMany(e => e.Localizations).ToArray();
+
         protected override string GetGroupGuiElement(string style) =>
-            $@"acs_trait_item_skill_{style} = {{    
+            $@"acs_trait_item_skill_{style} = {{
+    datacontext = ""[GetScriptedGui( '{ScriptedGuiName}' )]"" 
     blockoverride ""acs_trait_item_action"" {{
-        onclick = ""[GetScriptedGui( '{Variable}' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]""
+        onclick = ""[ScriptedGui.Execute( {GetSetScopes(0)} )]""
     }}
     blockoverride ""acs_checkbox_state"" {{
         {CheckBoxFrameSelector}
