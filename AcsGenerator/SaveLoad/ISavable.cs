@@ -31,19 +31,19 @@ namespace Vipl.AcsGenerator.SaveLoad
         public static MainSavable Instance => _instance ??= new MainSavable();
         public bool IsMain => true;
         public string Variable => "acs_active_filter";
-        public string DefaultCheck => 
-$@"NOT = {{
-    any_in_list = {{
-        variable = {this.ListVariable()}
-        always = yes
-    }} 
-}}";
+        public string DefaultCheck => $@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
         public string ResetValue => $@"clear_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
 $@"any_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
     dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} this = scope:slot_value }} }}
+    count = all
+}}
+any_in_list = {{
+    variable = {this.ListVariable()}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ any_in_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }} }}
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)

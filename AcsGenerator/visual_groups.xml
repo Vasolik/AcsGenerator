@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Main>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_fame_kinslayer"
+                               Localization="[kinslayer|E]"
+                               Icon="gfx/interface/icons/traits/kinslayer_2.dds">
+        <LogicanElement Name="kinslayer_1"/>
+        <LogicanElement Name="kinslayer_2"/>
+        <LogicanElement Name="kinslayer_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_lifestyle_reveler"
+                               Localization="Reveler"
+                               Icon="gfx/interface/icons/traits/reveler.dds">
+        <LogicanElement Name="reveler_1"/>
+        <LogicanElement Name="reveler_2"/>
+        <LogicanElement Name="reveler_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_lifestyle_blademaster"
+                               Localization="Blademaster"
+                               Icon="gfx/interface/icons/traits/blademaster.dds">
+        <LogicanElement Name="blademaster_1"/>
+        <LogicanElement Name="blademaster_2"/>
+        <LogicanElement Name="blademaster_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_lifestyle_hunter"
+                               Localization="Hunter"
+                               Icon="gfx/interface/icons/traits/hunter.dds">
+        <LogicanElement Name="hunter_1"/>
+        <LogicanElement Name="hunter_2"/>
+        <LogicanElement Name="hunter_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_lifestyle_mystic"
+                               Localization="Mystic"
+                               Icon="gfx/interface/icons/traits/mystic.dds">
+        <LogicanElement Name="mystic_1"/>
+        <LogicanElement Name="mystic_2"/>
+        <LogicanElement Name="mystic_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_lifestyle_physician"
+                               Localization="[court_physician|E]"
+                               Icon="gfx/interface/icons/message_feed/court_physician.dds">
+        <LogicanElement Name="physician_1"/>
+        <LogicanElement Name="physician_2"/>
+        <LogicanElement Name="physician_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_health_wounded"
+                               Localization="Wounded"
+                               Icon="gfx/interface/icons/traits/wounded_2.dds">
+        <LogicanElement Name="wounded_1"/>
+        <LogicanElement Name="wounded_2"/>
+        <LogicanElement Name="wounded_3"/>
+    </CustomCheckBoxVisualGroup>
+    <CustomCheckBoxVisualGroup Variable="acs_filter_trait_fame_born_status"
+                               Localization="Heritage"
+                               Icon="gfx/interface/icons/traits/disputed_heritage.dds">
+        <LogicanElement Name="bastard"/>
+        <LogicanElement Name="legitimized_bastard"/>
+        <LogicanElement Name="disputed_heritage"/>
+        <LogicanElement Name="child_of_concubine_female"/>
+        <LogicanElement Name="child_of_concubine_male"/>
+        <LogicanElement Name="wild_oat"/>
+        <LogicanElement Name="bastard_founder"/>
+    </CustomCheckBoxVisualGroup>
+    
+</Main>

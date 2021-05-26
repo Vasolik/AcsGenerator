@@ -18,12 +18,12 @@ namespace Vipl.AcsGenerator.SaveLoad
 
         public string LoadFromSlot
             => $@"acs_load_undo_{Slot}_filters = {{
-dummy_male = {{
+    dummy_male = {{
         if = {{
             limit = {{
                 has_global_variable = asc_save_slot_undo_{Slot}_used
             }}
-            {Items.Select(i => i.LoadFromSlot(Slot, "_undo", !IsFirst)).Join(2)}
+            {Items.Select(i => i.LoadFromSlot(Slot, "_undo", !IsFirst)).Join(3)}
             {(IsLast ? RemoveCurrentSlot : LoadFromNextSlot).Intend(3)}{(IsFirst? "\nacs_auto_apply_sorting_and_filters = yes" : "").Intend(3)}
         }}
     }}
@@ -48,8 +48,9 @@ if = {{
         public string RemoveCurrentSlot
             => $"remove_global_variable = asc_save_slot_undo_{Slot}_used";
         
+        
         public string SaveToSlot
-            => $@"acs_save_undo_{Slot}_filters = {{{SaveToNextSlot.Intend(1)}
+            =>  $@"acs_save_undo_{Slot}_filters = {{{SaveToNextSlot.Intend(1)}
     dummy_male = {{
         {Items.Select(i => i.SaveToSlot(Slot, "_undo", !IsFirst)).Join(2)}
     }}

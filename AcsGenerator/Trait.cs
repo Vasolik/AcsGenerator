@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator
@@ -16,7 +17,16 @@ namespace Vipl.AcsGenerator
             Name = name;
             All[name] = this;
         }
-
+        
+        public Trait(XmlElement element)
+            : base(element.GetAttribute("Name"))
+        {
+            Variable = element.GetAttribute("Variable");
+            HiddenTraits = element.ChildNodes.OfType<XmlElement>().Select(e => e.GetAttribute("Name")).ToList();
+            Name = element.GetAttribute("Name");
+            All[element.GetAttribute("Name")] = this;
+        }
+        
         public new static IDictionary<string, Trait> All { get; } = new Dictionary<string, Trait>();
 
         public List<string> HiddenTraits { get; }

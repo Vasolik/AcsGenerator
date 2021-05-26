@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.Layouts
 {
     public class SixPackLayout : ILayout
     {
-        public SixPackLayout(string name, IVisualElement[] elements, string localization)
+        public SixPackLayout(XmlElement element)
         {
-            Elements = elements;
-            Localization = localization;
-            Name = name;
-            
-        }
-        public SixPackLayout(string row)
-        {
-        
-            var sixPackRegex = new Regex("^(?<traits>\\w+(?:\\s+\\w+){5})\\s+(?<name>\\w+)\\s+(?<localization>\"[^\"]+\")");
-            var rowInfo = sixPackRegex.Match(row);
-            if(!rowInfo.Success)
-                throw new Exception("Invalid layout file");
-
-            Name = rowInfo.Groups["name"].Value;
-            Localization = rowInfo.Groups["localization"].Value;
-            Elements = rowInfo.Groups["traits"].Value
-                .Tokenized(true)
-                .Select(x => SimpleCheckBoxVisualElement.All[x])
+            Name = element.GetAttribute("localizationKey");
+            Localization = element.GetAttribute("localization");
+            Elements = element.ChildNodes.OfType<XmlElement>()
+                .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("name")])
                 .Cast<IVisualElement>()
                 .ToArray();
         }
-
         private string Name { get; }
         private string Localization { get; }
         public IVisualElement[] Elements { get; }
@@ -66,7 +52,7 @@ namespace Vipl.AcsGenerator.Layouts
             => Elements.SelectMany(e => e.Traits).ToArray();
         
         public string[] Localizations
-            => new[] {$" {Name}:0 {Localization}"}
+            => new[] {$" {Name}:0 \"{Localization}\""}
                 .Concat(Elements.SelectMany(e => e.Localizations)).ToArray();
 
     }

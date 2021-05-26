@@ -1,61 +1,372 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Main id="Main">
-    <CheckBox variable="acs_filter_trait_any_sinful" >
-        <Icon>"gfx/interface/icons/acs_any_sinful.dds"</Icon>
-        <Localisation>"Any sinful"</Localisation>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_education_general" IsOwnerMain="false">
+        <Trait Name="education_intrigue_1" Variable="acs_filter_trait_education_intrigue_1"/>
+        <Trait Name="education_intrigue_2" Variable="acs_filter_trait_education_intrigue_2"/>
+        <Trait Name="education_intrigue_3" Variable="acs_filter_trait_education_intrigue_3"/>
+        <Trait Name="education_intrigue_4" Variable="acs_filter_trait_education_intrigue_4"/>
+        <Trait Name="education_diplomacy_1" Variable="acs_filter_trait_education_diplomacy_1"/>
+        <Trait Name="education_diplomacy_2" Variable="acs_filter_trait_education_diplomacy_2"/>
+        <Trait Name="education_diplomacy_3" Variable="acs_filter_trait_education_diplomacy_3"/>
+        <Trait Name="education_diplomacy_4" Variable="acs_filter_trait_education_diplomacy_4"/>
+        <Trait Name="education_stewardship_1" Variable="acs_filter_trait_education_stewardship_1"/>
+        <Trait Name="education_stewardship_2" Variable="acs_filter_trait_education_stewardship_2"/>
+        <Trait Name="education_stewardship_3" Variable="acs_filter_trait_education_stewardship_3"/>
+        <Trait Name="education_stewardship_4" Variable="acs_filter_trait_education_stewardship_4"/>
+        <Trait Name="education_martial_1" Variable="acs_filter_trait_education_martial_1"/>
+        <Trait Name="education_martial_2" Variable="acs_filter_trait_education_martial_2"/>
+        <Trait Name="education_martial_3" Variable="acs_filter_trait_education_martial_3"/>
+        <Trait Name="education_martial_4" Variable="acs_filter_trait_education_martial_4"/>
+        <Trait Name="education_learning_1" Variable="acs_filter_trait_education_learning_1"/>
+        <Trait Name="education_learning_2" Variable="acs_filter_trait_education_learning_2"/>
+        <Trait Name="education_learning_3" Variable="acs_filter_trait_education_learning_3"/>
+        <Trait Name="education_learning_4" Variable="acs_filter_trait_education_learning_4"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_education_martial" IsOwnerMain="false">
+        <Trait Name="education_martial_prowess_1" Variable="acs_filter_trait_education_martial_prowess_1"/>
+        <Trait Name="education_martial_prowess_2" Variable="acs_filter_trait_education_martial_prowess_2"/>
+        <Trait Name="education_martial_prowess_3" Variable="acs_filter_trait_education_martial_prowess_3"/>
+        <Trait Name="education_martial_prowess_4" Variable="acs_filter_trait_education_martial_prowess_4"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_lust" IsOwnerMain="true">
+        <Trait Name="lustful" Variable="acs_filter_trait_personality_lustful"/>
+        <Trait Name="chaste" Variable="acs_filter_trait_personality_chaste"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_food" IsOwnerMain="true">
+        <Trait Name="gluttonous" Variable="acs_filter_trait_personality_gluttonous"/>
+        <Trait Name="temperate" Variable="acs_filter_trait_personality_temperate"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_greed" IsOwnerMain="true">
+        <Trait Name="greedy" Variable="acs_filter_trait_personality_greedy"/>
+        <Trait Name="generous" Variable="acs_filter_trait_personality_generous"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_work" IsOwnerMain="true">
+        <Trait Name="lazy" Variable="acs_filter_trait_personality_lazy"/>
+        <Trait Name="diligent" Variable="acs_filter_trait_personality_diligent"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_calmness" IsOwnerMain="true">
+        <Trait Name="wrathful" Variable="acs_filter_trait_personality_wrathful"/>
+        <Trait Name="calm" Variable="acs_filter_trait_personality_calm"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_patience" IsOwnerMain="true">
+        <Trait Name="patient" Variable="acs_filter_trait_personality_patient"/>
+        <Trait Name="impatient" Variable="acs_filter_trait_personality_impatient"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_arrogance" IsOwnerMain="true">
+        <Trait Name="arrogant" Variable="acs_filter_trait_personality_arrogant"/>
+        <Trait Name="humble" Variable="acs_filter_trait_personality_humble"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_lies" IsOwnerMain="true">
+        <Trait Name="deceitful" Variable="acs_filter_trait_personality_deceitful"/>
+        <Trait Name="honest" Variable="acs_filter_trait_personality_honest"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_bravery" IsOwnerMain="true">
+        <Trait Name="craven" Variable="acs_filter_trait_personality_craven"/>
+        <Trait Name="brave" Variable="acs_filter_trait_personality_brave"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_shyness" IsOwnerMain="true">
+        <Trait Name="shy" Variable="acs_filter_trait_personality_shy"/>
+        <Trait Name="gregarious" Variable="acs_filter_trait_personality_gregarious"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_ambition" IsOwnerMain="true">
+        <Trait Name="ambitious" Variable="acs_filter_trait_personality_ambitious"/>
+        <Trait Name="content" Variable="acs_filter_trait_personality_content"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_justice" IsOwnerMain="true">
+        <Trait Name="arbitrary" Variable="acs_filter_trait_personality_arbitrary"/>
+        <Trait Name="just" Variable="acs_filter_trait_personality_just"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_faith" IsOwnerMain="true">
+        <Trait Name="cynical" Variable="acs_filter_trait_personality_cynical"/>
+        <Trait Name="zealous" Variable="acs_filter_trait_personality_zealous"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_trust" IsOwnerMain="true">
+        <Trait Name="paranoid" Variable="acs_filter_trait_personality_paranoid"/>
+        <Trait Name="trusting" Variable="acs_filter_trait_personality_trusting"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_compassion" IsOwnerMain="true">
+        <Trait Name="compassionate" Variable="acs_filter_trait_personality_compassionate"/>
+        <Trait Name="callous" Variable="acs_filter_trait_personality_callous"/>
+        <Trait Name="sadistic" Variable="acs_filter_trait_personality_sadistic"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_stubborness" IsOwnerMain="true">
+        <Trait Name="stubborn" Variable="acs_filter_trait_personality_stubborn"/>
+        <Trait Name="fickle" Variable="acs_filter_trait_personality_fickle"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_vengefulness" IsOwnerMain="true">
+        <Trait Name="vengeful" Variable="acs_filter_trait_personality_vengeful"/>
+        <Trait Name="forgiving" Variable="acs_filter_trait_personality_forgiving"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_fame_born_status" IsOwnerMain="false">
+        <Trait Name="bastard" Variable="acs_filter_trait_fame_born_status_bastard"/>
+        <Trait Name="legitimized_bastard" Variable="acs_filter_trait_fame_born_status_legitimized_bastard"/>
+        <Trait Name="disputed_heritage" Variable="acs_filter_trait_fame_born_status_disputed_heritage"/>
+        <Trait Name="child_of_concubine_female" Variable="acs_filter_trait_fame_born_status_child_of_concubine_female"/>
+        <Trait Name="child_of_concubine_male" Variable="acs_filter_trait_fame_born_status_child_of_concubine_male"/>
+        <Trait Name="wild_oat" Variable="acs_filter_trait_fame_born_status_wild_oat"/>
+        <Trait Name="bastard_founder" Variable="acs_filter_trait_fame_born_status_bastard_founder"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_fame_kinslayer" IsOwnerMain="true">
+        <Trait Name="kinslayer_1" Variable="acs_filter_trait_fame_kinslayer_1"/>
+        <Trait Name="kinslayer_2" Variable="acs_filter_trait_fame_kinslayer_2"/>
+        <Trait Name="kinslayer_3" Variable="acs_filter_trait_fame_kinslayer_3"/>
+    </CheckboxLogicalGroup>
+    <Trait Name="berserker" Variable="acs_filter_trait_fame_berserker"/>
+    <Trait Name="shieldmaiden" Variable="acs_filter_trait_fame_shieldmaiden"/>
+    <Trait Name="varangian" Variable="acs_filter_trait_fame_varangian"/>
+    <Trait Name="poet" Variable="acs_filter_trait_fame_poet"/>
+    <Trait Name="twin" Variable="acs_filter_trait_fame_twin"/>
+    <Trait Name="deviant" Variable="acs_filter_trait_fame_deviant"/>
+    <Trait Name="cannibal" Variable="acs_filter_trait_fame_cannibal"/>
+    <Trait Name="sodomite" Variable="acs_filter_trait_fame_sodomite"/>
+    <Trait Name="incestuous" Variable="acs_filter_trait_fame_incestuous"/>
+    <Trait Name="adulterer" Variable="acs_filter_trait_fame_adulterer"/>
+    <Trait Name="fornicator" Variable="acs_filter_trait_fame_fornicator"/>
+    <Trait Name="murderer" Variable="acs_filter_trait_fame_murderer"/>
+    <Trait Name="born_in_the_purple" Variable="acs_filter_trait_fame_born_in_the_purple"/>
+    <Trait Name="augustus" Variable="acs_filter_trait_fame_augustus"/>
+    <Trait Name="viking" Variable="acs_filter_trait_fame_viking"/>
+    <Trait Name="reincarnation" Variable="acs_filter_trait_fame_reincarnation"/>
+    <Trait Name="adventurer" Variable="acs_filter_trait_fame_adventurer"/>
+    <Trait Name="heresiarch" Variable="acs_filter_trait_fame_heresiarch"/>
+    <Trait Name="peasant_leader" Variable="acs_filter_trait_fame_peasant_leader"/>
+    <Trait Name="witch" Variable="acs_filter_trait_fame_witch"/>
+    <Trait Name="disinherited" Variable="acs_filter_trait_fame_disinherited"/>
+    <Trait Name="denounced" Variable="acs_filter_trait_fame_denounced"/>
+    <Trait Name="chakravarti" Variable="acs_filter_trait_fame_chakravarti"/>
+    <Trait Name="greatest_of_khans" Variable="acs_filter_trait_fame_greatest_of_khans"/>
+    <Trait Name="logistician" Variable="acs_filter_trait_commander_logistician"/>
+    <Trait Name="military_engineer" Variable="acs_filter_trait_commander_military_engineer"/>
+    <Trait Name="aggressive_attacker" Variable="acs_filter_trait_commander_aggressive_attacker"/>
+    <Trait Name="unyielding_defender" Variable="acs_filter_trait_commander_unyielding_defender"/>
+    <Trait Name="forder" Variable="acs_filter_trait_commander_forder"/>
+    <Trait Name="flexible_leader" Variable="acs_filter_trait_commander_flexible_leader"/>
+    <Trait Name="desert_warrior" Variable="acs_filter_trait_commander_desert_warrior"/>
+    <Trait Name="jungle_stalker" Variable="acs_filter_trait_commander_jungle_stalker"/>
+    <Trait Name="reaver" Variable="acs_filter_trait_commander_reaver"/>
+    <Trait Name="reckless" Variable="acs_filter_trait_commander_reckless"/>
+    <Trait Name="holy_warrior" Variable="acs_filter_trait_commander_holy_warrior"/>
+    <Trait Name="open_terrain_expert" Variable="acs_filter_trait_commander_open_terrain_expert"/>
+    <Trait Name="rough_terrain_expert" Variable="acs_filter_trait_commander_rough_terrain_expert"/>
+    <Trait Name="forest_fighter" Variable="acs_filter_trait_commander_forest_fighter"/>
+    <Trait Name="cautious_leader" Variable="acs_filter_trait_commander_cautious_leader"/>
+    <Trait Name="organizer" Variable="acs_filter_trait_commander_organizer"/>
+    <Trait Name="winter_soldier" Variable="acs_filter_trait_commander_winter_soldier"/>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_reveler" IsOwnerMain="true">
+        <Trait Name="reveler_1" Variable="acs_filter_trait_lifestyle_reveler_1"/>
+        <Trait Name="reveler_2" Variable="acs_filter_trait_lifestyle_reveler_2"/>
+        <Trait Name="reveler_3" Variable="acs_filter_trait_lifestyle_reveler_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_blademaster" IsOwnerMain="true">
+        <Trait Name="blademaster_1" Variable="acs_filter_trait_lifestyle_blademaster_1"/>
+        <Trait Name="blademaster_2" Variable="acs_filter_trait_lifestyle_blademaster_2"/>
+        <Trait Name="blademaster_3" Variable="acs_filter_trait_lifestyle_blademaster_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_hunter" IsOwnerMain="true">
+        <Trait Name="hunter_1" Variable="acs_filter_trait_lifestyle_hunter_1"/>
+        <Trait Name="hunter_2" Variable="acs_filter_trait_lifestyle_hunter_2"/>
+        <Trait Name="hunter_3" Variable="acs_filter_trait_lifestyle_hunter_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_mystic" IsOwnerMain="true">
+        <Trait Name="mystic_1" Variable="acs_filter_trait_lifestyle_mystic_1"/>
+        <Trait Name="mystic_2" Variable="acs_filter_trait_lifestyle_mystic_2"/>
+        <Trait Name="mystic_3" Variable="acs_filter_trait_lifestyle_mystic_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_physician" IsOwnerMain="true">
+        <Trait Name="physician_1" Variable="acs_filter_trait_lifestyle_physician_1"/>
+        <Trait Name="physician_2" Variable="acs_filter_trait_lifestyle_physician_2"/>
+        <Trait Name="physician_3" Variable="acs_filter_trait_lifestyle_physician_3"/>
+    </CheckboxLogicalGroup>
+    <Trait Name="diplomat" Variable="acs_filter_trait_lifestyle_diplomat"/>
+    <Trait Name="family_first" Variable="acs_filter_trait_lifestyle_family_first"/>
+    <Trait Name="august" Variable="acs_filter_trait_lifestyle_august"/>
+    <Trait Name="strategist" Variable="acs_filter_trait_lifestyle_strategist"/>
+    <Trait Name="overseer" Variable="acs_filter_trait_lifestyle_overseer"/>
+    <Trait Name="gallant" Variable="acs_filter_trait_lifestyle_gallant"/>
+    <Trait Name="architect" Variable="acs_filter_trait_lifestyle_architect"/>
+    <Trait Name="administrator" Variable="acs_filter_trait_lifestyle_administrator"/>
+    <Trait Name="avaricious" Variable="acs_filter_trait_lifestyle_avaricious"/>
+    <Trait Name="schemer" Variable="acs_filter_trait_lifestyle_schemer"/>
+    <Trait Name="seducer" Variable="acs_filter_trait_lifestyle_seducer"/>
+    <Trait Name="torturer" Variable="acs_filter_trait_lifestyle_torturer"/>
+    <Trait Name="whole_of_body" Variable="acs_filter_trait_lifestyle_whole_of_body"/>
+    <Trait Name="scholar" Variable="acs_filter_trait_lifestyle_scholar"/>
+    <Trait Name="theologian" Variable="acs_filter_trait_lifestyle_theologian"/>
+    <Trait Name="lifestyle_herbalist" Variable="acs_filter_trait_lifestyle_lifestyle_herbalist"/>
+    <Trait Name="rowdy" Variable="acs_filter_trait_child_rowdy"/>
+    <Trait Name="charming" Variable="acs_filter_trait_child_charming"/>
+    <Trait Name="curious" Variable="acs_filter_trait_child_curious"/>
+    <Trait Name="pensive" Variable="acs_filter_trait_child_pensive"/>
+    <Trait Name="bossy" Variable="acs_filter_trait_child_bossy"/>
+    <Trait Name="drunkard" Variable="acs_filter_trait_stress_drunkard"/>
+    <Trait Name="hashishiyah" Variable="acs_filter_trait_stress_hashishiyah"/>
+    <Trait Name="rakish" Variable="acs_filter_trait_stress_rakish"/>
+    <Trait Name="reclusive" Variable="acs_filter_trait_stress_reclusive"/>
+    <Trait Name="irritable" Variable="acs_filter_trait_stress_irritable"/>
+    <Trait Name="flagellant" Variable="acs_filter_trait_stress_flagellant"/>
+    <Trait Name="profligate" Variable="acs_filter_trait_stress_profligate"/>
+    <Trait Name="improvident" Variable="acs_filter_trait_stress_improvident"/>
+    <Trait Name="contrite" Variable="acs_filter_trait_stress_contrite"/>
+    <Trait Name="comfort_eater" Variable="acs_filter_trait_stress_comfort_eater"/>
+    <Trait Name="inappetetic" Variable="acs_filter_trait_stress_inappetetic"/>
+    <Trait Name="journaller" Variable="acs_filter_trait_stress_journaller"/>
+    <Trait Name="confider" Variable="acs_filter_trait_stress_confider"/>
+    <Trait Name="athletic" Variable="acs_filter_trait_stress_athletic"/>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_health_wounded" IsOwnerMain="true">
+        <Trait Name="wounded_1" Variable="acs_filter_trait_health_wounded_1"/>
+        <Trait Name="wounded_2" Variable="acs_filter_trait_health_wounded_2"/>
+        <Trait Name="wounded_3" Variable="acs_filter_trait_health_wounded_3"/>
+    </CheckboxLogicalGroup>
+    <Trait Name="depressed_1" Variable="acs_filter_trait_health_depressed_1">
+        <Trait Name="depressed_genetic"/>
+    </Trait>
+    <Trait Name="lunatic_1" Variable="acs_filter_trait_health_lunatic_1">
+        <Trait Name="lunatic_genetic"/>
+    </Trait>
+    <Trait Name="possessed_1" Variable="acs_filter_trait_health_possessed_1">
+        <Trait Name="possessed_genetic"/>
+    </Trait>
+    <Trait Name="ill" Variable="acs_filter_trait_health_ill"/>
+    <Trait Name="pneumonic" Variable="acs_filter_trait_health_pneumonic"/>
+    <Trait Name="great_pox" Variable="acs_filter_trait_health_great_pox"/>
+    <Trait Name="lovers_pox" Variable="acs_filter_trait_health_lovers_pox">
+        <Trait Name="early_great_pox"/>
+    </Trait>
+    <Trait Name="leper" Variable="acs_filter_trait_health_leper"/>
+    <Trait Name="maimed" Variable="acs_filter_trait_health_maimed"/>
+    <Trait Name="one_eyed" Variable="acs_filter_trait_health_one_eyed"/>
+    <Trait Name="one_legged" Variable="acs_filter_trait_health_one_legged"/>
+    <Trait Name="disfigured" Variable="acs_filter_trait_health_disfigured"/>
+    <Trait Name="infirm" Variable="acs_filter_trait_health_infirm"/>
+    <Trait Name="incapable" Variable="acs_filter_trait_health_incapable"/>
+    <Trait Name="gout_ridden" Variable="acs_filter_trait_health_gout_ridden"/>
+    <Trait Name="consumption" Variable="acs_filter_trait_health_consumption"/>
+    <Trait Name="cancer" Variable="acs_filter_trait_health_cancer"/>
+    <Trait Name="typhus" Variable="acs_filter_trait_health_typhus"/>
+    <Trait Name="bubonic_plague" Variable="acs_filter_trait_health_bubonic_plague"/>
+    <Trait Name="smallpox" Variable="acs_filter_trait_health_smallpox"/>
+    <Trait Name="sickly" Variable="acs_filter_trait_health_sickly"/>
+    <Trait Name="scarred" Variable="acs_filter_trait_health_scarred"/>
+    <Trait Name="eunuch" Variable="acs_filter_trait_health_eunuch"/>
+    <Trait Name="blind" Variable="acs_filter_trait_health_blind"/>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_beauty" IsOwnerMain="false">
+        <Trait Name="beauty_bad_1" Variable="acs_filter_trait_physical_beauty_bad_1"/>
+        <Trait Name="beauty_bad_2" Variable="acs_filter_trait_physical_beauty_bad_2"/>
+        <Trait Name="beauty_bad_3" Variable="acs_filter_trait_physical_beauty_bad_3"/>
+        <Trait Name="beauty_good_1" Variable="acs_filter_trait_physical_beauty_good_1"/>
+        <Trait Name="beauty_good_2" Variable="acs_filter_trait_physical_beauty_good_2"/>
+        <Trait Name="beauty_good_3" Variable="acs_filter_trait_physical_beauty_good_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_intellect" IsOwnerMain="false">
+        <Trait Name="intellect_bad_1" Variable="acs_filter_trait_physical_intellect_bad_1"/>
+        <Trait Name="intellect_bad_2" Variable="acs_filter_trait_physical_intellect_bad_2"/>
+        <Trait Name="intellect_bad_3" Variable="acs_filter_trait_physical_intellect_bad_3"/>
+        <Trait Name="intellect_good_1" Variable="acs_filter_trait_physical_intellect_good_1"/>
+        <Trait Name="intellect_good_2" Variable="acs_filter_trait_physical_intellect_good_2"/>
+        <Trait Name="intellect_good_3" Variable="acs_filter_trait_physical_intellect_good_3"/>
+    </CheckboxLogicalGroup>
+    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_physique" IsOwnerMain="false">
+        <Trait Name="physique_bad_1" Variable="acs_filter_trait_physical_physique_bad_1"/>
+        <Trait Name="physique_bad_2" Variable="acs_filter_trait_physical_physique_bad_2"/>
+        <Trait Name="physique_bad_3" Variable="acs_filter_trait_physical_physique_bad_3"/>
+        <Trait Name="physique_good_1" Variable="acs_filter_trait_physical_physique_good_1"/>
+        <Trait Name="physique_good_2" Variable="acs_filter_trait_physical_physique_good_2"/>
+        <Trait Name="physique_good_3" Variable="acs_filter_trait_physical_physique_good_3"/>
+    </CheckboxLogicalGroup>
+    <Trait Name="pure_blooded" Variable="acs_filter_trait_physical_pure_blooded"/>
+    <Trait Name="fecund" Variable="acs_filter_trait_physical_fecund"/>
+    <Trait Name="strong" Variable="acs_filter_trait_physical_strong"/>
+    <Trait Name="shrewd" Variable="acs_filter_trait_physical_shrewd"/>
+    <Trait Name="clubfooted" Variable="acs_filter_trait_physical_clubfooted"/>
+    <Trait Name="hunchbacked" Variable="acs_filter_trait_physical_hunchbacked"/>
+    <Trait Name="lisping" Variable="acs_filter_trait_physical_lisping"/>
+    <Trait Name="stuttering" Variable="acs_filter_trait_physical_stuttering"/>
+    <Trait Name="dwarf" Variable="acs_filter_trait_physical_dwarf"/>
+    <Trait Name="giant" Variable="acs_filter_trait_physical_giant"/>
+    <Trait Name="inbred" Variable="acs_filter_trait_physical_inbred"/>
+    <Trait Name="weak" Variable="acs_filter_trait_physical_weak"/>
+    <Trait Name="dull" Variable="acs_filter_trait_physical_dull"/>
+    <Trait Name="impotent" Variable="acs_filter_trait_physical_impotent">
+        <Trait Name="infertile"/>
+    </Trait>
+    <Trait Name="spindly" Variable="acs_filter_trait_physical_spindly"/>
+    <Trait Name="scaly" Variable="acs_filter_trait_physical_scaly"/>
+    <Trait Name="albino" Variable="acs_filter_trait_physical_albino"/>
+    <Trait Name="wheezing" Variable="acs_filter_trait_physical_wheezing"/>
+    <Trait Name="bleeder" Variable="acs_filter_trait_physical_bleeder"/>
+    <Trait Name="pregnant" Variable="acs_filter_trait_physical_pregnant"/>
+    <Trait Name="celibate" Variable="acs_filter_trait_religius_celibate"/>
+    <Trait Name="pilgrim" Variable="acs_filter_trait_religius_pilgrim"/>
+    <Trait Name="excommunicated" Variable="acs_filter_trait_religius_excommunicated"/>
+    <Trait Name="devoted" Variable="acs_filter_trait_religius_devoted"/>
+    <Trait Name="sayyid" Variable="acs_filter_trait_religius_sayyid"/>
+    <Trait Name="saoshyant" Variable="acs_filter_trait_religius_saoshyant"/>
+    <Trait Name="saoshyant_descendant" Variable="acs_filter_trait_religius_saoshyant_descendant"/>
+    <Trait Name="savior" Variable="acs_filter_trait_religius_savior"/>
+    <Trait Name="divine_blood" Variable="acs_filter_trait_religius_divine_blood"/>
+    <Trait Name="blood_of_prophet" Variable="acs_filter_trait_religius_blood_of_prophet"/>
+    <Trait Name="faith_warrior" Variable="acs_filter_trait_religius_faith_warrior"/>
+    <Trait Name="saint" Variable="acs_filter_trait_religius_saint"/>
+    <Trait Name="order_member" Variable="acs_filter_trait_religius_order_member"/>
+    <Trait Name="paragon" Variable="acs_filter_trait_religius_paragon"/>
+    <Trait Name="consecrated_blood" Variable="acs_filter_trait_religius_consecrated_blood"/>
+    <Trait Name="crusader_king" Variable="acs_filter_trait_religius_crusader_king"/>
+    <CheckBox Variable="acs_filter_trait_any_sinful" >
+        <Icon>gfx/interface/icons/acs_any_sinful.dds</Icon>
+        <Localisation>Any sinful</Localisation>
         <PositiveTrigger>num_sinful_traits = { value > 0 faith = scope:acs_filter_faith }</PositiveTrigger>
         <NegativeTrigger>num_sinful_traits = { value = 0 faith = scope:acs_filter_faith }</NegativeTrigger>
     </CheckBox>
-    <CheckBox variable="acs_filter_trait_any_virtuous" >
-        <Icon>"gfx/interface/icons/acs_any_virtuous.dds"</Icon>
-        <Localisation>"Any virtuous"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_virtuous" >
+        <Icon>gfx/interface/icons/acs_any_virtuous.dds</Icon>
+        <Localisation>Any virtuous</Localisation>
         <PositiveTrigger>num_virtuous_traits = { value > 0 faith = scope:acs_filter_faith }</PositiveTrigger>
         <NegativeTrigger>num_virtuous_traits = { value = 0 faith = scope:acs_filter_faith }</NegativeTrigger>
     </CheckBox>
 
-    <CheckBox variable="acs_filter_trait_any_sinful_by_their_standard" >
-        <Icon>"gfx/interface/icons/acs_any_sinful.dds"</Icon>
-        <Localisation>"Any sinful by their standard"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_sinful_by_their_standard" >
+        <Icon>gfx/interface/icons/acs_any_sinful.dds</Icon>
+        <Localisation>Any sinful by their standard</Localisation>
         <PositiveTrigger>num_sinful_traits > 0</PositiveTrigger>
         <NegativeTrigger>num_sinful_traits = 0</NegativeTrigger>
     </CheckBox>
-    <CheckBox variable="acs_filter_trait_any_virtuous_by_their_standard" >
-        <Icon>"gfx/interface/icons/acs_any_virtuous.dds"</Icon>
-        <Localisation>"Any virtuous by their standard"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_virtuous_by_their_standard" >
+        <Icon>gfx/interface/icons/acs_any_virtuous.dds</Icon>
+        <Localisation>Any virtuous by their standard</Localisation>
         <PositiveTrigger>num_virtuous_traits > 0</PositiveTrigger>
         <NegativeTrigger>num_virtuous_traits = 0</NegativeTrigger>
     </CheckBox>
 
-    <CheckBox variable="acs_filter_trait_any_bad_genetic" >
-        <Icon>"gfx/interface/icons/acs_any_bad_genetic.dds"</Icon>
-        <Localisation>"Any bad genetic"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_bad_genetic" >
+        <Icon>gfx/interface/icons/acs_any_bad_genetic.dds</Icon>
+        <Localisation>Any bad genetic</Localisation>
         <PositiveTrigger>num_of_bad_genetic_traits > 0</PositiveTrigger>
         <NegativeTrigger>num_of_bad_genetic_traits = 0</NegativeTrigger>
     </CheckBox>
-    <CheckBox variable="acs_filter_trait_any_good_genetic" >
-        <Icon>"gfx/interface/icons/acs_any_good_genetic.dds"</Icon>
-        <Localisation>"Any good genetic"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_good_genetic" >
+        <Icon>gfx/interface/icons/acs_any_good_genetic.dds</Icon>
+        <Localisation>Any good genetic</Localisation>
         <PositiveTrigger>num_of_good_genetic_traits > 0</PositiveTrigger>
         <NegativeTrigger>num_of_good_genetic_traits = 0</NegativeTrigger>
     </CheckBox>
 
-    <CheckBox variable="acs_filter_trait_any_commander" >
-        <Icon>"gfx/interface/icons/acs_any_commander.dds"</Icon>
-        <Localisation>"Any commander"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_commander" >
+        <Icon>gfx/interface/icons/acs_any_commander.dds</Icon>
+        <Localisation>Any commander</Localisation>
         <PositiveTrigger>number_of_commander_traits > 0</PositiveTrigger>
         <NegativeTrigger>number_of_commander_traits = 0</NegativeTrigger>
     </CheckBox>
 
-    <CheckBox variable="acs_filter_trait_any_lifestyle" >
-        <Icon>"gfx/interface/icons/acs_any_lifestyle.dds"</Icon>
-        <Localisation>"Any lifestyle"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_lifestyle" >
+        <Icon>gfx/interface/icons/acs_any_lifestyle.dds</Icon>
+        <Localisation>Any lifestyle</Localisation>
         <PositiveTrigger>number_of_lifestyle_traits > 0</PositiveTrigger>
         <NegativeTrigger>number_of_lifestyle_traits = 0</NegativeTrigger>
     </CheckBox>
 
-    <CheckBox variable="acs_filter_trait_any_infamous" >
-        <Icon>"gfx/interface/icons/acs_any_crime.dds"</Icon>
-        <Localisation>"Any infamous"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_infamous" >
+        <Icon>gfx/interface/icons/acs_any_crime.dds</Icon>
+        <Localisation>Any infamous</Localisation>
         <PositiveTrigger>OR = { 
     has_trait = adulterer
     has_trait = fornicator
@@ -81,9 +392,9 @@
     has_trait = excommunicated
 }</NegativeTrigger>
     </CheckBox>
-    <CheckBox variable="acs_filter_trait_any_diseases" >
-        <Icon>"gfx/interface/icons/acs_any_crime.dds"</Icon>
-        <Localisation>"Any diseases"</Localisation>
+    <CheckBox Variable="acs_filter_trait_any_diseases" >
+        <Icon>gfx/interface/icons/acs_any_crime.dds</Icon>
+        <Localisation>Any diseases</Localisation>
         <PositiveTrigger>OR = {
     has_trait = ill
     has_trait = bubonic_plague

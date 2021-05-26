@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml.Serialization;
+using System.Xml;
+
 using Vipl.AcsGenerator.Layouts;
 
 namespace Vipl.AcsGenerator.VisualElements
@@ -27,39 +27,35 @@ namespace Vipl.AcsGenerator.VisualElements
 
         public IList<ILayout> Layouts { get; } = new List<ILayout>();
 
-        public static void Parse(string toParse)
+        public static void Parse()
         {
-            VisualOrganisationGroup last = null;
-            string layoutType = null;
-            foreach (var row in toParse.Tokenized())
+            
+            var layoutsDocument = new XmlDocument();
+            layoutsDocument.Load("layout.xml");
+            
+            foreach (var element in layoutsDocument.GetElementsByTagName("Main").OfType<XmlElement>().First()!.ChildNodes.OfType<XmlElement>())
             {
-                var groupRegex = new Regex("^=(?<name>\\w+):(?<type>\\w+)\\s+(?<localization>\"[^\"]+\")");
-                var groupInfo = groupRegex.Match(row);
-                if (groupInfo.Success)
+                switch (element.Name)
                 {
-                    last = new VisualOrganisationGroup(groupInfo.Groups["name"].Value,
-                        groupInfo.Groups["localization"].Value);
-                    layoutType = groupInfo.Groups["type"].Value;
-                    continue;
+                    case "VisualOrganizationGroup":
+                        
+                        var group = new VisualOrganisationGroup(element.GetAttribute("name"), element.GetAttribute("localization"));
+                        foreach (var layout in element.ChildNodes.OfType<XmlElement>())
+                        {
+                            group.Layouts.Add( layout.Name switch
+                            {
+                                nameof(NormalLayout) => new NormalLayout(layout),
+                                nameof(StarLayout) => new StarLayout(layout),
+                                nameof(ThreePackLayout) => new ThreePackLayout(layout),
+                                nameof(SixPackLayout) => new SixPackLayout(layout),
+                                "SkillLayout" => Skill.ParseTwoSkillsLayout(layout),
+                                nameof(CustomLayout) => new CustomLayout(layout),
+                                _ => throw new Exception("Invalid layout.txt file")
+                            });
+                        }
+                        
+                        break;
                 }
-                var layoutRegex = new Regex("^\\+(?<layout>\\w+)");
-                var layoutInfo = layoutRegex.Match(row);
-                if (layoutInfo.Success)
-                {
-                    layoutType = layoutInfo.Groups["layout"].Value;
-                    continue;
-                }
-
-                last?.Layouts.Add( layoutType switch
-                {
-                    "n" => new NormalLayout(row),
-                    "s" => new StarLayout(row),
-                    "t" => new ThreePackLayout(row),
-                    "6pack" => new SixPackLayout(row),
-                    "e" => Skill.ParseTwoSkillsLayout(row),
-                    "cg" => new CustomLayout(row),
-                    _ => throw new Exception("Invalid layout.txt file")
-                });
             }
         }
 
@@ -72,7 +68,7 @@ namespace Vipl.AcsGenerator.VisualElements
 
         public string GuiElement =>
 $@"types acs_filter_trait_{Name}_group_types {{
-    type acs_filter_trait_{Name}_group =  acs_vbox_filter_group_trait {{
+    type acs_filter_trait_{Name}_group =  acs_vbox_filter_group {{
         parentanchor = top|left
         blockoverride ""acs_vbox_filter_group_name"" {{
             text = ""{Variable}""
@@ -82,14 +78,12 @@ $@"types acs_filter_trait_{Name}_group_types {{
             onclick = ""[GetVariableSystem.Toggle( '{Variable}' )]""
             frame = ""[Select_int32( Not( GetVariableSystem.Exists( '{Variable}' ) ), '(int32)1', '(int32)2' )]""
         }}
-        blockoverride ""filters"" {{
-            flowcontainer = {{
-                visible = ""[GetVariableSystem.Exists( '{Variable}' )]""
-                position = {{ 0 26 }}
-                direction = vertical
-                spacing = 5
-                {Layouts.Select(e => e.GuiElement).Join(4)}
-            }}    
+        blockoverride ""acs_filter_visible"" {{
+            visible = ""[GetVariableSystem.Exists( '{Variable}' )]""
+        }}
+
+        blockoverride ""acs_filters"" {{
+            {Layouts.Select(e => e.GuiElement).Join(3)}
         }}
     }}
 }}";
@@ -98,7 +92,7 @@ $@"types acs_filter_trait_{Name}_group_types {{
 
 
         public string[] Localizations
-            => new[] {$" {Variable}:0 {Localization}"}
+            => new[] {$" {Variable}:0 \"{Localization}\""}
                 .Concat(Layouts.SelectMany(e => e.Localizations)).ToArray();
 
         public static string CompleteLocalization

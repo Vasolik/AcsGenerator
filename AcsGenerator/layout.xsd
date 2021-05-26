@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  targetNamespace="http://www.vipl.in.rs/layout" 
+            elementFormDefault="qualified"
+            xmlns="http://www.vipl.in.rs/layout"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Main" type="Main"/>
+  <xs:complexType name="LogicalElement">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="VisualOrganizationGroup">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element type="SixPackLayout" name="SixPackLayout"  />
+        <xs:element type="NormalLayout" name="NormalLayout" />
+        <xs:element type="ThreePackLayout" name="ThreePackLayout"  />
+        <xs:element type="StarLayout" name="StarLayout" />
+        <xs:element type="SkillLayout" name="SkillLayout"/>
+        <xs:element type="CustomLayout" name="CustomLayout"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="localization" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="NormalLayout">
+    <xs:sequence>
+      <xs:element type="LogicalElement" name="Left"  />
+      <xs:element type="LogicalElement" name="Right"  />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ThreePackLayout">
+    <xs:sequence>
+      <xs:element type="LogicalElement" name="LogicalElement" maxOccurs="3" minOccurs="3"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SixPackLayout">
+    <xs:sequence>
+      <xs:element type="LogicalElement" name="LogicalElement" maxOccurs="6" minOccurs="6"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="localizationKey" use="required"/>
+    <xs:attribute type="xs:string" name="localization" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="StarLayout">
+    <xs:sequence>
+      <xs:element type="LogicalElement" name="Top"/>
+      <xs:element type="LogicalElement" name="Left"/>
+      <xs:element type="LogicalElement" name="Right"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SkillLayout">
+    <xs:sequence>
+      <xs:element type="Skill" name="LeftSkill" />
+      <xs:element type="Skill" name="RightSkill" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Skill">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="CustomLayout">
+    <xs:sequence>
+      <xs:element type="Elements" name="Left" />
+      <xs:element type="Elements" name="Right"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Elements">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element type="LogicalElement" name="LogicalElement" />
+        <xs:element type="CustomCheckBoxVisualGroup" name="CustomCheckBoxVisualGroup"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CustomCheckBoxVisualGroup">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="Main">
+    <xs:sequence>
+      <xs:element type="VisualOrganizationGroup" name="VisualOrganizationGroup" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

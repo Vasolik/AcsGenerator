@@ -28,8 +28,8 @@ namespace Vipl.AcsGenerator
             var listOfTraits = File.OpenText("trait.txt").ReadToEnd().Tokenized();
             
             LogicalOrganisationGroup.PrepareLogicalElements();
-            CustomCheckBoxVisualGroup.Parse( File.ReadAllText("visual_groups.txt"));
-            VisualOrganisationGroup.Parse(File.ReadAllText("layout.txt"));
+            CustomCheckBoxVisualGroup.Parse();
+            VisualOrganisationGroup.Parse();
             DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));
             
             

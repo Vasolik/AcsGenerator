@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.Layouts
@@ -13,15 +14,12 @@ namespace Vipl.AcsGenerator.Layouts
             RightElements = rightElements;
         }
 
-        public CustomLayout(string row)
+        public CustomLayout(XmlElement element)
         {
-            var regex = new Regex(@"(?<left>(?:(?:(?:\w+:g)|(?:\w+))\s+)*(?:(?:(?:\w+:g)|(?:\w+))\s*))\s*\-\s*(?<right>(?:(?:(?:\w+:g)|(?:\w+))\s+)*(?:(?:(?:\w+:g)|(?:\w+))\s*))");
-            var rowInfo = regex.Match(row);
-            if(!rowInfo.Success)
-                throw new Exception("Invalid layout file");
-            LeftElements = rowInfo.Groups["left"].Value.Tokenized(true)
+
+            LeftElements = element["Left"].ChildNodes.OfType<XmlElement>()
                 .Select(GetVisualElement).ToArray();
-            RightElements = rowInfo.Groups["right"].Value.Tokenized(true)
+            RightElements = element["Right"].ChildNodes.OfType<XmlElement>()
                 .Select(GetVisualElement).ToArray();
         }
 
@@ -29,14 +27,15 @@ namespace Vipl.AcsGenerator.Layouts
             => LeftElements.SelectMany(e => e.Traits)
                 .Concat(RightElements.SelectMany(e => e.Traits)).ToArray();
 
-        private static IVisualElement GetVisualElement(string t)
+        private static IVisualElement GetVisualElement(XmlElement element)
         {
-            if (t.Contains(":"))
+            return element.Name switch
             {
-                return CustomCheckBoxVisualGroup.All[t.Replace(":g", "")];
-            }
+                "LogicalElement" => SimpleCheckBoxVisualElement.All[element.GetAttribute("name")],
+                nameof(CustomCheckBoxVisualGroup) => CustomCheckBoxVisualGroup.All[element.GetAttribute("name")],
 
-            return SimpleCheckBoxVisualElement.All[t];
+                _ => throw new Exception("Invalid layout.txt file")
+            };
         }
 
         public IVisualElement[] LeftElements { get; }

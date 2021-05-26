@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.Layouts;
 using Vipl.AcsGenerator.VisualElements;
 
@@ -62,16 +63,12 @@ namespace Vipl.AcsGenerator
         frame = {Index}
     }}
 }}";
-
-        public static ILayout ParseTwoSkillsLayout(string row)
+        public static ILayout ParseTwoSkillsLayout(XmlElement element)
         {
-            var skillPackRegex = new Regex("^(?<skill>\\w+)\\s+(?<skill2>\\w+)");
-            var rowInfo = skillPackRegex.Match(row);
-            if(!rowInfo.Success)
-                throw new Exception("Invalid layout file");
+
             return new CustomLayout( 
-                new IVisualElement[]{All[rowInfo.Groups["skill"].Value]}, 
-                new IVisualElement[]{All[rowInfo.Groups["skill2"].Value]});
+                new IVisualElement[]{All[element["LeftSkill"].GetAttribute("name")]}, 
+                new IVisualElement[]{All[element["RightSkill"].GetAttribute("name")]});
         }
     }
 }

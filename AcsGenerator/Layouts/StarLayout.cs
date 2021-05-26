@@ -1,31 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.Layouts
 {
     public class StarLayout : ILayout
     {
-        public StarLayout(IVisualElement top, IVisualElement left, IVisualElement right)
+        public StarLayout(XmlElement element)
         {
-            Top = top;
-            Left = left;
-            Right = right;
+            Top = SimpleCheckBoxVisualElement.All[element[nameof(Top)].GetAttribute("name")];
+            Left = SimpleCheckBoxVisualElement.All[element[nameof(Left)].GetAttribute("name")];
+            Right = SimpleCheckBoxVisualElement.All[element[nameof(Right)].GetAttribute("name")];
         }
-        public StarLayout(string row)
-        {
-            var starLayoutRegex = new Regex("^(?<top>\\w+)\\s+(?<left>\\w+)\\s+(?<right>\\w+)");
-            var rowInfo = starLayoutRegex.Match(row);
-            if (!rowInfo.Success)
-                throw new Exception("Invalid layout file");
-     
-            Top = SimpleCheckBoxVisualElement.All[rowInfo.Groups["top"].Value];
-            Left = SimpleCheckBoxVisualElement.All[rowInfo.Groups["left"].Value];
-            Right = SimpleCheckBoxVisualElement.All[rowInfo.Groups["right"].Value];
-        }
-        
-
 
         public IVisualElement Top { get; }
         public IVisualElement Left { get; }

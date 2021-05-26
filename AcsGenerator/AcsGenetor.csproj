@@ -40,7 +40,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="visual_groups.txt">
+      <Content Include="visual_groups.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="trait.txt" />
@@ -48,19 +48,17 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="settings.txt" />
-      <Content Include="layout.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="groups.txt" />
-      <Content Include="groups.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="dropdown.txt" />
       <Content Include="dropdown.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="logicalElements.xml" />
       <Content Include="logicalElements.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="layout.xml" />
+      <Content Include="layout.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

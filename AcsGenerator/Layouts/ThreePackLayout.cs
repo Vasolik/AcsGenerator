@@ -1,25 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.Layouts
 {
     public class ThreePackLayout : ILayout
     {
-        public ThreePackLayout(IVisualElement[] elements)
+        public ThreePackLayout(XmlElement element)
         {
-            Elements = elements;
-        }
-        
-        public ThreePackLayout(string row)
-        {
-            var threePackRegex = new Regex("^(\\w+)(?:\\s+(\\w+)){2}");
-            var rowInfo = threePackRegex.Match(row);
-            if(!rowInfo.Success)
-                throw new Exception("Invalid layout file");
-            Elements = row.Tokenized(true)
-                .Select(x => SimpleCheckBoxVisualElement.All[x])
+            Elements = element.ChildNodes.OfType<XmlElement>()
+                .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("name")])
                 .Cast<IVisualElement>()
                 .ToArray();
         }

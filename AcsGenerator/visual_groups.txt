@@ -1,8 +1,0 @@
-﻿acs_filter_trait_fame_kinslayer kinslayer_1 kinslayer_2 kinslayer_3 "[kinslayer|E]" "gfx/interface/icons/traits/kinslayer_2.dds"
-acs_filter_trait_lifestyle_reveler reveler_1 reveler_2 reveler_3 "Reveler" "gfx/interface/icons/traits/reveler.dds"
-acs_filter_trait_lifestyle_blademaster blademaster_1 blademaster_2 blademaster_3 "Blademaster" "gfx/interface/icons/traits/blademaster.dds"
-acs_filter_trait_lifestyle_hunter hunter_1 hunter_2 hunter_3 "Hunter" "gfx/interface/icons/traits/hunter.dds"
-acs_filter_trait_lifestyle_mystic mystic_1 mystic_2 mystic_3 "Mystic" "gfx/interface/icons/traits/mystic.dds"
-acs_filter_trait_lifestyle_physician physician_1 physician_2 physician_3 "[court_physician|E]" "gfx/interface/icons/message_feed/court_physician.dds"
-acs_filter_trait_health_wounded wounded_1 wounded_2 wounded_3 "Wounded" "gfx/interface/icons/traits/wounded_2.dds"
-acs_filter_trait_fame_born_status bastard legitimized_bastard disputed_heritage child_of_concubine_female child_of_concubine_male wild_oat bastard_founder "Heritage" "gfx/interface/icons/traits/disputed_heritage.dds"

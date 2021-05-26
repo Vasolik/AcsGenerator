@@ -2,32 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace Vipl.AcsGenerator.VisualElements
 {
     public sealed class CustomCheckBoxVisualGroup : CheckBoxVisualGroup, ICustomCheckBoxVisualElement
     {
         public static IDictionary<string, CustomCheckBoxVisualGroup> All { get; } = new Dictionary<string, CustomCheckBoxVisualGroup>();
-        public CustomCheckBoxVisualGroup(string variable, SimpleCheckBoxVisualElement[] elements, string icon, string localization)
+
+        public CustomCheckBoxVisualGroup(XmlElement element)
         {
-            Variable = variable;
-            Elements = elements;
-            Icon = icon;
-            Localization = localization;
-            All[Variable] = this;
-        }
-        
-        public CustomCheckBoxVisualGroup(string row)
-        {
-            Regex regex =
-                new Regex("(?<variable>\\w+)\\s(?<traits>(?:\\w+\\s+)+)(?<localization>\"[^\"]+\")\\s+(?<icon>\"[^\"]+\")");
-            var rowInfo = regex.Match(row);
-            if (!rowInfo.Success)
-                throw new Exception("Invalid visual_groups.txt file");
-            Variable = rowInfo.Groups["variable"].Value;
-            Elements = rowInfo.Groups["traits"].Value.Tokenized(true).Select(t => Trait.All[t]).Cast<SimpleCheckBoxVisualElement>().ToArray();
-            Icon = rowInfo.Groups["icon"].Value;
-            Localization = rowInfo.Groups["localization"].Value;
+
+            Variable = element.GetAttribute(nameof(Variable));
+            Elements = element.ChildNodes.OfType<XmlElement>().Select(t => Trait.All[t.GetAttribute("Name")]).Cast<SimpleCheckBoxVisualElement>().ToArray();
+            Icon = element.GetAttribute(nameof(Icon));
+            Localization = element.GetAttribute(nameof(Localization));
             All[Variable] = this;
         }
 
@@ -51,17 +40,19 @@ namespace Vipl.AcsGenerator.VisualElements
 
         public override Trait[] Traits => Elements.SelectMany(e => e.Traits).ToArray();
         public override string[] Localizations
-            => new[] {$" {Variable}:0 {Localization}"}
+            => new[] {$" {Variable}:0 \"{Localization}\""}
                 .Concat(Elements.SelectMany(e => e.Localizations)).ToArray();
-        public static void Parse(string toParse)
+        public static void Parse()
         {
-
-            foreach (var row in toParse.Tokenized())
+            
+            var layoutsDocument = new XmlDocument();
+            layoutsDocument.Load("visual_groups.xml");
+            
+            foreach (var element in layoutsDocument.GetElementsByTagName("Main").OfType<XmlElement>().First()!.ChildNodes.OfType<XmlElement>())
             {
-                // ReSharper disable once HeapView.ObjectAllocation.Evident
-                // ReSharper disable once ObjectCreationAsStatement
-                new CustomCheckBoxVisualGroup(row);
+                new CustomCheckBoxVisualGroup(element);
             }
+            
         }
     }
 }

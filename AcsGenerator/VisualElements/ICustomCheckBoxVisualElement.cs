@@ -17,7 +17,7 @@
         text = ""{Variable}""
     }}
     blockoverride ""acs_custom_image"" {{  
-        texture = {Icon}
+        texture = ""{Icon}""
     }}
 }}";
     }

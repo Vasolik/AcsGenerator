@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.Layouts
 {
     public class NormalLayout : ILayout
     {
-        public NormalLayout(IVisualElement left, IVisualElement right)
-        {
-            Left = left;
-            Right = right;
-        }
 
-        public NormalLayout(string row)
+        public NormalLayout(XmlElement element)
         {
-            var normalLayoutRegex = new Regex("^(?<left>\\w+)\\s+(?<right>\\w+)");
-            var rowInfo = normalLayoutRegex.Match(row);
-            if (!rowInfo.Success)
-                throw new Exception("Invalid layout file");
-            Left = SimpleCheckBoxVisualElement.All[rowInfo.Groups["left"].Value];
-            Right = SimpleCheckBoxVisualElement.All[rowInfo.Groups["right"].Value];
+ 
+            Left = SimpleCheckBoxVisualElement.All[element[nameof(Left)].GetAttribute("name")];
+            Right = SimpleCheckBoxVisualElement.All[element[nameof(Right)].GetAttribute("name")];
         }
         public IVisualElement Left { get; }
         public IVisualElement Right { get; }

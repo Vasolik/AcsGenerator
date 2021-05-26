@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Vipl.AcsGenerator.SaveLoad;
 
 namespace Vipl.AcsGenerator.LogicalElements
@@ -8,19 +9,20 @@ namespace Vipl.AcsGenerator.LogicalElements
 
     public class CheckboxLogicalGroup : ILogicalElement, ISavable
     {
-        public List<ICheckboxLogicalElement> Elements { get;  }
-        public string ScriptedGuiName => Elements.Count == 2
+        public ICheckboxLogicalElement[] Elements { get;  }
+        public string ScriptedGuiName => Elements.Length == 2
             ? "acs_filter_2_group_checkbox"
-            : Elements.Count == 3
+            : Elements.Length == 3
                 ? "acs_filter_3_group_checkbox"
                 : Variable;
         List<ILogicalElement> ISavable.Elements => Elements.Cast<ILogicalElement>().ToList();
-        public CheckboxLogicalGroup(string variable)
+
+        public CheckboxLogicalGroup(XmlElement element)
         {
-            Variable = variable;
-            Elements = new List<ICheckboxLogicalElement>();
+            Variable = element.GetAttribute("Variable");
+            Elements = element.ChildNodes.OfType<XmlElement>().Select(x => new Trait(x) {Owner = this}).OfType<ICheckboxLogicalElement>().ToArray();
         }
-        
+
         public string GetSwitchTriggerForCombo(int[] combo)
         {
             return 
@@ -115,28 +117,29 @@ if = {{
         
 
         private int[][] AllFlagIndexes =>
-            Enumerable.Range(1, (int)Math.Pow(3, Elements.Count) - 1)
-                .Select(x => Enumerable.Range(0, Elements.Count).Select(y => x /(int)Math.Pow(3, y) % 3 ).ToArray())
+            Enumerable.Range(1, (int)Math.Pow(3, Elements.Length) - 1)
+                .Select(x => Enumerable.Range(0, Elements.Length).Select(y => x /(int)Math.Pow(3, y) % 3 ).ToArray())
                 .OrderBy(GetIndexForCombo)
                 .ToArray();
 
         public string ListReducedVariable => $"{this.ListVariable()}_reduced";
         public ISavable Owner => IsSmall ? MainSavable.Instance : null;
-        public int NumberOfFlagsNeeded => IsSmall ? (int)Math.Pow(3, Elements.Count) - 1 : 1;
+        public int NumberOfFlagsNeeded => IsSmall ? (int)Math.Pow(3, Elements.Length) - 1 : 1;
         public string Variable { get; }
         public string DefaultCheck => IsSmall ? null :
-$@"NOT = {{
-    any_in_list = {{
-        variable = {this.ListVariable()}
-        always = yes
-    }} 
-}}";
+$@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
         public string ResetValue => IsSmall ? null : $@"clear_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
             $@"any_in_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} scope:slot_value = scope:slot_value }} }}
+    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} this = scope:slot_value }} }}
+    count = all
+}}
+any_in_list = {{
+    variable = {this.ListVariable()}
+    save_temporary_scope_as = slot_value
+    dummy_male = {{ any_in_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }} }}
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)
@@ -154,7 +157,7 @@ every_in_list = {{
     dummy_male = {{ add_to_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} }}
 }}";
 
-        public bool IsSmall => Elements.Count < 4;
+        public bool IsSmall => Elements.Length < 4;
         
         bool ISavable.HaveSomethingToSave => !IsSmall;
 
@@ -165,13 +168,17 @@ every_in_list = {{
             set
             {
                 _index = value;
-                var i = 0;
-                foreach (var (element, j) in Elements.Select((e, j) => new Tuple<ILogicalElement, int>( e, j)))
+                if (IsSmall)
                 {
-                    element.Index = _index + (IsSmall ? 0 : i);
-                    i += element.NumberOfFlagsNeeded;
-                    element.IndexInGroup = j;
+                    var i = 0;
+                    foreach (var (element, j) in Elements.Select((e, j) => new Tuple<ILogicalElement, int>( e, j)))
+                    {
+                        element.Index = _index + (IsSmall ? 0 : i);
+                        i += element.NumberOfFlagsNeeded;
+                        element.IndexInGroup = j;
+                    }
                 }
+               
             } 
         }
         public int IndexInGroup { get; set; }
@@ -239,7 +246,7 @@ $@"{ScriptedGuiName} = {{
                     save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
                     save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
                     scope:to_test = 0
-                    count = {Elements.Count}
+                    count = {Elements.Length}
                 }}
             }}
             trigger_else = {{
@@ -248,7 +255,7 @@ $@"{ScriptedGuiName} = {{
                     save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
                     save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
                     scope:to_test = 1
-                    count = {Elements.Count}
+                    count = {Elements.Length}
                 }}
             }}
         }}
@@ -269,7 +276,7 @@ $@"{ScriptedGuiName} = {{
                 set_local_variable = {{ name = acs_counter value = 0 }}
                 while = {{
                     limit = {{
-                        local_var:acs_counter < {Elements.Count * 2}
+                        local_var:acs_counter < {Elements.Length * 2}
                     }}
                     add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
                     change_local_variable = {{ name = acs_counter add = 2 }}
@@ -283,13 +290,13 @@ $@"{ScriptedGuiName} = {{
                         save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
                         save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
                         scope:to_test = 0
-                        count = {Elements.Count}
+                        count = {Elements.Length}
                     }}
                 }}
                 set_local_variable = {{ name = acs_counter value = 0 }}
                 while = {{
                     limit = {{
-                        local_var:acs_counter < {Elements.Count * 2}
+                        local_var:acs_counter < {Elements.Length * 2}
                     }}
                     remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
                     change_local_variable = {{ name = acs_counter add = 1 }}
@@ -301,7 +308,7 @@ $@"{ScriptedGuiName} = {{
                 set_local_variable = {{ name = acs_counter value = 0 }}
                 while = {{
                     limit = {{
-                        local_var:acs_counter < {Elements.Count * 2}
+                        local_var:acs_counter < {Elements.Length * 2}
                     }}
                     remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
                     change_local_variable = {{ name = acs_counter add = 1 }}
