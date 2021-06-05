@@ -1,4 +1,6 @@
-﻿namespace Vipl.AcsGenerator.VisualElements
+﻿using System.Collections.Generic;
+
+namespace Vipl.AcsGenerator.VisualElements
 {
     public class SimpleCustomCheckBoxVisualElement : SimpleCheckBoxVisualElement, ICustomCheckBoxVisualElement
     {
@@ -6,7 +8,7 @@
             : base(variable)
         {
             Icon = icon;
-            Localization = localization;
+            Localization = new LocalizationEntry{Key = variable, Localization = localization, File = LocalizationFiles.TraitFile};
             NegativeTrigger = negativeTrigger;
             PositiveTrigger = positiveTrigger;
             Variable = variable;
@@ -15,12 +17,10 @@
             => ((ICustomCheckBoxVisualElement) this).GetCustomCheckBox(style);
 
 
-        public override Trait[] Traits => new Trait[0];
-        public override string[] Localizations
-            => new[] {$" {Variable}:0 \"{Localization}\""};
+        public override LocalizationEntry[] Localizations => Localization.MakeArray();
 
         public string Icon { get; }
-        public string Localization { get; }
+        public LocalizationEntry Localization { get;  }
 
         public override string NegativeTrigger { get; }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Vipl.AcsGenerator.LogicalElements;
 
 namespace Vipl.AcsGenerator.VisualElements
@@ -22,11 +23,10 @@ namespace Vipl.AcsGenerator.VisualElements
 
         public string ScriptedGuiName => $"{LogicalOwner.ScriptedGuiName}_group";
         public abstract string GetSetScopes(int value);
-        public abstract Trait[] Traits { get; }
 
         public string CheckBoxFrameSelector
             => $@"frame = ""[Select_int32( {this.IsShown(1)}, '(int32)2' , Select_int32( {this.IsShown(2)} , '(int32)3', Select_int32( {this.IsShown(0)}  , '(int32)1', '(int32)4' ) ) )]""";
 
-        public abstract string[] Localizations { get; }
+        public abstract LocalizationEntry[] Localizations { get; }
     }
 }

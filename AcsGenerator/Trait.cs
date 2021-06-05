@@ -62,8 +62,7 @@ namespace Vipl.AcsGenerator
     }}
 }}";
         
-        public override Trait[] Traits => new[] {this};
-        public override string[] Localizations => new string[0];
+        public override LocalizationEntry[] Localizations => new LocalizationEntry[0];
 
     }
 }

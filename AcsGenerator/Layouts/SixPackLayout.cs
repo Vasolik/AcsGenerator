@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -10,16 +11,16 @@ namespace Vipl.AcsGenerator.Layouts
     {
         public SixPackLayout(XmlElement element)
         {
-            Name = element.GetAttribute("localizationKey");
-            Localization = element.GetAttribute("localization");
+            Name = element.GetAttribute("LocalizationKey");
+            Localization = new LocalizationEntry(){Key = Name, Localization = element.GetAttribute("Localization"), File = LocalizationFiles.TraitFile };
             Elements = element.ChildNodes.OfType<XmlElement>()
-                .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("name")])
-                .Cast<IVisualElement>()
+                .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("Name")])
+                .Cast<ICheckBoxVisualElement>()
                 .ToArray();
         }
         private string Name { get; }
-        private string Localization { get; }
-        public IVisualElement[] Elements { get; }
+        private LocalizationEntry Localization { get; }
+        public ICheckBoxVisualElement[] Elements { get; }
    
         public string GuiElement =>
             $@"flowcontainer = {{
@@ -48,12 +49,9 @@ namespace Vipl.AcsGenerator.Layouts
         }}
     }}
 }}";
-        public Trait[] Traits
-            => Elements.SelectMany(e => e.Traits).ToArray();
-        
-        public string[] Localizations
-            => new[] {$" {Name}:0 \"{Localization}\""}
-                .Concat(Elements.SelectMany(e => e.Localizations)).ToArray();
+
+        public LocalizationEntry[] Localizations
+            => Localization.MakeArray(Elements.SelectMany(e => e.Localizations));
 
     }
 }

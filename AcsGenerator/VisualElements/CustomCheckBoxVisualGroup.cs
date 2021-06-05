@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Vipl.AcsGenerator.VisualElements
@@ -16,11 +14,11 @@ namespace Vipl.AcsGenerator.VisualElements
             Variable = element.GetAttribute(nameof(Variable));
             Elements = element.ChildNodes.OfType<XmlElement>().Select(t => Trait.All[t.GetAttribute("Name")]).Cast<SimpleCheckBoxVisualElement>().ToArray();
             Icon = element.GetAttribute(nameof(Icon));
-            Localization = element.GetAttribute(nameof(Localization));
+            Localization = new LocalizationEntry(){Key = Variable, Localization = element.GetAttribute(nameof(Localization)), File = LocalizationFiles.TraitFile} ;
             All[Variable] = this;
         }
-
-        public string Localization { get;  }
+        public LocalizationEntry Localization;
+        
         public string Icon { get;  }
         protected override string GetGroupGuiElement(string style) 
             => ((ICustomCheckBoxVisualElement)this).GetCustomCheckBox(style);
@@ -38,10 +36,8 @@ namespace Vipl.AcsGenerator.VisualElements
             $".AddScope( 'minor_digit' , {MinorDigit} )" +
             ".End";
 
-        public override Trait[] Traits => Elements.SelectMany(e => e.Traits).ToArray();
-        public override string[] Localizations
-            => new[] {$" {Variable}:0 \"{Localization}\""}
-                .Concat(Elements.SelectMany(e => e.Localizations)).ToArray();
+        public override LocalizationEntry[] Localizations
+            => Localization.MakeArray(Elements.SelectMany(e => e.Localizations));
         public static void Parse()
         {
             

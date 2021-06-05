@@ -20,20 +20,19 @@ namespace Vipl.AcsGenerator.VisualElements
         public abstract string GetGuiElement(string style);
         public int PositiveIndex => Index;
         public int NegativeIndex => Index + 1;
-        public abstract Trait[] Traits { get; }
         public ISavable Owner { get; set; }
         ISavable ILogicalElement.Owner => Owner;
         public CheckboxLogicalGroup CheckBoxLogicalOwner => Owner as CheckboxLogicalGroup;
         public virtual string NegativeTrigger => null;
         public virtual string PositiveTrigger => null;
-        public abstract string[] Localizations { get; }
+        public abstract LocalizationEntry[] Localizations { get; }
         
         public string SwitchTrigger =>
 $@"{PositiveIndex} = {{
-    {PositiveTrigger.Intend(3)} 
+    {PositiveTrigger.Intend(1)} 
 }}
 {NegativeIndex} = {{ 
-    {NegativeTrigger.Intend(3)}   
+    {NegativeTrigger.Intend(1)}   
 }}";
         public int NumberOfFlagsNeeded => 2;
         public int Index { get; set; }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.vipl.in.rs/logical_elements"
+           elementFormDefault="qualified"
+           xmlns="http://www.vipl.in.rs/logical_elements"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Main" type="Main"/>
+  <xs:complexType name="Trait" mixed="true">
+    <xs:sequence>
+      <xs:element type="HiddenTrait" name="Trait" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
+    <xs:attribute type="xs:string" name="Variable" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="HiddenTrait" mixed="true">
+    <xs:attribute type="xs:string" name="Name" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="CheckboxLogicalGroup" mixed="true">
+    <xs:sequence>
+      <xs:element type="Trait" name="Trait" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Variable" use="required"/>
+    <xs:attribute type="xs:string" name="IsOwnerMain" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="CheckBox">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Icon"/>
+      <xs:element type="xs:string" name="Localisation"/>
+      <xs:element type="xs:string" name="PositiveTrigger"/>
+      <xs:element type="xs:string" name="NegativeTrigger"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Variable" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="Option">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="LocalizationKey" use="required"/>
+        <xs:attribute type="xs:string" name="Localization" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="DropDown">
+    <xs:sequence>
+      <xs:element type="Option" name="Option" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="LocalizationKey" use="required"/>
+    <xs:attribute type="xs:string" name="IsSpecial" use="required"/>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
+    <xs:attribute type="xs:string" name="Localization" />
+    <xs:attribute type="xs:int" name="DefaultValue" />
+  </xs:complexType>
+  <xs:complexType name="Main">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="CheckboxLogicalGroup" name="CheckboxLogicalGroup" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="Trait" name="Trait" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="CheckBox" name="CheckBox" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="DropDown" name="DropDown" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

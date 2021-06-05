@@ -3,6 +3,7 @@
     public interface ICustomCheckBoxVisualElement : ICheckBoxVisualElement
     {
         public string Icon { get; }
+        public string Variable { get; }
         
         string GetCustomCheckBox(string style) =>
             $@"acs_trait_item_custom_{style} = {{

@@ -31,11 +31,15 @@ namespace Vipl.AcsGenerator.LogicalElements
                     case nameof(CheckboxLogicalGroup):
                         var group = new CheckboxLogicalGroup(element);
                         MainSavable.Instance.Elements.Add(group);
-                        if (element.GetAttribute("IsOwnerMain") == "false")
+                        if (!element.GetAttribute("IsOwnerMain").ToBool())
                         {
                             ISavable.All.Add(group);
                         }
                         break;
+                    case nameof(DropDown):
+                        var dropdown = new DropDown(element){Owner = MainSavable.Instance};
+                        MainSavable.Instance.Elements.Add(dropdown);
+                        break;;
                 }
             }
         }

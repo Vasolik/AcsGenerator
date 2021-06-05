@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -10,14 +11,14 @@ namespace Vipl.AcsGenerator.Layouts
     {
         public StarLayout(XmlElement element)
         {
-            Top = SimpleCheckBoxVisualElement.All[element[nameof(Top)].GetAttribute("name")];
-            Left = SimpleCheckBoxVisualElement.All[element[nameof(Left)].GetAttribute("name")];
-            Right = SimpleCheckBoxVisualElement.All[element[nameof(Right)].GetAttribute("name")];
+            Top = SimpleCheckBoxVisualElement.All[element[nameof(Top)].GetAttribute("Name")];
+            Left = SimpleCheckBoxVisualElement.All[element[nameof(Left)].GetAttribute("Name")];
+            Right = SimpleCheckBoxVisualElement.All[element[nameof(Right)].GetAttribute("Name")];
         }
 
-        public IVisualElement Top { get; }
-        public IVisualElement Left { get; }
-        public IVisualElement Right { get; }
+        public ICheckBoxVisualElement Top { get; }
+        public ICheckBoxVisualElement Left { get; }
+        public ICheckBoxVisualElement Right { get; }
         public string GuiElement =>
             $@"widget = {{
     allow_outside = yes
@@ -32,12 +33,7 @@ namespace Vipl.AcsGenerator.Layouts
         }}
     }}
 }}";
-        public Trait[] Traits
-            => Left.Traits.AsEnumerable()
-                .Concat(Right.Traits)
-                .Concat(Top.Traits)
-                .ToArray();
-        public string[] Localizations
+        public LocalizationEntry[] Localizations
             => Top.Localizations
                 .Concat(Left.Localizations)
                 .Concat(Right.Localizations)

@@ -1,5 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Main id="Main">
+<Main xmlns="http://www.vipl.in.rs/logical_elements"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.vipl.in.rs/logical_elements logicalElements.xsd">
+    <DropDown LocalizationKey="relation_filter" IsSpecial="true" Name="acs_filter_relation" DefaultValue="4">
+        <Option LocalizationKey="any_filter_option"/>
+        <Option LocalizationKey="acs_any_close_realm_and_this" Localization="Top Realm and Close Realms"/>
+		<Option LocalizationKey="acs_any_neighboring_realm_and_this_aw" Localization="Top Realm and Neighboring realms+"/>
+		<Option LocalizationKey="acs_any_neighboring_realm_and_this" Localization="Top Realm and Neighboring realms"/>
+        <Option LocalizationKey="top_realm_relation_filter"/>
+        <Option LocalizationKey="realm_relation_filter"/>
+        <Option LocalizationKey="vassal_relation_filter"/>
+        <Option LocalizationKey="court_relation_filter"/>
+        <Option LocalizationKey="acs_any_close_realm" Localization="Close realms"/>
+        <Option LocalizationKey="acs_any_neighboring_realm_aw" Localization="Neighboring realms+"/>
+        <Option LocalizationKey="acs_any_neighboring_realm" Localization="Neighboring realms"/>
+        <Option LocalizationKey="acs_any_independent_c" Localization="Independent realms courts"/>
+        <Option LocalizationKey="acs_any_close_realm_c" Localization="Close realms courts"/>
+		<Option LocalizationKey="acs_any_neighboring_realm_awc" Localization="Neighboring realms+ courts"/>
+		<Option LocalizationKey="acs_any_neighboring_realm_c" Localization="Neighboring realms courts"/>
+    </DropDown>
     <CheckboxLogicalGroup Variable="acs_filter_trait_education_general" IsOwnerMain="false">
         <Trait Name="education_intrigue_1" Variable="acs_filter_trait_education_intrigue_1"/>
         <Trait Name="education_intrigue_2" Variable="acs_filter_trait_education_intrigue_2"/>
@@ -408,7 +427,7 @@
     has_trait = smallpox
     has_trait = typhus
     has_trait = early_great_pox
-    }</PositiveTrigger>
+}</PositiveTrigger>
         <NegativeTrigger>NOR = {
     has_trait = ill
     has_trait = bubonic_plague
@@ -421,9 +440,557 @@
     has_trait = pneumonic
     has_trait = smallpox
     has_trait = typhus
-    has_trait = early_great_pox
-    }</NegativeTrigger>
+    has_trait = early_great_pox 
+}</NegativeTrigger>
     </CheckBox>
 
-
+    <DropDown LocalizationKey="rule_diplomatic_range" IsSpecial="false" Name="acs_filter_diplomatic_range">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="in_range_filter">in_diplomatic_range = scope:acs_filter_diplomatic_range_root</Option>
+        <Option LocalizationKey="not_in_range_filter">NOT = { in_diplomatic_range = scope:acs_filter_diplomatic_range_root }</Option>
+    </DropDown>
+    <DropDown LocalizationKey="ruler_filter" IsSpecial="false" Name="acs_filter_ruler">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="ruler_filter_option">is_ruler = yes</Option>
+        <Option LocalizationKey="landed_ruler_filter_option">holds_landed_title = yes
+is_ruler = yes</Option>
+        <Option LocalizationKey="landless_ruler_filter_option">holds_landed_title = no
+is_ruler = yes</Option>
+        <Option LocalizationKey="not_ruler_filter_option">is_ruler = no</Option>
+        <Option LocalizationKey="acs_independent_filter" Localization="Independent Ruler">is_independent_ruler = yes</Option>
+    </DropDown>
+    <DropDown LocalizationKey="acs_filter_trait_fame_born_status" IsSpecial="false" Name="acs_filter_heritage">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="acs_filter_heir_to_empire" Localization="Heir to Empire">any_heir_to_title = { tier = tier_empire }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_kingdom" Localization="Heir to Kingdom+">any_heir_to_title = { tier >= tier_kingdom }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_duchy" Localization="Heir to Duchy+">any_heir_to_title = { tier >= tier_duchy }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_county" Localization="Heir to County+">any_heir_to_title = { tier >= tier_county }</Option>
+		<Option LocalizationKey="acs_filter_heir_to_anything" Localization="Heir">any_heir_to_title = { }</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_empire" Localization="2nd+ to Empire">OR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_kingdom" Localization="2nd+ to Kingdom+">OR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_duchy" Localization="2nd+ to Duchy+">OR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_county" Localization="2nd+ to County+">OR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_anything" Localization="2nd+ to title">OR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_empire" Localization="3rd+ to Empire">OR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_kingdom" Localization="3rd+ to Kingdom+">OR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_duchy" Localization="3rd+ to Duchy+">OR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_county" Localization="3rd+ to County+">OR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_anything" Localization="3rd+ to title">OR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_empire" Localization="4th+ to Empire">OR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_kingdom" Localization="4th+ to Kingdom+">OR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_duchy" Localization="4th+ to Duchy+">OR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_county" Localization="4th+ to County+">OR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_anything" Localization="4th+ to title">OR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_empire" Localization="Pretender to Empire">OR = {
+	any_heir_to_title = { tier = tier_empire }
+	any_pretender_title = { tier = tier_empire }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_kingdom" Localization="Pretender to Kingdom+">OR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { tier >= tier_kingdom }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_duchy" Localization="Pretender to Duchy+">OR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { tier >= tier_duchy }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_county" Localization="Pretender to County+">OR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { tier >= tier_county }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_anything" Localization="Pretender">OR = {
+	any_heir_to_title = {  }
+	any_pretender_title = { }
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_empire" Localization="Pretender to Empire or parent is [emperor|E]">OR = {
+	any_heir_to_title = { tier = tier_empire }
+	any_pretender_title = { tier = tier_empire }
+	any_parent = { 
+		highest_held_title_tier = tier_empire
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_kingdom" Localization="Pretender to Kingdom+ or parent is [king|E]+">OR = {
+	any_heir_to_title = { tier >= tier_kingdom } 
+	any_pretender_title = { tier >= tier_kingdom }
+	any_parent = { 
+		highest_held_title_tier >= tier_kingdom
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_duchy" Localization="Pretender to Duchy+ or parent is [duke|E]+">OR = {
+	any_heir_to_title = { tier >=  tier_duchy } 
+	any_pretender_title = { tier >= tier_duchy }
+	any_parent = { 
+		highest_held_title_tier >= tier_duchy
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_county" Localization="Pretender to County+ or parent is [count|E]+">OR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { tier >= tier_county }
+	any_parent = { 
+		highest_held_title_tier >=  tier_county
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_anything" Localization="Pretender or parent is a ruler">OR = {
+	any_heir_to_title = { } 
+	any_pretender_title = { }
+	any_parent = { 
+		highest_held_title_tier >= tier_county 
+		is_alive = yes
+	} 
+}</Option>
+	</DropDown>
+	<DropDown LocalizationKey="acs_filter_no_heritage" IsSpecial="false" Name="acs_filter_no_heritage" Localization="No Heritage">
+		<Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="acs_filter_heir_to_empire">any_heir_to_title = { tier = tier_empire count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_kingdom">any_heir_to_title = { tier >= tier_kingdom count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_duchy">any_heir_to_title = { tier >= tier_duchy count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_county">any_heir_to_title = { tier >= tier_county count = 0 }</Option>
+		<Option LocalizationKey="acs_filter_heir_to_anything">any_heir_to_title = { count = 0 }</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_empire">NOR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_kingdom">NOR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_duchy">NOR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_county" >NOR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_anything">NOR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 2
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_empire">NOR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_kingdom">NOR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_duchy">NOR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_county">NOR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_3heir_to_anything" >NOR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 3
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_empire" >NOR = {
+	any_heir_to_title = { tier = tier_empire  }
+	any_pretender_title = { 
+		tier = tier_empire
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_kingdom">NOR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { 
+		tier >= tier_kingdom
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_duchy">NOR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { 
+		tier >= tier_duchy
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_county">NOR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { 
+		tier >= tier_county
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_4heir_to_anything">NOR = {
+	any_heir_to_title = {  }
+	any_pretender_title = {
+		place_in_line_of_succession = {
+			target = scope:candidate
+			value &lt;= 4
+		}
+	}
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_empire">NOR = {
+	any_heir_to_title = { tier = tier_empire }
+	any_pretender_title = { tier = tier_empire }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_kingdom">NOR = {
+	any_heir_to_title = { tier >= tier_kingdom }
+	any_pretender_title = { tier >= tier_kingdom }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_duchy">NOR = {
+	any_heir_to_title = { tier >= tier_duchy }
+	any_pretender_title = { tier >= tier_duchy }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_county">NOR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { tier >= tier_county }
+}</Option>
+		<Option LocalizationKey="acs_filter_sheir_to_anything">NOR = {
+	any_heir_to_title = {  }
+	any_pretender_title = { }
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_empire">NOR = {
+	any_heir_to_title = { tier = tier_empire }
+	any_pretender_title = { tier = tier_empire }
+	any_parent = { 
+		highest_held_title_tier = tier_empire
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_kingdom">NOR = {
+	any_heir_to_title = { tier >= tier_kingdom } 
+	any_pretender_title = { tier >= tier_kingdom }
+	any_parent = { 
+		highest_held_title_tier >= tier_kingdom
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_duchy">NOR = {
+	any_heir_to_title = { tier >=  tier_duchy } 
+	any_pretender_title = { tier >= tier_duchy }
+	any_parent = { 
+		highest_held_title_tier >= tier_duchy
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_county" >NOR = {
+	any_heir_to_title = { tier >= tier_county }
+	any_pretender_title = { tier >= tier_county }
+	any_parent = { 
+		highest_held_title_tier >=  tier_county
+		is_alive = yes
+	} 
+}</Option>
+        <Option LocalizationKey="acs_filter_pheir_to_anything">NOR = {
+	any_heir_to_title = { } 
+	any_pretender_title = { }
+	any_parent = { 
+		highest_held_title_tier >= tier_county 
+		is_alive = yes
+	} 
+}</Option>
+	</DropDown>
+    <DropDown LocalizationKey="acs_filter_parents" IsSpecial="false" Name="acs_filter_parents" Localization="Parents">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="acs_filter_parents_alive" Localization="Living both parent">any_parent = { count = 2 is_alive = yes } </Option>
+		<Option LocalizationKey="acs_filter_1pparents_alive" Localization="Any living parent">any_parent = { count >= 1 is_alive = yes } </Option>
+		<Option LocalizationKey="acs_filter_1parents_alive" Localization="One living parent">any_parent = { count = 1 is_alive = yes } </Option>
+        <Option LocalizationKey="acs_filter_mother_alive" Localization="Only mother alive">AND = {
+    has_mother = yes
+    NOT = { has_father = yes }
+}</Option>
+		<Option LocalizationKey="acs_filter_father_alive" Localization="Only father alive">AND = {
+    NOT = { has_mother = yes }
+    has_father = yes
+}</Option>
+		<Option LocalizationKey="acs_filter_parents_dead" Localization="Both parents dead">any_parent = { count = 0 is_alive = yes }</Option>
+		<Option LocalizationKey="acs_filter_father_alive_nm" Localization="Unknown mother, known live father">AND = {
+    NOT = { exists = mother }
+    has_father = yes
+}</Option>
+		<Option LocalizationKey="acs_filter_father_dead_nm" Localization="Unknown mother, known dead father">AND = {
+    NOT = { exists = mother }
+    exists = father
+    father = { is_alive = no }
+}</Option>
+		<Option LocalizationKey="acs_filter_mother_alive_nf" Localization="Unknown father, known live mother">AND = {
+    NOT = { exists = father }
+    has_mother = yes
+}</Option>
+		<Option LocalizationKey="acs_filter_mother_dead_nf" Localization="Unknown father, known dead mother">AND = {
+    NOT = { exists = father }
+    exists = mother
+    mother = { is_alive = no }
+}</Option>
+		<Option LocalizationKey="acs_filter_no_parents" Localization="Unknown parents">AND = {
+    NOT = { exists = father }
+    NOT = { exists = mother }
+}</Option>
+    </DropDown>
+    <DropDown LocalizationKey="adult_filter" IsSpecial="false" Name="acs_filter_adult">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="child_filter_option">is_adult = no</Option>
+        <Option LocalizationKey="adult_filter_option">is_adult = yes</Option>
+        <Option LocalizationKey="acs_younger_adult" Localization="Younger Adult">is_adult = yes
+age &lt; 35</Option>
+        <Option LocalizationKey="acs_older_adult" Localization="Older Adult">is_adult = yes
+age >= 35</Option>
+    </DropDown>
+    <DropDown LocalizationKey="gender_filter" IsSpecial="false" Name="acs_filter_gender">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="female_gender_filter">is_male = no</Option>
+        <Option LocalizationKey="male_gender_filter">is_male = yes</Option>
+    </DropDown>
+    <DropDown LocalizationKey="married_filter" IsSpecial="false" Name="acs_filter_martial_status">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="is_married_filter">is_married = yes</Option>
+        <Option LocalizationKey="not_married_filter">is_married = no</Option>
+        <Option LocalizationKey="acs_is_betrothed_filter" Localization="Betrothed">is_betrothed = yes</Option>
+        <Option LocalizationKey="acs_not_betrothed_filter" Localization="Not Betrothed">is_betrothed = no
+is_married = no</Option>
+    </DropDown>
+    <DropDown LocalizationKey="imprisoned_filter" IsSpecial="false" Name="acs_filter_imprisonment_status">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="is_imprisoned_filter">is_imprisoned = yes</Option>
+        <Option LocalizationKey="not_imprisoned_filter">is_imprisoned = no</Option>
+    </DropDown>
+    <DropDown LocalizationKey="hook_filter" IsSpecial="false" Name="acs_filter_hooks">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="has_hook_filter">scope:acs_filter_hooks_root = { has_hook = prev }</Option>
+        <Option LocalizationKey="no_hook_filter">NOT = { scope:acs_filter_hooks_root = { has_hook = prev } }</Option>
+        <Option LocalizationKey="acs_know_secret_filter" Localization="Know Secret">any_secret_knower = { this = scope:acs_filter_hooks_root }</Option>
+        <Option LocalizationKey="acs_no_hook_no_secret_filter" Localization="No hook and no secret">NOT = { scope:acs_filter_hooks_root = { has_hook = prev } }
+NOT = { any_secret_knower = { this = scope:acs_filter_hooks_root } }</Option>
+    </DropDown>
+    <DropDown LocalizationKey="acs_filter_sexuality" IsSpecial="false" Name="acs_filter_sexuality" Localization="Sexuality">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="acs_heterosexual" Localization="Heterosexual">has_sexuality = heterosexual</Option>
+        <Option LocalizationKey="acs_homosexual" Localization="Homosexual">has_sexuality = homosexual</Option>
+        <Option LocalizationKey="acs_bisexual" Localization="Bisexual">has_sexuality = bisexual</Option>
+        <Option LocalizationKey="acs_asexual" Localization="Asexual">has_sexuality = asexual</Option>
+    </DropDown>
+    <DropDown LocalizationKey="religion_filter" IsSpecial="false" Name="acs_filter_religion">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="same_faith_filter_option">faith = scope:acs_filter_faith</Option>
+        <Option LocalizationKey="same_religion_filter_option">religion = scope:acs_filter_religion</Option>
+        <Option LocalizationKey="not_same_faith_filter_option">NOT = { faith = scope:acs_filter_faith }</Option>
+        <Option LocalizationKey="not_same_religion_filter_option">NOT = { religion = scope:acs_filter_religion }</Option>
+    </DropDown>
+    <DropDown LocalizationKey="culture_filter" IsSpecial="false" Name="acs_filter_culture">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="same_culture_group_filter_option">culture_group = scope:acs_filter_culture_root.culture_group</Option>
+        <Option LocalizationKey="same_culture_filter_option">culture = scope:acs_filter_culture_root.culture</Option>
+        <Option LocalizationKey="not_same_culture_group_filter_option">NOT = { culture_group = scope:acs_filter_culture_root.culture_group }</Option>
+        <Option LocalizationKey="not_same_culture_filter_option">NOT = { culture = scope:acs_filter_culture_root.culture }</Option>
+    </DropDown>
+    <DropDown LocalizationKey="dynasty_filter" IsSpecial="false" Name="acs_filter_dynasty">
+        <Option LocalizationKey="any_filter_option" />
+        <Option LocalizationKey="player_dynasty_filter">dynasty = scope:acs_filter_dynasty_root.dynasty</Option>
+        <Option LocalizationKey="not_player_dynasty_filter">NOT = { dynasty = scope:acs_filter_dynasty_root.dynasty }</Option>
+        <Option LocalizationKey="acs_player_house_filter" Localization="[GetPlayer.GetHouse.GetNameNoTooltip|U] [house|E]">house = scope:acs_filter_dynasty_root.house</Option>
+        <Option LocalizationKey="acs_not_player_house_filter" Localization="Not $acs_player_house_filter$">NOT = { house = scope:acs_filter_dynasty_root.house }</Option>
+        <Option LocalizationKey="any_dynasty_filter" >is_lowborn = no</Option>
+        <Option LocalizationKey="no_dynasty_filter">is_lowborn = yes</Option>
+        <Option LocalizationKey="acs_filter_dynasty_not_lowborn_different_dynasty" Localization="Not Lowborn Not [GetPlayer.GetHouse.GetDynasty.GetNameNoTooltip|U]">is_lowborn = no
+NOT = { dynasty = scope:acs_filter_dynasty_root.dynasty }</Option>
+    </DropDown>
 </Main>

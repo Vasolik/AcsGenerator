@@ -44,15 +44,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="trait.txt" />
-      <Content Include="trait.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="settings.txt" />
       <None Remove="groups.txt" />
       <None Remove="dropdown.txt" />
-      <Content Include="dropdown.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="logicalElements.xml" />
       <Content Include="logicalElements.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>

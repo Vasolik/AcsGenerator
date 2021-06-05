@@ -14,12 +14,12 @@ namespace Vipl.AcsGenerator.LogicalElements
             ? "acs_filter_2_group_checkbox"
             : Elements.Length == 3
                 ? "acs_filter_3_group_checkbox"
-                : Variable;
+                : Name;
         List<ILogicalElement> ISavable.Elements => Elements.Cast<ILogicalElement>().ToList();
 
         public CheckboxLogicalGroup(XmlElement element)
         {
-            Variable = element.GetAttribute("Variable");
+            Name = element.GetAttribute("Variable");
             Elements = element.ChildNodes.OfType<XmlElement>().Select(x => new Trait(x) {Owner = this}).OfType<ICheckboxLogicalElement>().ToArray();
         }
 
@@ -125,7 +125,7 @@ if = {{
         public string ListReducedVariable => $"{this.ListVariable()}_reduced";
         public ISavable Owner => IsSmall ? MainSavable.Instance : null;
         public int NumberOfFlagsNeeded => IsSmall ? (int)Math.Pow(3, Elements.Length) - 1 : 1;
-        public string Variable { get; }
+        public string Name { get; }
         public string DefaultCheck => IsSmall ? null :
 $@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
         public string ResetValue => IsSmall ? null : $@"clear_variable_list = {this.ListVariable()}";
@@ -467,8 +467,8 @@ $@"{ScriptedGuiName} = {{
     }}
 }}";
         public string ScriptedGui => IsSmall ? "" : ScripterGuiForLargeGroups + 
-            (Variable.Contains("education_general") ? "\n" + ScripterGroupGuiForEducationGeneral :
-                (Variable.Contains("education_martial") || Variable.Contains("born_status")  ? "\n" + ScripterGroupGuiForLargeGroups : ""));
+            (Name.Contains("education_general") ? "\n" + ScripterGroupGuiForEducationGeneral :
+                (Name.Contains("education_martial") || Name.Contains("born_status")  ? "\n" + ScripterGroupGuiForLargeGroups : ""));
     }
     
 }

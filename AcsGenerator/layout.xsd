@@ -5,7 +5,7 @@
             xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="Main" type="Main"/>
   <xs:complexType name="LogicalElement">
-    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="VisualOrganizationGroup">
@@ -17,10 +17,15 @@
         <xs:element type="StarLayout" name="StarLayout" />
         <xs:element type="SkillLayout" name="SkillLayout"/>
         <xs:element type="CustomLayout" name="CustomLayout"/>
+        <xs:element type="DropDown" name="DropDown"/>
+        <xs:element type="Divider" name="Divider"/>
+        
       </xs:choice>
     </xs:sequence>
-    <xs:attribute type="xs:string" name="name" use="required"/>
-    <xs:attribute type="xs:string" name="localization" use="required"/>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
+    <xs:attribute type="xs:string" name="Localization"/>
+    <xs:attribute type="xs:string" name="LocalizationKey" />
+    <xs:attribute type="xs:boolean" name="IsDropDown" />
   </xs:complexType>
 
   <xs:complexType name="NormalLayout">
@@ -38,8 +43,8 @@
     <xs:sequence>
       <xs:element type="LogicalElement" name="LogicalElement" maxOccurs="6" minOccurs="6"/>
     </xs:sequence>
-    <xs:attribute type="xs:string" name="localizationKey" use="required"/>
-    <xs:attribute type="xs:string" name="localization" use="required"/>
+    <xs:attribute type="xs:string" name="LocalizationKey" use="required"/>
+    <xs:attribute type="xs:string" name="Localization" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="StarLayout">
@@ -58,7 +63,11 @@
   </xs:complexType>
 
   <xs:complexType name="Skill">
-    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="DropDown">
+    <xs:attribute type="xs:string" name="Name" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="CustomLayout">
@@ -78,8 +87,10 @@
   </xs:complexType>
 
   <xs:complexType name="CustomCheckBoxVisualGroup">
-    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="Name" use="required"/>
   </xs:complexType>
+
+  <xs:complexType name="Divider"/>
   
   <xs:complexType name="Main">
     <xs:sequence>

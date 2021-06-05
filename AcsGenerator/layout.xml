@@ -2,432 +2,455 @@
 <Main xmlns="http://www.vipl.in.rs/layout"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.vipl.in.rs/layout layout.xsd">
-    <VisualOrganizationGroup name="any_trait_of_kind"
-                             localization="Trait groups">
+    <VisualOrganizationGroup Name="acs_filter_main" IsDropDown="true">
+        <DropDown Name="acs_filter_relation"/>
+        <DropDown Name="acs_filter_diplomatic_range"/>
+    </VisualOrganizationGroup>
+    <VisualOrganizationGroup Name="acs_filter_dropdown_authority_and_heritage" LocalizationKey="acs_filter_dropdown_authority_and_heritage" Localization="Authority and Heritage" IsDropDown="true">
+        <DropDown Name="acs_filter_ruler"/>
+        <DropDown Name="acs_filter_heritage"/>
+        <DropDown Name="acs_filter_no_heritage"/>
+        <DropDown Name="acs_filter_parents"/>
+    </VisualOrganizationGroup>
+    <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="game_concept_personality_traits" IsDropDown="true">
+        <DropDown Name="acs_filter_adult"/>
+        <DropDown Name="acs_filter_gender"/>
+        <DropDown Name="acs_filter_martial_status"/>
+        <DropDown Name="acs_filter_imprisonment_status"/>
+        <DropDown Name="acs_filter_hooks"/>
+        <DropDown Name="acs_filter_sexuality"/>
+    </VisualOrganizationGroup>
+    <VisualOrganizationGroup Name="acs_filter_dropdown_membership" LocalizationKey="membership_filter_category" IsDropDown="true">
+        <DropDown Name="acs_filter_religion"/>
+        <DropDown Name="acs_filter_culture"/>
+        <DropDown Name="acs_filter_dynasty"/>
+    </VisualOrganizationGroup>
+    <VisualOrganizationGroup Name="any_trait_of_kind"
+                             Localization="Trait groups">
         <NormalLayout>
-            <Left name="acs_filter_trait_any_sinful"/>
-            <Right name="acs_filter_trait_any_virtuous"/>
+            <Left Name="acs_filter_trait_any_sinful"/>
+            <Right Name="acs_filter_trait_any_virtuous"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="acs_filter_trait_any_sinful_by_their_standard"/>
-            <Right name="acs_filter_trait_any_virtuous_by_their_standard"/>
+            <Left Name="acs_filter_trait_any_sinful_by_their_standard"/>
+            <Right Name="acs_filter_trait_any_virtuous_by_their_standard"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="acs_filter_trait_any_bad_genetic"/>
-            <Right name="acs_filter_trait_any_good_genetic"/>
+            <Left Name="acs_filter_trait_any_bad_genetic"/>
+            <Right Name="acs_filter_trait_any_good_genetic"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="acs_filter_trait_any_commander"/>
-            <Right name="acs_filter_trait_any_lifestyle"/>
+            <Left Name="acs_filter_trait_any_commander"/>
+            <Right Name="acs_filter_trait_any_lifestyle"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="acs_filter_trait_any_infamous"/>
-            <Right name="acs_filter_trait_any_diseases"/>
+            <Left Name="acs_filter_trait_any_infamous"/>
+            <Right Name="acs_filter_trait_any_diseases"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="physical"
-        localization="[GetTrait( 'beauty_bad_1' ).GetTraitCategoryLabel]">
-        <SixPackLayout localizationKey = "acs_beauty" localization="Beauty">
-            <LogicalElement name="beauty_bad_3"/>
-            <LogicalElement name="beauty_bad_2"/>
-            <LogicalElement name="beauty_bad_1"/>
-            <LogicalElement name="beauty_good_1"/>
-            <LogicalElement name="beauty_good_2"/>
-            <LogicalElement name="beauty_good_3"/>
+    <VisualOrganizationGroup Name="physical"
+        Localization="[GetTrait( 'beauty_bad_1' ).GetTraitCategoryLabel]">
+        <SixPackLayout LocalizationKey = "acs_beauty" Localization="Beauty">
+            <LogicalElement Name="beauty_bad_3"/>
+            <LogicalElement Name="beauty_bad_2"/>
+            <LogicalElement Name="beauty_bad_1"/>
+            <LogicalElement Name="beauty_good_1"/>
+            <LogicalElement Name="beauty_good_2"/>
+            <LogicalElement Name="beauty_good_3"/>
         </SixPackLayout>
-        <SixPackLayout localizationKey = "acs_intellect" localization="Intellect">
-            <LogicalElement name="intellect_bad_3"/>
-            <LogicalElement name="intellect_bad_2"/>
-            <LogicalElement name="intellect_bad_1"/>
-            <LogicalElement name="intellect_good_1"/>
-            <LogicalElement name="intellect_good_2"/>
-            <LogicalElement name="intellect_good_3"/>
+        <SixPackLayout LocalizationKey = "acs_intellect" Localization="Intellect">
+            <LogicalElement Name="intellect_bad_3"/>
+            <LogicalElement Name="intellect_bad_2"/>
+            <LogicalElement Name="intellect_bad_1"/>
+            <LogicalElement Name="intellect_good_1"/>
+            <LogicalElement Name="intellect_good_2"/>
+            <LogicalElement Name="intellect_good_3"/>
         </SixPackLayout>
-        <SixPackLayout localizationKey = "acs_physique" localization="Physique">
-            <LogicalElement name="physique_bad_3"/>
-            <LogicalElement name="physique_bad_2"/>
-            <LogicalElement name="physique_bad_1"/>
-            <LogicalElement name="physique_good_1"/>
-            <LogicalElement name="physique_good_2"/>
-            <LogicalElement name="physique_good_3"/>
+        <SixPackLayout LocalizationKey = "acs_physique" Localization="Physique">
+            <LogicalElement Name="physique_bad_3"/>
+            <LogicalElement Name="physique_bad_2"/>
+            <LogicalElement Name="physique_bad_1"/>
+            <LogicalElement Name="physique_good_1"/>
+            <LogicalElement Name="physique_good_2"/>
+            <LogicalElement Name="physique_good_3"/>
         </SixPackLayout>
         <NormalLayout>
-            <Left name="pure_blooded"/>
-            <Right name="fecund"/>
+            <Left Name="pure_blooded"/>
+            <Right Name="fecund"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="strong"/>
-            <Right name="shrewd"/>
+            <Left Name="strong"/>
+            <Right Name="shrewd"/>
         </NormalLayout>
         <ThreePackLayout>
-            <LogicalElement name="clubfooted"/>
-            <LogicalElement name="hunchbacked"/>
-            <LogicalElement name="lisping"/>
+            <LogicalElement Name="clubfooted"/>
+            <LogicalElement Name="hunchbacked"/>
+            <LogicalElement Name="lisping"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="stuttering"/>
-            <LogicalElement name="dwarf"/>
-            <LogicalElement name="giant"/>
+            <LogicalElement Name="stuttering"/>
+            <LogicalElement Name="dwarf"/>
+            <LogicalElement Name="giant"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="inbred"/>
-            <LogicalElement name="weak"/>
-            <LogicalElement name="dull"/>
+            <LogicalElement Name="inbred"/>
+            <LogicalElement Name="weak"/>
+            <LogicalElement Name="dull"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="impotent"/>
-            <LogicalElement name="spindly"/>
-            <LogicalElement name="scaly"/>
+            <LogicalElement Name="impotent"/>
+            <LogicalElement Name="spindly"/>
+            <LogicalElement Name="scaly"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="albino"/>
-            <LogicalElement name="wheezing"/>
-            <LogicalElement name="bleeder"/>
+            <LogicalElement Name="albino"/>
+            <LogicalElement Name="wheezing"/>
+            <LogicalElement Name="bleeder"/>
         </ThreePackLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="personality"
-                             localization="[GetTrait( 'lustful' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="personality"
+                             Localization="[GetTrait( 'lustful' ).GetTraitCategoryLabel]">
         <NormalLayout>
-            <Left name="lustful"/>
-            <Right name="chaste"/>
+            <Left Name="lustful"/>
+            <Right Name="chaste"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="gluttonous"/>
-            <Right name="temperate"/>
+            <Left Name="gluttonous"/>
+            <Right Name="temperate"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="greedy"/>
-            <Right name="generous"/>
+            <Left Name="greedy"/>
+            <Right Name="generous"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="lazy"/>
-            <Right name="diligent"/>
+            <Left Name="lazy"/>
+            <Right Name="diligent"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="wrathful"/>
-            <Right name="calm"/>
+            <Left Name="wrathful"/>
+            <Right Name="calm"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="impatient"/>
-            <Right name="patient"/>
+            <Left Name="impatient"/>
+            <Right Name="patient"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="arrogant"/>
-            <Right name="humble"/>
+            <Left Name="arrogant"/>
+            <Right Name="humble"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="deceitful"/>
-            <Right name="honest"/>
+            <Left Name="deceitful"/>
+            <Right Name="honest"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="craven"/>
-            <Right name="brave"/>
+            <Left Name="craven"/>
+            <Right Name="brave"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="shy"/>
-            <Right name="gregarious"/>
+            <Left Name="shy"/>
+            <Right Name="gregarious"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="ambitious"/>
-            <Right name="content"/>
+            <Left Name="ambitious"/>
+            <Right Name="content"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="arbitrary"/>
-            <Right name="just"/>
+            <Left Name="arbitrary"/>
+            <Right Name="just"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="cynical"/>
-            <Right name="zealous"/>
+            <Left Name="cynical"/>
+            <Right Name="zealous"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="paranoid"/>
-            <Right name="trusting"/>
+            <Left Name="paranoid"/>
+            <Right Name="trusting"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="stubborn"/>
-            <Right name="fickle"/>
+            <Left Name="stubborn"/>
+            <Right Name="fickle"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="vengeful"/>
-            <Right name="forgiving"/>
+            <Left Name="vengeful"/>
+            <Right Name="forgiving"/>
         </NormalLayout>
         <StarLayout>
-            <Top name="callous"/>
-            <Left name="sadistic"/>
-            <Right name="compassionate"/>
+            <Top Name="callous"/>
+            <Left Name="sadistic"/>
+            <Right Name="compassionate"/>
         </StarLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="personality_child" localization="[GetTrait( 'rowdy' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="personality_child" Localization="[GetTrait( 'rowdy' ).GetTraitCategoryLabel]">
         <ThreePackLayout>
-            <LogicalElement name="rowdy"/>
-            <LogicalElement name="charming"/>
-            <LogicalElement name="curious"/>
+            <LogicalElement Name="rowdy"/>
+            <LogicalElement Name="charming"/>
+            <LogicalElement Name="curious"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="pensive"/>
-            <Right name="bossy"/>
+            <Left Name="pensive"/>
+            <Right Name="bossy"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="education" localization="[GetTrait( 'education_intrigue_1' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="education" Localization="[GetTrait( 'education_intrigue_1' ).GetTraitCategoryLabel]">
         <SkillLayout>
-            <LeftSkill name="diplomacy"/>
-            <RightSkill name="martial"/>
+            <LeftSkill Name="diplomacy"/>
+            <RightSkill Name="martial"/>
         </SkillLayout>
         <SkillLayout>
-            <LeftSkill name="stewardship"/>
-            <RightSkill name="intrigue"/>
+            <LeftSkill Name="stewardship"/>
+            <RightSkill Name="intrigue"/>
         </SkillLayout>
         <SkillLayout>
-            <LeftSkill name="learning"/>
-            <RightSkill name="prowess"/>
+            <LeftSkill Name="learning"/>
+            <RightSkill Name="prowess"/>
         </SkillLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="commander" localization="[GetTrait( 'logistician' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="commander" Localization="[GetTrait( 'logistician' ).GetTraitCategoryLabel]">
         <ThreePackLayout>
-            <LogicalElement name="logistician"/>
-            <LogicalElement name="military_engineer"/>
-            <LogicalElement name="reckless"/>
+            <LogicalElement Name="logistician"/>
+            <LogicalElement Name="military_engineer"/>
+            <LogicalElement Name="reckless"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="jungle_stalker"/>
-            <LogicalElement name="forder"/>
-            <LogicalElement name="flexible_leader"/>
+            <LogicalElement Name="jungle_stalker"/>
+            <LogicalElement Name="forder"/>
+            <LogicalElement Name="flexible_leader"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="desert_warrior"/>
-            <LogicalElement name="unyielding_defender"/>
-            <LogicalElement name="reaver"/>
+            <LogicalElement Name="desert_warrior"/>
+            <LogicalElement Name="unyielding_defender"/>
+            <LogicalElement Name="reaver"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="holy_warrior"/>
-            <LogicalElement name="aggressive_attacker"/>
-            <LogicalElement name="organizer"/>
+            <LogicalElement Name="holy_warrior"/>
+            <LogicalElement Name="aggressive_attacker"/>
+            <LogicalElement Name="organizer"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="winter_soldier"/>
-            <LogicalElement name="forest_fighter"/>
-            <LogicalElement name="cautious_leader"/>
+            <LogicalElement Name="winter_soldier"/>
+            <LogicalElement Name="forest_fighter"/>
+            <LogicalElement Name="cautious_leader"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="open_terrain_expert"/>
-            <Right name="rough_terrain_expert"/>
+            <Left Name="open_terrain_expert"/>
+            <Right Name="rough_terrain_expert"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="health" localization="[GetTrait( 'pregnant' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="health" Localization="[GetTrait( 'pregnant' ).GetTraitCategoryLabel]">
        <CustomLayout>
            <Left>
-               <CustomCheckBoxVisualGroup name="acs_filter_trait_health_wounded"/>
+               <CustomCheckBoxVisualGroup Name="acs_filter_trait_health_wounded"/>
            </Left>
            <Right>
-               <LogicalElement name="depressed_1"/>
-               <LogicalElement name="lunatic_1"/>
-               <LogicalElement name="possessed_1"/>
+               <LogicalElement Name="depressed_1"/>
+               <LogicalElement Name="lunatic_1"/>
+               <LogicalElement Name="possessed_1"/>
            </Right>
        </CustomLayout>
         <ThreePackLayout>
-            <LogicalElement name="maimed"/>
-            <LogicalElement name="infirm"/>
-            <LogicalElement name="incapable"/>
+            <LogicalElement Name="maimed"/>
+            <LogicalElement Name="infirm"/>
+            <LogicalElement Name="incapable"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="one_eyed"/>
-            <LogicalElement name="one_legged"/>
-            <LogicalElement name="disfigured"/>
+            <LogicalElement Name="one_eyed"/>
+            <LogicalElement Name="one_legged"/>
+            <LogicalElement Name="disfigured"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="sickly"/>
-            <LogicalElement name="scarred"/>
-            <LogicalElement name="eunuch"/>
+            <LogicalElement Name="sickly"/>
+            <LogicalElement Name="scarred"/>
+            <LogicalElement Name="eunuch"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="blind"/>
-            <Right name="pregnant"/>
+            <Left Name="blind"/>
+            <Right Name="pregnant"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="health_diseases" localization="Diseases [GetTrait( 'bubonic_plague' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="health_diseases" Localization="Diseases [GetTrait( 'bubonic_plague' ).GetTraitCategoryLabel]">
         <ThreePackLayout>
-            <LogicalElement name="gout_ridden"/>
-            <LogicalElement name="consumption"/>
-            <LogicalElement name="cancer"/>
+            <LogicalElement Name="gout_ridden"/>
+            <LogicalElement Name="consumption"/>
+            <LogicalElement Name="cancer"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="typhus"/>
-            <LogicalElement name="bubonic_plague"/>
-            <LogicalElement name="smallpox"/>
+            <LogicalElement Name="typhus"/>
+            <LogicalElement Name="bubonic_plague"/>
+            <LogicalElement Name="smallpox"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="ill"/>
-            <LogicalElement name="pneumonic"/>
-            <LogicalElement name="great_pox"/>
+            <LogicalElement Name="ill"/>
+            <LogicalElement Name="pneumonic"/>
+            <LogicalElement Name="great_pox"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="lovers_pox"/>
-            <Right name="leper"/>
+            <Left Name="lovers_pox"/>
+            <Right Name="leper"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="stress" localization="Coping mechanisms [GetTrait( 'drunkard' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="stress" Localization="Coping mechanisms [GetTrait( 'drunkard' ).GetTraitCategoryLabel]">
         <ThreePackLayout>
-            <LogicalElement name="journaller"/>
-            <LogicalElement name="confider"/>
-            <LogicalElement name="athletic"/>
+            <LogicalElement Name="journaller"/>
+            <LogicalElement Name="confider"/>
+            <LogicalElement Name="athletic"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="drunkard"/>
-            <LogicalElement name="hashishiyah"/>
-            <LogicalElement name="rakish"/>
+            <LogicalElement Name="drunkard"/>
+            <LogicalElement Name="hashishiyah"/>
+            <LogicalElement Name="rakish"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="reclusive"/>
-            <LogicalElement name="irritable"/>
-            <LogicalElement name="flagellant"/>
+            <LogicalElement Name="reclusive"/>
+            <LogicalElement Name="irritable"/>
+            <LogicalElement Name="flagellant"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="profligate"/>
-            <LogicalElement name="improvident"/>
-            <LogicalElement name="contrite"/>
+            <LogicalElement Name="profligate"/>
+            <LogicalElement Name="improvident"/>
+            <LogicalElement Name="contrite"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="comfort_eater"/>
-            <Right name="inappetetic"/>
+            <Left Name="comfort_eater"/>
+            <Right Name="inappetetic"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="religion" localization="Religious [GetTrait( 'celibate' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="religion" Localization="Religious [GetTrait( 'celibate' ).GetTraitCategoryLabel]">
         <NormalLayout>
-            <Left name="celibate"/>
-            <Right name="excommunicated"/>
+            <Left Name="celibate"/>
+            <Right Name="excommunicated"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="devoted"/>
-            <Right name="order_member"/>
+            <Left Name="devoted"/>
+            <Right Name="order_member"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="pilgrim"/>
-            <Right name="faith_warrior"/>
+            <Left Name="pilgrim"/>
+            <Right Name="faith_warrior"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="saint"/>
-            <Right name="crusader_king"/>
-        </NormalLayout>
-    </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="descentant" localization="Descendant [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
-        <NormalLayout>
-            <Left name="saoshyant"/>
-            <Right name="saoshyant_descendant"/>
-        </NormalLayout>
-        <NormalLayout>
-            <Left name="savior"/>
-            <Right name="divine_blood"/>
-        </NormalLayout>
-        <NormalLayout>
-            <Left name="paragon"/>
-            <Right name="consecrated_blood"/>
-        </NormalLayout>
-        <NormalLayout>
-            <Left name="sayyid"/>
-            <Right name="blood_of_prophet"/>
+            <Left Name="saint"/>
+            <Right Name="crusader_king"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="infamous" localization="Infamous [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="descentant" Localization="Descendant [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
+        <NormalLayout>
+            <Left Name="saoshyant"/>
+            <Right Name="saoshyant_descendant"/>
+        </NormalLayout>
+        <NormalLayout>
+            <Left Name="savior"/>
+            <Right Name="divine_blood"/>
+        </NormalLayout>
+        <NormalLayout>
+            <Left Name="paragon"/>
+            <Right Name="consecrated_blood"/>
+        </NormalLayout>
+        <NormalLayout>
+            <Left Name="sayyid"/>
+            <Right Name="blood_of_prophet"/>
+        </NormalLayout>
+    </VisualOrganizationGroup>
+    <VisualOrganizationGroup Name="infamous" Localization="Infamous [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
         <CustomLayout>
             <Left>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_fame_kinslayer"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_fame_kinslayer"/>
             </Left>
             <Right>
-                <LogicalElement name="murderer"/>
-                <LogicalElement name="cannibal"/>
-                <LogicalElement name="witch"/>
-                <LogicalElement name="deviant"/>
+                <LogicalElement Name="murderer"/>
+                <LogicalElement Name="cannibal"/>
+                <LogicalElement Name="witch"/>
+                <LogicalElement Name="deviant"/>
             </Right>
         </CustomLayout>
         <NormalLayout>
-            <Left name="sodomite"/>
-            <Right name="incestuous"/>
+            <Left Name="sodomite"/>
+            <Right Name="incestuous"/>
         </NormalLayout>
         <NormalLayout>
-            <Left name="adulterer"/>
-            <Right name="fornicator"/>
+            <Left Name="adulterer"/>
+            <Right Name="fornicator"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="fame_other" localization="Other [GetTrait( 'berserker' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="fame_other" Localization="Other [GetTrait( 'berserker' ).GetTraitCategoryLabel]">
         <CustomLayout>
             <Left>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_fame_born_status"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_fame_born_status"/>
             </Left>
             <Right>
-                <LogicalElement name="berserker"/>
-                <LogicalElement name="shieldmaiden"/>
-                <LogicalElement name="varangian"/>
-                <LogicalElement name="poet"/>
-                <LogicalElement name="twin"/>
-                <LogicalElement name="born_in_the_purple"/>
-                <LogicalElement name="augustus"/>
-                <LogicalElement name="viking"/>
+                <LogicalElement Name="berserker"/>
+                <LogicalElement Name="shieldmaiden"/>
+                <LogicalElement Name="varangian"/>
+                <LogicalElement Name="poet"/>
+                <LogicalElement Name="twin"/>
+                <LogicalElement Name="born_in_the_purple"/>
+                <LogicalElement Name="augustus"/>
+                <LogicalElement Name="viking"/>
             </Right>
         </CustomLayout>
         <ThreePackLayout>
-            <LogicalElement name="reincarnation"/>
-            <LogicalElement name="adventurer"/>
-            <LogicalElement name="heresiarch"/>
+            <LogicalElement Name="reincarnation"/>
+            <LogicalElement Name="adventurer"/>
+            <LogicalElement Name="heresiarch"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="peasant_leader"/>
-            <LogicalElement name="disinherited"/>
-            <LogicalElement name="denounced"/>
+            <LogicalElement Name="peasant_leader"/>
+            <LogicalElement Name="disinherited"/>
+            <LogicalElement Name="denounced"/>
         </ThreePackLayout>
         <NormalLayout>
-            <Left name="chakravarti"/>
-            <Right name="greatest_of_khans"/>
+            <Left Name="chakravarti"/>
+            <Right Name="greatest_of_khans"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup name="lifestyle" localization="[GetTrait( 'diplomat' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="lifestyle" Localization="[GetTrait( 'diplomat' ).GetTraitCategoryLabel]">
         <CustomLayout>
             <Left>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_lifestyle_physician"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_physician"/>
             </Left>
             <Right>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_lifestyle_mystic"/>
-            </Right>
-        </CustomLayout>
-        <CustomLayout>
-            <Left>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_lifestyle_hunter"/>
-            </Left>
-            <Right>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_lifestyle_blademaster"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_mystic"/>
             </Right>
         </CustomLayout>
         <CustomLayout>
             <Left>
-                <CustomCheckBoxVisualGroup name="acs_filter_trait_lifestyle_reveler"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_hunter"/>
             </Left>
             <Right>
-                <LogicalElement name="lifestyle_herbalist"/>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_blademaster"/>
+            </Right>
+        </CustomLayout>
+        <CustomLayout>
+            <Left>
+                <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_reveler"/>
+            </Left>
+            <Right>
+                <LogicalElement Name="lifestyle_herbalist"/>
             </Right>
         </CustomLayout>
         <ThreePackLayout>
-            <LogicalElement name="diplomat"/>
-            <LogicalElement name="family_first"/>
-            <LogicalElement name="august"/>
+            <LogicalElement Name="diplomat"/>
+            <LogicalElement Name="family_first"/>
+            <LogicalElement Name="august"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="strategist"/>
-            <LogicalElement name="overseer"/>
-            <LogicalElement name="gallant"/>
+            <LogicalElement Name="strategist"/>
+            <LogicalElement Name="overseer"/>
+            <LogicalElement Name="gallant"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="architect"/>
-            <LogicalElement name="administrator"/>
-            <LogicalElement name="avaricious"/>
+            <LogicalElement Name="architect"/>
+            <LogicalElement Name="administrator"/>
+            <LogicalElement Name="avaricious"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="schemer"/>
-            <LogicalElement name="seducer"/>
-            <LogicalElement name="torturer"/>
+            <LogicalElement Name="schemer"/>
+            <LogicalElement Name="seducer"/>
+            <LogicalElement Name="torturer"/>
         </ThreePackLayout>
         <ThreePackLayout>
-            <LogicalElement name="whole_of_body"/>
-            <LogicalElement name="scholar"/>
-            <LogicalElement name="theologian"/>
+            <LogicalElement Name="whole_of_body"/>
+            <LogicalElement Name="scholar"/>
+            <LogicalElement Name="theologian"/>
         </ThreePackLayout>
 
     </VisualOrganizationGroup>

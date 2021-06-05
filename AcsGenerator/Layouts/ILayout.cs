@@ -2,10 +2,10 @@
 
 namespace Vipl.AcsGenerator.Layouts
 {
-    public interface ILayout: ILocalizable
+
+    public interface ILayout:  IVisualElement
     {
         string GuiElement { get; }
-        public Trait[] Traits { get; }
     }
 }
 

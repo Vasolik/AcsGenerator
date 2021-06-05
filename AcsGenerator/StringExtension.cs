@@ -26,6 +26,46 @@ namespace Vipl.AcsGenerator
         {
             return string.Join(separator, values.Where(v => v is not null)).Intend(intend, first);
         }
+        
+        public static bool IsNullOrEmpty (this string value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
+
+        public static int ToInt(this string value)
+        {
+            return string.IsNullOrEmpty(value) ? 0 : int.Parse(value);
+        }
+        
+        public static bool ToBool(this string value)
+        {
+            return !string.IsNullOrEmpty(value) && bool.Parse(value);
+        }
+       
+    }
+    
+    public static class EnumerationExtension
+    {
+        public static IEnumerable<T> MakeEnumerable<T>(this T value)
+        {
+            yield return value;
+        }
+        public static IEnumerable<T> MakeEnumerable<T>(this T value, IEnumerable<T> others)
+        {
+            yield return value;
+            foreach (var other in others)
+            {
+                yield return other;
+            }
+        }
+        public static T[] MakeArray<T>(this T value)
+        {
+            return value.MakeEnumerable().ToArray();
+        }
+        public static T[] MakeArray<T>(this T value, IEnumerable<T> others)
+        {
+            return value.MakeEnumerable(others).ToArray();
+        }
        
     }
 }

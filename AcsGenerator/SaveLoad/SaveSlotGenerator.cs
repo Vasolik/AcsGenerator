@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Vipl.AcsGenerator.LogicalElements;
 
 namespace Vipl.AcsGenerator.SaveLoad
 {
@@ -13,9 +12,7 @@ namespace Vipl.AcsGenerator.SaveLoad
         
         public static void GenerateSaveSlot()
         {
-            var allSavableList = DropDownFilter.All
-                .Concat(ISavable.All).ToList();
-            var allSavable = allSavableList.ToArray();
+            var allSavable = ISavable.All.ToArray();
             DefaultSlot = new SaveSlot(allSavable, -1);
             Slots.AddRange(Enumerable.Range(0, 13)
                 .Select(i => new SaveSlot(allSavable, i)));

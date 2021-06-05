@@ -24,20 +24,19 @@ namespace Vipl.AcsGenerator
             Directory.CreateDirectory($"{ModFolder}gui");
             Directory.CreateDirectory($"{ModFolder}localization/english");
             Directory.CreateDirectory("report");
-
-            var listOfTraits = File.OpenText("trait.txt").ReadToEnd().Tokenized();
             
             LogicalOrganisationGroup.PrepareLogicalElements();
             CustomCheckBoxVisualGroup.Parse();
-            VisualOrganisationGroup.Parse();
-            DropDownFilter.Parse(File.ReadAllText("dropdown.txt"));
+            VisualOrganizationGroup.Parse();
+      
             
             
             File.WriteAllText($"{ModFolder}/common/scripted_triggers/acs_big_switch.txt",LogicalOrganisationGroup.SwitchTrigger, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}/common/scripted_guis/acs_filter_large_groups.txt",LogicalOrganisationGroup.ScriptedGui, new System.Text.UTF8Encoding(true));
-            File.WriteAllText($"{ModFolder}localization/english/acs_filter_trait_l_english.yml",VisualOrganisationGroup.CompleteLocalization, new System.Text.UTF8Encoding(true));
-            VisualOrganisationGroup.GenerateGuiElement(ModFolder);
-            VisualOrganisationGroup.GenerateGuiCall();
+            File.WriteAllText($"{ModFolder}localization/english/acs_filter_trait_l_english.yml",VisualOrganizationGroup.GetCompleteLocalization(LocalizationFiles.TraitFile), new System.Text.UTF8Encoding(true));
+            File.WriteAllText($"{ModFolder}localization/english/acs_filter_dropdown_l_english.yml",VisualOrganizationGroup.GetCompleteLocalization(LocalizationFiles.DropDownFile), new System.Text.UTF8Encoding(true));
+            VisualOrganizationGroup.GenerateGuiElement(ModFolder);
+            VisualOrganizationGroup.GenerateGuiCall();
 
             SaveSlotGenerator.GenerateSaveSlot();
             File.WriteAllText($"{ModFolder}common/script_values/acs_filter_save.txt",SaveSlotGenerator.SelectedSlot, new System.Text.UTF8Encoding(true));
@@ -48,10 +47,6 @@ namespace Vipl.AcsGenerator
             File.WriteAllText($"{ModFolder}common/scripted_effects/acs_reset_filters.txt",SaveSlotGenerator.Reset, new System.Text.UTF8Encoding(true));
             File.WriteAllText($"{ModFolder}common/scripted_effects/acs_make_reduced_and_count.txt",SaveSlotGenerator.MakeReducedListAndCount, new System.Text.UTF8Encoding(true));
             var reportFile = new StreamWriter("report/report.txt");
-            reportFile.WriteLine("Not Used traits at all");
-            reportFile.WriteLine( listOfTraits.Except(Trait.All.Keys).Join());
-            reportFile.WriteLine("Not Used on screen");
-            reportFile.WriteLine(Trait.All.Keys.Except(VisualOrganisationGroup.All.SelectMany(g => g.Traits.Select(t => t.Name))).Join());
 
             reportFile.Close();
         }

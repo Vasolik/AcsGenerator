@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Vipl.AcsGenerator.Layouts;
+using Vipl.AcsGenerator.LogicalElements;
 using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator
@@ -13,7 +14,7 @@ namespace Vipl.AcsGenerator
         public Skill(string name,  int index)
         {
             var traitRegex = new Regex($"(education_{name}_[1-4]|education_martial_{name}_[1-4])");
-            Traits = Trait.All.Values.Where(t => traitRegex.Match(t.Name).Success).ToArray();
+            Elements = Trait.All.Values.Where(t => traitRegex.Match(t.Name).Success).Cast<SimpleCheckBoxVisualElement>().ToArray();
             Name = name;
             Index = index;
         }
@@ -28,7 +29,7 @@ namespace Vipl.AcsGenerator
             new ("learning", 5),
             new ("prowess", 6),
         }.ToDictionary(s=> s.Name, s => s));
-        protected override SimpleCheckBoxVisualElement[] Elements => Traits.Clone() as SimpleCheckBoxVisualElement[] ;
+        protected override SimpleCheckBoxVisualElement[] Elements { get; } 
         public override string GetSetScopes(int value) =>
             Index == 6 ? GetSetScopeForProwess(value) : GetSetScopeForSmallGeneral(value);
         
@@ -40,11 +41,11 @@ namespace Vipl.AcsGenerator
             $".AddScope( 'major_digit' , {MajorDigit} )" +
             $".AddScope( 'minor_digit' , {MinorDigit} )" +
             ".End";
-        public override Trait[] Traits { get; }
+       
         public string Name { get; }
         public int Index { get; }
         public override string Variable => $"acs_filter_trait_education_{Name}";
-        public override string[] Localizations
+        public override LocalizationEntry[] Localizations
             => Elements.SelectMany(e => e.Localizations).ToArray();
 
         protected override string GetGroupGuiElement(string style) =>
@@ -67,8 +68,8 @@ namespace Vipl.AcsGenerator
         {
 
             return new CustomLayout( 
-                new IVisualElement[]{All[element["LeftSkill"].GetAttribute("name")]}, 
-                new IVisualElement[]{All[element["RightSkill"].GetAttribute("name")]});
+                new ICheckBoxVisualElement[]{All[element["LeftSkill"].GetAttribute("Name")]}, 
+                new ICheckBoxVisualElement[]{All[element["RightSkill"].GetAttribute("Name")]});
         }
     }
 }

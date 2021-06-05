@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -8,7 +9,7 @@ namespace Vipl.AcsGenerator.Layouts
 {
     public class CustomLayout : ILayout
     {
-        public CustomLayout(IVisualElement[] leftElements, IVisualElement[] rightElements)
+        public CustomLayout(ICheckBoxVisualElement[] leftElements, ICheckBoxVisualElement[] rightElements)
         {
             LeftElements = leftElements;
             RightElements = rightElements;
@@ -23,23 +24,19 @@ namespace Vipl.AcsGenerator.Layouts
                 .Select(GetVisualElement).ToArray();
         }
 
-        public Trait[] Traits
-            => LeftElements.SelectMany(e => e.Traits)
-                .Concat(RightElements.SelectMany(e => e.Traits)).ToArray();
-
-        private static IVisualElement GetVisualElement(XmlElement element)
+        private static ICheckBoxVisualElement GetVisualElement(XmlElement element)
         {
             return element.Name switch
             {
-                "LogicalElement" => SimpleCheckBoxVisualElement.All[element.GetAttribute("name")],
-                nameof(CustomCheckBoxVisualGroup) => CustomCheckBoxVisualGroup.All[element.GetAttribute("name")],
+                "LogicalElement" => SimpleCheckBoxVisualElement.All[element.GetAttribute("Name")],
+                nameof(CustomCheckBoxVisualGroup) => CustomCheckBoxVisualGroup.All[element.GetAttribute("Name")],
 
                 _ => throw new Exception("Invalid layout.txt file")
             };
         }
 
-        public IVisualElement[] LeftElements { get; }
-        public IVisualElement[] RightElements { get; }
+        public ICheckBoxVisualElement[] LeftElements { get; }
+        public ICheckBoxVisualElement[] RightElements { get; }
 
         public string GuiElement => 
             $@"flowcontainer = {{
@@ -54,7 +51,7 @@ namespace Vipl.AcsGenerator.Layouts
         {RightElements.Select(e => e.GetGuiElement("right")).Join(2)}
     }}
 }}";
-        public string[] Localizations
+        public LocalizationEntry[] Localizations
             => LeftElements.SelectMany(e => e.Localizations)
                 .Concat(RightElements.SelectMany(e => e.Localizations)).ToArray();
     }

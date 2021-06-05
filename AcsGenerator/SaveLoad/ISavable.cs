@@ -5,9 +5,9 @@ namespace Vipl.AcsGenerator.SaveLoad
 {
     public interface ISavable
     {
-        public string Variable { get; }
-        public string CountVariable => $"{Variable}_count";
-        public string ListVariable => $"{Variable}_list";
+        public string Name { get; }
+        public string CountVariable => $"{Name}_count";
+        public string ListVariable => $"{Name}_list";
         public string DefaultCheck { get;  }
         string ResetValue { get;  }
         public string GetSlotCheck(int slot, string slotPrefix = "");
@@ -15,7 +15,6 @@ namespace Vipl.AcsGenerator.SaveLoad
         string LoadFromSlot(int slot, string slotPrefix = "", bool toPrev = false);
         bool HaveSomethingToSave { get; }
         public string MakeReducedListAndCount { get; }
-        string SmallSwitchForLargeGroup => null;
         bool IsMain => false;
         public List<ILogicalElement> Elements { get; }
         
@@ -30,7 +29,7 @@ namespace Vipl.AcsGenerator.SaveLoad
         private static MainSavable _instance;
         public static MainSavable Instance => _instance ??= new MainSavable();
         public bool IsMain => true;
-        public string Variable => "acs_active_filter";
+        public string Name => "acs_active_filter";
         public string DefaultCheck => $@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
         public string ResetValue => $@"clear_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
@@ -72,16 +71,16 @@ every_in_list = {{
     public static class SavableExtensions
     {
         public static string MakePrevVariable(this ISavable toSave, int slot, string slotPrefix, bool fromPrev)
-            => $"{toSave.Variable}{(fromPrev ? $"{slotPrefix}_{slot - 1}" : "")}";
+            => $"{toSave.Name}{(fromPrev ? $"{slotPrefix}_{slot - 1}" : "")}";
         
         public static string MakeVariable(this ISavable toSave, int slot, string slotPrefix)
-            => $"{toSave.Variable}{slotPrefix}_{slot}";
+            => $"{toSave.Name}{slotPrefix}_{slot}";
 
         public static string MakePrevListVariable(this ISavable toSave, int slot, string slotPrefix, bool fromPrev)
-            => $"{toSave.Variable}_list{(fromPrev ? $"{slotPrefix}_{slot - 1}" : "")}";
+            => $"{toSave.Name}_list{(fromPrev ? $"{slotPrefix}_{slot - 1}" : "")}";
         
         public static string MakeListVariable(this ISavable toSave, int slot, string slotPrefix)
-            => $"{toSave.Variable}_list{slotPrefix}_{slot}";
+            => $"{toSave.Name}_list{slotPrefix}_{slot}";
         
         public static string CountVariable(this ISavable savable) => savable.CountVariable;
         public static string ListVariable(this ISavable savable) => savable.ListVariable;
