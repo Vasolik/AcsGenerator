@@ -11,7 +11,7 @@ namespace Vipl.AcsGenerator.VisualElements
     public static class VisualElementExtension
     {
         public static string GetDigit(this IVisualElementWithScriptedGui _, int digit)
-            => $"GetDummyMale.MakeScope.Var( 'acs_digit_{digit}' ).Province.MakeScope";
+            => $"MakeScopeValue( '(CFixedPoint){digit}' )";
 
         public static string IsShown(this IVisualElementWithScriptedGui element, int index)
             => $"ScriptedGui.IsShown( {element.GetSetScopes(index)} )";

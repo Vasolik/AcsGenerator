@@ -676,12 +676,12 @@ is_ruler = yes</Option>
 	</DropDown>
 	<DropDown LocalizationKey="acs_filter_no_heritage" IsSpecial="false" Name="acs_filter_no_heritage" Localization="No Heritage">
 		<Option LocalizationKey="any_filter_option" />
-        <Option LocalizationKey="acs_filter_heir_to_empire">any_heir_to_title = { tier = tier_empire count = 0 }</Option>
-        <Option LocalizationKey="acs_filter_heir_to_kingdom">any_heir_to_title = { tier >= tier_kingdom count = 0 }</Option>
-        <Option LocalizationKey="acs_filter_heir_to_duchy">any_heir_to_title = { tier >= tier_duchy count = 0 }</Option>
-        <Option LocalizationKey="acs_filter_heir_to_county">any_heir_to_title = { tier >= tier_county count = 0 }</Option>
-		<Option LocalizationKey="acs_filter_heir_to_anything">any_heir_to_title = { count = 0 }</Option>
-		<Option LocalizationKey="acs_filter_2heir_to_empire">NOR = {
+        <Option LocalizationKey="acs_filter_heir_to_empire.not" Localization="Not Heir to Empire">any_heir_to_title = { tier = tier_empire count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_kingdom.not" Localization="Not Heir to Kingdom+">any_heir_to_title = { tier >= tier_kingdom count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_duchy.not" Localization="Not Heir to Duchy+">any_heir_to_title = { tier >= tier_duchy count = 0 }</Option>
+        <Option LocalizationKey="acs_filter_heir_to_county.not" Localization="Not Heir to County+">any_heir_to_title = { tier >= tier_county count = 0 }</Option>
+		<Option LocalizationKey="acs_filter_heir_to_anything.not"  Localization="Not Heir">any_heir_to_title = { count = 0 }</Option>
+		<Option LocalizationKey="acs_filter_2heir_to_empire.not" Localization="At most 3rd to Empire">NOR = {
 	any_heir_to_title = { tier = tier_empire  }
 	any_pretender_title = { 
 		tier = tier_empire
@@ -691,7 +691,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_2heir_to_kingdom">NOR = {
+		<Option LocalizationKey="acs_filter_2heir_to_kingdom.not" Localization="At most 3rd to Kingdom">NOR = {
 	any_heir_to_title = { tier >= tier_kingdom }
 	any_pretender_title = { 
 		tier >= tier_kingdom
@@ -701,7 +701,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_2heir_to_duchy">NOR = {
+		<Option LocalizationKey="acs_filter_2heir_to_duchy.not" Localization="At most 3rd to Duchy">NOR = {
 	any_heir_to_title = { tier >= tier_duchy }
 	any_pretender_title = { 
 		tier >= tier_duchy
@@ -711,7 +711,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_2heir_to_county" >NOR = {
+		<Option LocalizationKey="acs_filter_2heir_to_county.not" Localization="At most 3rd to County">NOR = {
 	any_heir_to_title = { tier >= tier_county }
 	any_pretender_title = { 
 		tier >= tier_county
@@ -721,7 +721,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_2heir_to_anything">NOR = {
+		<Option LocalizationKey="acs_filter_2heir_to_anything.not" Localization="At most 3rd to title">NOR = {
 	any_heir_to_title = {  }
 	any_pretender_title = {
 		place_in_line_of_succession = {
@@ -730,7 +730,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_3heir_to_empire">NOR = {
+		<Option LocalizationKey="acs_filter_3heir_to_empire.not" Localization="At most 4th to Empire">NOR = {
 	any_heir_to_title = { tier = tier_empire  }
 	any_pretender_title = { 
 		tier = tier_empire
@@ -740,7 +740,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_3heir_to_kingdom">NOR = {
+		<Option LocalizationKey="acs_filter_3heir_to_kingdom.not" Localization="At most 4th to Kingdom">NOR = {
 	any_heir_to_title = { tier >= tier_kingdom }
 	any_pretender_title = { 
 		tier >= tier_kingdom
@@ -750,7 +750,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_3heir_to_duchy">NOR = {
+		<Option LocalizationKey="acs_filter_3heir_to_duchy.not" Localization="At most 4th to Duchy">NOR = {
 	any_heir_to_title = { tier >= tier_duchy }
 	any_pretender_title = { 
 		tier >= tier_duchy
@@ -760,7 +760,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_3heir_to_county">NOR = {
+		<Option LocalizationKey="acs_filter_3heir_to_county.not" Localization="At most 4th to County">NOR = {
 	any_heir_to_title = { tier >= tier_county }
 	any_pretender_title = { 
 		tier >= tier_county
@@ -770,7 +770,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_3heir_to_anything" >NOR = {
+		<Option LocalizationKey="acs_filter_3heir_to_anything.not" Localization="At most 4th to title">NOR = {
 	any_heir_to_title = {  }
 	any_pretender_title = {
 		place_in_line_of_succession = {
@@ -779,7 +779,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_4heir_to_empire" >NOR = {
+		<Option LocalizationKey="acs_filter_4heir_to_empire.not" Localization="At most 5th to Empire">NOR = {
 	any_heir_to_title = { tier = tier_empire  }
 	any_pretender_title = { 
 		tier = tier_empire
@@ -789,7 +789,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_4heir_to_kingdom">NOR = {
+		<Option LocalizationKey="acs_filter_4heir_to_kingdom.not" Localization="At most 5th to Kingdom">NOR = {
 	any_heir_to_title = { tier >= tier_kingdom }
 	any_pretender_title = { 
 		tier >= tier_kingdom
@@ -799,7 +799,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_4heir_to_duchy">NOR = {
+		<Option LocalizationKey="acs_filter_4heir_to_duchy.not" Localization="At most 5th to Duchy">NOR = {
 	any_heir_to_title = { tier >= tier_duchy }
 	any_pretender_title = { 
 		tier >= tier_duchy
@@ -809,7 +809,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_4heir_to_county">NOR = {
+		<Option LocalizationKey="acs_filter_4heir_to_county.not" Localization="At most 5th to County">NOR = {
 	any_heir_to_title = { tier >= tier_county }
 	any_pretender_title = { 
 		tier >= tier_county
@@ -819,7 +819,7 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_4heir_to_anything">NOR = {
+		<Option LocalizationKey="acs_filter_4heir_to_anything.not" Localization="At most 5th to title">NOR = {
 	any_heir_to_title = {  }
 	any_pretender_title = {
 		place_in_line_of_succession = {
@@ -828,27 +828,27 @@ is_ruler = yes</Option>
 		}
 	}
 }</Option>
-		<Option LocalizationKey="acs_filter_sheir_to_empire">NOR = {
+		<Option LocalizationKey="acs_filter_sheir_to_empire.not" Localization="Not Pretender to Empire">NOR = {
 	any_heir_to_title = { tier = tier_empire }
 	any_pretender_title = { tier = tier_empire }
 }</Option>
-		<Option LocalizationKey="acs_filter_sheir_to_kingdom">NOR = {
+		<Option LocalizationKey="acs_filter_sheir_to_kingdom.not" Localization="Not Pretender to Kingdom">NOR = {
 	any_heir_to_title = { tier >= tier_kingdom }
 	any_pretender_title = { tier >= tier_kingdom }
 }</Option>
-		<Option LocalizationKey="acs_filter_sheir_to_duchy">NOR = {
+		<Option LocalizationKey="acs_filter_sheir_to_duchy.not" Localization="Not Pretender to Duchy">NOR = {
 	any_heir_to_title = { tier >= tier_duchy }
 	any_pretender_title = { tier >= tier_duchy }
 }</Option>
-		<Option LocalizationKey="acs_filter_sheir_to_county">NOR = {
+		<Option LocalizationKey="acs_filter_sheir_to_county.not" Localization="Not Pretender to County">NOR = {
 	any_heir_to_title = { tier >= tier_county }
 	any_pretender_title = { tier >= tier_county }
 }</Option>
-		<Option LocalizationKey="acs_filter_sheir_to_anything">NOR = {
+		<Option LocalizationKey="acs_filter_sheir_to_anything.not" Localization="Not Pretender">NOR = {
 	any_heir_to_title = {  }
 	any_pretender_title = { }
 }</Option>
-        <Option LocalizationKey="acs_filter_pheir_to_empire">NOR = {
+        <Option LocalizationKey="acs_filter_pheir_to_empire.not" Localization="Not Pretender to Empire and parent is not [emperor|E]">NOR = {
 	any_heir_to_title = { tier = tier_empire }
 	any_pretender_title = { tier = tier_empire }
 	any_parent = { 
@@ -856,7 +856,7 @@ is_ruler = yes</Option>
 		is_alive = yes
 	} 
 }</Option>
-        <Option LocalizationKey="acs_filter_pheir_to_kingdom">NOR = {
+        <Option LocalizationKey="acs_filter_pheir_to_kingdom.not" Localization="Not Pretender to Kingdom and parent is not [king|E]">NOR = {
 	any_heir_to_title = { tier >= tier_kingdom } 
 	any_pretender_title = { tier >= tier_kingdom }
 	any_parent = { 
@@ -864,7 +864,7 @@ is_ruler = yes</Option>
 		is_alive = yes
 	} 
 }</Option>
-        <Option LocalizationKey="acs_filter_pheir_to_duchy">NOR = {
+        <Option LocalizationKey="acs_filter_pheir_to_duchy.not" Localization="Not Pretender to Duchy and parent is not [duke|E]">NOR = {
 	any_heir_to_title = { tier >=  tier_duchy } 
 	any_pretender_title = { tier >= tier_duchy }
 	any_parent = { 
@@ -872,7 +872,7 @@ is_ruler = yes</Option>
 		is_alive = yes
 	} 
 }</Option>
-        <Option LocalizationKey="acs_filter_pheir_to_county" >NOR = {
+        <Option LocalizationKey="acs_filter_pheir_to_county.not" Localization="Not Pretender to County and parent is not [count|E]">NOR = {
 	any_heir_to_title = { tier >= tier_county }
 	any_pretender_title = { tier >= tier_county }
 	any_parent = { 
@@ -880,7 +880,7 @@ is_ruler = yes</Option>
 		is_alive = yes
 	} 
 }</Option>
-        <Option LocalizationKey="acs_filter_pheir_to_anything">NOR = {
+        <Option LocalizationKey="acs_filter_pheir_to_anything.not" Localization="Not Pretender and parent is not ruler">NOR = {
 	any_heir_to_title = { } 
 	any_pretender_title = { }
 	any_parent = { 
@@ -891,7 +891,7 @@ is_ruler = yes</Option>
 	</DropDown>
     <DropDown LocalizationKey="acs_filter_parents" IsSpecial="false" Name="acs_filter_parents" Localization="Parents">
         <Option LocalizationKey="any_filter_option" />
-        <Option LocalizationKey="acs_filter_parents_alive" Localization="Living both parent">any_parent = { count = 2 is_alive = yes } </Option>
+        <Option LocalizationKey="acs_filter_parents_alive" Localization="Living both parents">any_parent = { count = 2 is_alive = yes } </Option>
 		<Option LocalizationKey="acs_filter_1pparents_alive" Localization="Any living parent">any_parent = { count >= 1 is_alive = yes } </Option>
 		<Option LocalizationKey="acs_filter_1parents_alive" Localization="One living parent">any_parent = { count = 1 is_alive = yes } </Option>
         <Option LocalizationKey="acs_filter_mother_alive" Localization="Only mother alive">AND = {
@@ -903,6 +903,7 @@ is_ruler = yes</Option>
     has_father = yes
 }</Option>
 		<Option LocalizationKey="acs_filter_parents_dead" Localization="Both parents dead">any_parent = { count = 0 is_alive = yes }</Option>
+        <Option LocalizationKey="acs_filter_nm" Localization="Unknown mother">NOT = { exists = mother }</Option>
 		<Option LocalizationKey="acs_filter_father_alive_nm" Localization="Unknown mother, known live father">AND = {
     NOT = { exists = mother }
     has_father = yes
@@ -912,6 +913,7 @@ is_ruler = yes</Option>
     exists = father
     father = { is_alive = no }
 }</Option>
+        <Option LocalizationKey="acs_filter_nf" Localization="Unknown father">NOT = { exists = father }</Option>
 		<Option LocalizationKey="acs_filter_mother_alive_nf" Localization="Unknown father, known live mother">AND = {
     NOT = { exists = father }
     has_mother = yes

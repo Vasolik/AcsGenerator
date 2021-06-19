@@ -185,23 +185,22 @@ every_in_list = {{
 
         private string ScripterGuiForLargeGroups => 
 $@"{ScriptedGuiName} = {{
-    scope = province
     saved_scopes = {{
-        major_digit
-        minor_digit
+        ctrl_value
+        position
     }}
     is_shown = {{
         dummy_male = {{
             any_in_list = {{
                 variable = {this.ListVariable()}
                 save_temporary_scope_value_as = {{ name = offset value = -1 }}
-                this = acs_major_minor_index_offset
+                this = acs_position_value_offset
             }}
         }}
 
     }}     
     effect = {{
-        set_local_variable = {{ name = acs_start value = acs_major_minor }}
+        set_local_variable = {{ name = acs_start value = scope:position }}
         acs_simple_checkbox = {{ LIST = {this.ListVariable()} START = local_var:acs_start }}
         dummy_male = {{
             if = {{
@@ -223,12 +222,14 @@ $@"{ScriptedGuiName} = {{
         
         private string ScripterGroupGuiForLargeGroups => 
             $@"{ScriptedGuiName}_group = {{
-    scope = province
+        saved_scopes = {{
+        ctrl_value
+    }}
     is_shown = {{
         dummy_male = {{
             trigger_if = {{
                 limit = {{ 
-                    root.var:index = 0
+                    scope:ctrl_value = 0
                 }}
                 NOT = {{
                     any_in_list = {{
@@ -239,7 +240,7 @@ $@"{ScriptedGuiName} = {{
             }} 
             trigger_else_if = {{
                 limit = {{ 
-                    root.var:index = 1
+                    scope:ctrl_value = 1
                 }}
                 any_in_list = {{
                     variable =  {this.ListVariable()}
@@ -322,42 +323,41 @@ $@"{ScriptedGuiName} = {{
         
         private string ScripterGroupGuiForEducationGeneral => 
             $@"{ScriptedGuiName}_group = {{
-    scope = province
     saved_scopes = {{
-        major_digit
-        minor_digit
+        ctrl_value
+        position
     }}
     is_shown = {{
         dummy_male = {{
             trigger_if = {{
                 limit = {{ 
-                    root.var:index = 0
+                    scope:ctrl_value = 0
                 }}
                 NOT = {{
                     any_in_list = {{
                         variable = {this.ListVariable()}
                         AND = {{
-                            this >= acs_major_minor
+                            this >= scope:position
                             save_temporary_scope_value_as = {{ name = offset value = 7 }}
-                            this <= acs_major_minor_offset
+                            this <= acs_position_offset
                         }}
                     }}
                 }}    
             }} 
             trigger_else_if = {{
                 limit = {{ 
-                    root.var:index = 1
+                    scope:ctrl_value = 1
                 }}
                 any_in_list = {{
                     variable =  {this.ListVariable()}
                     OR = {{
-                        this = acs_major_minor
+                        this = scope:position
                         save_temporary_scope_value_as = {{ name = offset value = 2 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                         save_temporary_scope_value_as = {{ name = offset value = 4 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                         save_temporary_scope_value_as = {{ name = offset value = 6 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                     }}
                     count = 4
                 }}
@@ -367,13 +367,13 @@ $@"{ScriptedGuiName} = {{
                     variable =  {this.ListVariable()}
                     OR = {{
                         save_temporary_scope_value_as = {{ name = offset value = 1 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                         save_temporary_scope_value_as = {{ name = offset value = 3 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                         save_temporary_scope_value_as = {{ name = offset value = 5 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                         save_temporary_scope_value_as = {{ name = offset value = 7 }}
-                        this = acs_major_minor_offset
+                        this = acs_position_offset
                     }}
                     count = 4
                 }}
@@ -389,14 +389,14 @@ $@"{ScriptedGuiName} = {{
                         any_in_list = {{
                             variable = {this.ListVariable()}
                             AND = {{
-                                this >= acs_major_minor
+                                this >= scope:position
                                 save_temporary_scope_value_as = {{ name = offset value = 7 }}
-                                this <= acs_major_minor_offset
+                                this <= acs_position_offset
                             }}
                         }}
                     }}
                 }}
-                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_counter value = scope:position }}
                 set_local_variable = {{ name = acs_total_left value = 4 }}
                 while = {{
                     limit = {{
@@ -412,18 +412,18 @@ $@"{ScriptedGuiName} = {{
                     any_in_list = {{
                         variable =  {this.ListVariable()}
                         OR = {{
-                            this = acs_major_minor
+                            this = scope:position
                             save_temporary_scope_value_as = {{ name = offset value = 2 }}
-                            this = acs_major_minor_offset
+                            this = acs_position_offset
                             save_temporary_scope_value_as = {{ name = offset value = 4 }}
-                            this = acs_major_minor_offset
+                            this = acs_position_offset
                             save_temporary_scope_value_as = {{ name = offset value = 6 }}
-                            this = acs_major_minor_offset
+                            this = acs_position_offset
                         }}
                         count = 4
                     }}
                 }}
-                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_counter value = scope:position }}
                 set_local_variable = {{ name = acs_total_left value = 4 }}
                 while = {{
                     limit = {{
@@ -437,7 +437,7 @@ $@"{ScriptedGuiName} = {{
                 }}
             }}
             else = {{
-                set_local_variable = {{ name = acs_counter value = acs_major_minor }}
+                set_local_variable = {{ name = acs_counter value = scope:position }}
                 set_local_variable = {{ name = acs_total_left value = 8 }}
                 while = {{
                     limit = {{

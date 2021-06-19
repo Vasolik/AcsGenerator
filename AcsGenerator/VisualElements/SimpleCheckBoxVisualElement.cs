@@ -39,12 +39,9 @@ $@"{PositiveIndex} = {{
         public int IndexInGroup { get; set; }
 
         public string IndexInGroupName => this.GetDigit(IndexInGroup);
-        public string MajorDigit => this.GetDigit(Index/40);
-        public string MinorDigit => this.GetDigit(Index%40);
         public string ScriptedGuiName => Owner.ScriptedGuiName;
-        public string GetSetScopes(int value ) => $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
-            $".AddScope( 'major_digit' , {MajorDigit} )" +
-            $".AddScope( 'minor_digit' , {MinorDigit} )" +
+        public string GetSetScopes(int value ) => $"GuiScope.AddScope( 'ctrl_value', {this.GetDigit(value)} )" +
+            $".AddScope( 'position' , {this.GetDigit(Index)} )" +
             (!Owner.IsMain && !Owner.HaveSomethingToSave ? $".AddScope( 'element_in_group' , {IndexInGroupName} )" : "") +
             ".End";
 

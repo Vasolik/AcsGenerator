@@ -73,14 +73,11 @@ $@"acs_filter_dropdown_other_value = {{
         public List<ILogicalElement> Elements => Options.Cast<ILogicalElement>().ToList();
         public string ScriptedGuiName => null;
         public string GetSetScopes(int value)
-        => $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
-            (!IsSpecial ? $".AddScope( 'major_digit' , {MajorDigit} )" +
-            $".AddScope( 'minor_digit' , {MinorDigit} )" +
-            $".AddScope( 'total_element_count' , {this.GetDigit(Options.Length - 1)} )" : "")+
+        => $"GuiScope.AddScope( 'ctrl_value',  {this.GetDigit(value)} )" +
+            (!IsSpecial ? $".AddScope( 'position' , {this.GetDigit(Index)} )" +
+                $".AddScope( 'total_element_count' , {this.GetDigit(Options.Length - 1)} )" : "")+
             ".End";
         
-        public string MajorDigit => this.GetDigit(Index / 40);
-        public string MinorDigit => this.GetDigit(Index % 40);
 
 
         public string DefaultCheck => $"global_var:{Name} = {DefaultValue}";

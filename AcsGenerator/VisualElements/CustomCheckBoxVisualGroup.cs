@@ -24,16 +24,13 @@ namespace Vipl.AcsGenerator.VisualElements
             => ((ICustomCheckBoxVisualElement)this).GetCustomCheckBox(style);
         protected override SimpleCheckBoxVisualElement[] Elements { get; }
         
-        public string MajorDigit => this.GetDigit(LogicalOwner.Index / 40);
-        public string MinorDigit => this.GetDigit(LogicalOwner.Index % 40);
         public override string GetSetScopes(int value) =>
             LogicalOwner.IsSmall ? GetSetScopeForSmallGroups(value) : GetSetScopeForLargeGroups(value);
         
-        public string GetSetScopeForLargeGroups(int value ) => $"GuiScope.SetRoot( {this.GetDigit(value)} ).End";
+        public string GetSetScopeForLargeGroups(int value ) => $"GuiScope.AddScope( 'ctrl_value', {this.GetDigit(value)} ).End";
         public string GetSetScopeForSmallGroups(int value ) => 
-            $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
-            $".AddScope( 'major_digit' , {MajorDigit} )" +
-            $".AddScope( 'minor_digit' , {MinorDigit} )" +
+            $"GuiScope.AddScope( 'ctrl_value', {this.GetDigit(value)} )" +
+            $".AddScope( 'position' , {this.GetDigit(LogicalOwner.Index)} )" +
             ".End";
 
         public override LocalizationEntry[] Localizations

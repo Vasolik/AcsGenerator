@@ -33,13 +33,10 @@ namespace Vipl.AcsGenerator
         public override string GetSetScopes(int value) =>
             Index == 6 ? GetSetScopeForProwess(value) : GetSetScopeForSmallGeneral(value);
         
-        public string MajorDigit => this.GetDigit(Elements.Min(e => e.Index) / 40);
-        public string MinorDigit => this.GetDigit(Elements.Min(e => e.Index) % 40);
-        public string GetSetScopeForProwess(int value ) => $"GuiScope.SetRoot( {this.GetDigit(value)} ).End";
+        public string GetSetScopeForProwess(int value ) => $"GuiScope.AddScope( 'ctrl_value', {this.GetDigit(value)} ).End";
         public string GetSetScopeForSmallGeneral(int value ) => 
-            $"GuiScope.SetRoot( {this.GetDigit(value)} )" +
-            $".AddScope( 'major_digit' , {MajorDigit} )" +
-            $".AddScope( 'minor_digit' , {MinorDigit} )" +
+            $"GuiScope.AddScope('ctrl_value', {this.GetDigit(value)} )" +
+            $".AddScope( 'position' , {this.GetDigit(Elements.Min(e => e.Index))} )" +
             ".End";
        
         public string Name { get; }

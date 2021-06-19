@@ -12,7 +12,7 @@
         <DropDown Name="acs_filter_no_heritage"/>
         <DropDown Name="acs_filter_parents"/>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="game_concept_personality_traits" IsDropDown="true">
+    <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="acs_game_concept_personality_traits" Localization="$game_concept_personality_traits$" IsDropDown="true">
         <DropDown Name="acs_filter_adult"/>
         <DropDown Name="acs_filter_gender"/>
         <DropDown Name="acs_filter_martial_status"/>
@@ -20,7 +20,7 @@
         <DropDown Name="acs_filter_hooks"/>
         <DropDown Name="acs_filter_sexuality"/>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="acs_filter_dropdown_membership" LocalizationKey="membership_filter_category" IsDropDown="true">
+    <VisualOrganizationGroup Name="acs_filter_dropdown_membership" LocalizationKey="acs_membership_filter_category" Localization="$membership_filter_category$" IsDropDown="true">
         <DropDown Name="acs_filter_religion"/>
         <DropDown Name="acs_filter_culture"/>
         <DropDown Name="acs_filter_dynasty"/>
@@ -48,8 +48,7 @@
             <Right Name="acs_filter_trait_any_diseases"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="physical"
-        Localization="[GetTrait( 'beauty_bad_1' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="physical" Localization="[Concept('physical_trait','Physical Traits')|E]">
         <SixPackLayout LocalizationKey = "acs_beauty" Localization="Beauty">
             <LogicalElement Name="beauty_bad_3"/>
             <LogicalElement Name="beauty_bad_2"/>
@@ -108,8 +107,7 @@
             <LogicalElement Name="bleeder"/>
         </ThreePackLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="personality"
-                             Localization="[GetTrait( 'lustful' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="personality" Localization="[Concept('personality_trait','Personality Traits')|E]">
         <NormalLayout>
             <Left Name="lustful"/>
             <Right Name="chaste"/>
@@ -180,7 +178,7 @@
             <Right Name="compassionate"/>
         </StarLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="personality_child" Localization="[GetTrait( 'rowdy' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="personality_child" Localization="[Concept('childhood_trait','Childhood Traits')|E]">
         <ThreePackLayout>
             <LogicalElement Name="rowdy"/>
             <LogicalElement Name="charming"/>
@@ -191,7 +189,7 @@
             <Right Name="bossy"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="education" Localization="[GetTrait( 'education_intrigue_1' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="education" Localization="[Concept('education_trait','Education Traits')|E]">
         <SkillLayout>
             <LeftSkill Name="diplomacy"/>
             <RightSkill Name="martial"/>
@@ -205,7 +203,7 @@
             <RightSkill Name="prowess"/>
         </SkillLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="commander" Localization="[GetTrait( 'logistician' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="commander" Localization="[Concept('commander_trait','Commander Traits')|E]">
         <ThreePackLayout>
             <LogicalElement Name="logistician"/>
             <LogicalElement Name="military_engineer"/>
@@ -236,7 +234,7 @@
             <Right Name="rough_terrain_expert"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="health" Localization="[GetTrait( 'pregnant' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="health" Localization="[Concept('health_trait','Health Traits')|E]">
        <CustomLayout>
            <Left>
                <CustomCheckBoxVisualGroup Name="acs_filter_trait_health_wounded"/>
@@ -267,7 +265,7 @@
             <Right Name="pregnant"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="health_diseases" Localization="Diseases [GetTrait( 'bubonic_plague' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="health_diseases" Localization="[Concept('health_trait','Diseases')|E]">
         <ThreePackLayout>
             <LogicalElement Name="gout_ridden"/>
             <LogicalElement Name="consumption"/>
@@ -288,7 +286,7 @@
             <Right Name="leper"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="stress" Localization="Coping mechanisms [GetTrait( 'drunkard' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="stress" Localization="[Concept('fame_trait','Coping mechanisms')|E]">
         <ThreePackLayout>
             <LogicalElement Name="journaller"/>
             <LogicalElement Name="confider"/>
@@ -314,7 +312,7 @@
             <Right Name="inappetetic"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="religion" Localization="Religious [GetTrait( 'celibate' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="religion" Localization="[Concept('fame_trait','Religious Traits')|E]">
         <NormalLayout>
             <Left Name="celibate"/>
             <Right Name="excommunicated"/>
@@ -332,7 +330,7 @@
             <Right Name="crusader_king"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="descentant" Localization="Descendant [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="descentant" Localization="[Concept('fame_trait','Descendant Traits')|E]">
         <NormalLayout>
             <Left Name="saoshyant"/>
             <Right Name="saoshyant_descendant"/>
@@ -350,7 +348,7 @@
             <Right Name="blood_of_prophet"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="infamous" Localization="Infamous [GetTrait( 'saoshyant' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="infamous" Localization="[Concept('fame_trait','Infamous Traits')|E]">
         <CustomLayout>
             <Left>
                 <CustomCheckBoxVisualGroup Name="acs_filter_trait_fame_kinslayer"/>
@@ -371,7 +369,7 @@
             <Right Name="fornicator"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="fame_other" Localization="Other [GetTrait( 'berserker' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="fame_other" Localization="[Concept('fame_trait','Other Fame Traits')|E]">
         <CustomLayout>
             <Left>
                 <CustomCheckBoxVisualGroup Name="acs_filter_trait_fame_born_status"/>
@@ -402,7 +400,7 @@
             <Right Name="greatest_of_khans"/>
         </NormalLayout>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="lifestyle" Localization="[GetTrait( 'diplomat' ).GetTraitCategoryLabel]">
+    <VisualOrganizationGroup Name="lifestyle" Localization="[Concept('lifestyle_trait','Lifestyle Traits')|E]">
         <CustomLayout>
             <Left>
                 <CustomCheckBoxVisualGroup Name="acs_filter_trait_lifestyle_physician"/>
