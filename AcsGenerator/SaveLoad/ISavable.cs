@@ -30,34 +30,34 @@ namespace Vipl.AcsGenerator.SaveLoad
         public static MainSavable Instance => _instance ??= new MainSavable();
         public bool IsMain => true;
         public string Name => "acs_active_filter";
-        public string DefaultCheck => $@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
-        public string ResetValue => $@"clear_variable_list = {this.ListVariable()}";
+        public string DefaultCheck => $@"any_in_global_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
+        public string ResetValue => $@"clear_global_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
-$@"any_in_list = {{
+$@"any_in_global_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} this = scope:slot_value }} }}
+    any_in_global_list = {{ variable = {this.ListVariable()} this = scope:slot_value }}
     count = all
 }}
-any_in_list = {{
+any_in_global_list = {{
     variable = {this.ListVariable()}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ any_in_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }} }}
+    any_in_global_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }} 
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)
-            => $@"clear_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
-every_in_list = {{
+            => $@"clear_global_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
+every_in_global_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ add_to_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }} }}
+    add_to_global_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }}
 }}";
         public string SaveToSlot(int slot, string slotPrefix = "", bool toPrev = false)
-            => $@"clear_variable_list = {this.MakeListVariable(slot, slotPrefix)}
-every_in_list = {{
+            => $@"clear_global_variable_list = {this.MakeListVariable(slot, slotPrefix)}
+every_in_global_list = {{
     variable = {this.MakePrevListVariable(slot, slotPrefix, toPrev)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ add_to_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} }}
+    add_to_global_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }}
 }}";
         public string MakeReducedListAndCount =>  "";
         

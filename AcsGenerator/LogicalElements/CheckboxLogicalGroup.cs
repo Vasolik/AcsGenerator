@@ -56,17 +56,15 @@ $@"AND = {{
         }
         
         public string MakeReducedListAndCount =>
-$@"clear_variable_list = {ListReducedVariable}
+$@"clear_global_variable_list = {ListReducedVariable}
 set_global_variable = {{ name = {this.CountVariable()} value = 0  }} 
-every_in_list = {{
+every_in_global_list = {{
     variable = {this.ListVariable()}
     save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
-    dummy_male = {{ 
-        if = {{
-            limit = {{ acs_modulo_2 = 0 }}
-            add_to_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
-            change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
-        }}
+    if = {{
+        limit = {{ acs_modulo_2 = 0 }}
+        add_to_global_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
+        change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
     }}
 }}
 if = {{
@@ -79,15 +77,13 @@ if = {{
     limit = {{
         global_var:{this.CountVariable()} = 0
     }}
-    every_in_list = {{
+    every_in_global_list = {{
         variable = {this.ListVariable()}
         save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
-        dummy_male = {{
-            if = {{
-                limit = {{ acs_modulo_2 = 1 }}
-                add_to_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
-                change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
-            }}
+        if = {{
+            limit = {{ acs_modulo_2 = 1 }}
+            add_to_global_variable_list = {{ name = {ListReducedVariable} target = scope:to_get_modulo }}
+            change_global_variable = {{ name = {this.CountVariable()} add = 1 }} 
         }}
     }}
 }}";
@@ -100,18 +96,16 @@ if = {{
         public string SwitchTriggerForLargeGroup => 
             $@"{Index} = {{
     save_temporary_scope_as = candidate2
-    dummy_male = {{
-        any_in_list = {{
-            variable = {ListReducedVariable}
-            save_temporary_scope_as = filter2
-            scope:candidate2 = {{
-                switch = {{
-                    trigger = scope:filter2
-                    {Elements.Select(e => e.SwitchTrigger).Join(5)}
-                }}
+    any_in_global_list = {{
+        variable = {ListReducedVariable}
+        save_temporary_scope_as = filter2
+        scope:candidate2 = {{
+            switch = {{
+                trigger = scope:filter2
+                {Elements.Select(e => e.SwitchTrigger).Join(4)}
             }}
-            count = global_var:{this.CountVariable()}
         }}
+        count = global_var:{this.CountVariable()}
     }}
 }}";
         
@@ -127,34 +121,34 @@ if = {{
         public int NumberOfFlagsNeeded => IsSmall ? (int)Math.Pow(3, Elements.Length) - 1 : 1;
         public string Name { get; }
         public string DefaultCheck => IsSmall ? null :
-$@"any_in_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
-        public string ResetValue => IsSmall ? null : $@"clear_variable_list = {this.ListVariable()}";
+$@"any_in_global_list = {{ variable = {this.ListVariable()} always = yes count = 0 }}";
+        public string ResetValue => IsSmall ? null : $@"clear_global_variable_list = {this.ListVariable()}";
         public string GetSlotCheck(int slot, string slotPrefix = "") => 
-            $@"any_in_list = {{
+            $@"any_in_global_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ any_in_list = {{ variable = {this.ListVariable()} this = scope:slot_value }} }}
+    any_in_global_list = {{ variable = {this.ListVariable()} this = scope:slot_value }}
     count = all
 }}
-any_in_list = {{
+any_in_global_list = {{
     variable = {this.ListVariable()}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ any_in_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }} }}
+    any_in_global_list = {{ variable = {this.MakeListVariable(slot, slotPrefix)} this = scope:slot_value }}
     count = all
 }}";
         public string LoadFromSlot(int slot, string slotPrefix = "", bool fromPrev = false)
-            => $@"clear_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
-every_in_list = {{
+            => $@"clear_global_variable_list = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)}
+every_in_global_list = {{
     variable = {this.MakeListVariable(slot, slotPrefix)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ add_to_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }} }}
+    add_to_global_variable_list = {{ name = {this.MakePrevListVariable(slot, slotPrefix, fromPrev)} target = scope:slot_value }}
 }}";
         public string SaveToSlot(int slot, string slotPrefix = "", bool toPrev = false)
-            => $@"clear_variable_list = {this.MakeListVariable(slot, slotPrefix)}
-every_in_list = {{
+            => $@"clear_global_variable_list = {this.MakeListVariable(slot, slotPrefix)}
+every_in_global_list = {{
     variable = {this.MakePrevListVariable(slot, slotPrefix, toPrev)}
     save_temporary_scope_as = slot_value
-    dummy_male = {{ add_to_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} }}
+    add_to_global_variable_list = {{ name = {this.MakeListVariable(slot, slotPrefix)} target = scope:slot_value }} 
 }}";
 
         public bool IsSmall => Elements.Length < 4;
@@ -190,31 +184,26 @@ $@"{ScriptedGuiName} = {{
         position
     }}
     is_shown = {{
-        dummy_male = {{
-            any_in_list = {{
-                variable = {this.ListVariable()}
-                save_temporary_scope_value_as = {{ name = offset value = -1 }}
-                this = acs_position_value_offset
-            }}
+        any_in_global_list = {{
+            variable = {this.ListVariable()}
+            save_temporary_scope_value_as = {{ name = offset value = -1 }}
+            this = acs_position_value_offset
         }}
-
     }}     
     effect = {{
         set_local_variable = {{ name = acs_start value = scope:position }}
         acs_simple_checkbox = {{ LIST = {this.ListVariable()} START = local_var:acs_start }}
-        dummy_male = {{
-            if = {{
-                limit = {{
-                    any_in_list = {{
-                        variable = {this.ListVariable()}
-                        always = yes
-                    }}
+        if = {{
+            limit = {{
+                any_in_global_list = {{
+                    variable = {this.ListVariable()}
+                    always = yes
                 }}
-                add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
             }}
-            else = {{
-                remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
-            }}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+        }}
+        else = {{
+            remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
         }}
         acs_auto_apply_sorting_and_filters = yes
     }}
@@ -226,23 +215,64 @@ $@"{ScriptedGuiName} = {{
         ctrl_value
     }}
     is_shown = {{
-        dummy_male = {{
-            trigger_if = {{
-                limit = {{ 
-                    scope:ctrl_value = 0
+        trigger_if = {{
+            limit = {{ 
+                scope:ctrl_value = 0
+            }}
+            NOT = {{
+                any_in_global_list = {{
+                    variable = {this.ListVariable()}
+                    always = yes
                 }}
+            }}    
+        }} 
+        trigger_else_if = {{
+            limit = {{ 
+                scope:ctrl_value = 1
+            }}
+            any_in_global_list = {{
+                variable =  {this.ListVariable()}
+                save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+                save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
+                scope:to_test = 0
+                count = {Elements.Length}
+            }}
+        }}
+        trigger_else = {{
+             any_in_global_list = {{
+                variable =  {this.ListVariable()}
+                save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
+                save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
+                scope:to_test = 1
+                count = {Elements.Length}
+            }}
+        }}
+        
+    }}     
+    effect = {{
+        acs_save_undo_0_filters = yes
+        if = {{
+            limit = {{
                 NOT = {{
-                    any_in_list = {{
+                    any_in_global_list = {{
                         variable = {this.ListVariable()}
                         always = yes
                     }}
-                }}    
-            }} 
-            trigger_else_if = {{
-                limit = {{ 
-                    scope:ctrl_value = 1
                 }}
-                any_in_list = {{
+            }}
+            set_local_variable = {{ name = acs_counter value = 0 }}
+            while = {{
+                limit = {{
+                    local_var:acs_counter < {Elements.Length * 2}
+                }}
+                add_to_global_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 2 }}
+            }}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+        }}
+        else_if = {{
+            limit = {{
+                any_in_global_list = {{
                     variable =  {this.ListVariable()}
                     save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
                     save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
@@ -250,75 +280,30 @@ $@"{ScriptedGuiName} = {{
                     count = {Elements.Length}
                 }}
             }}
-            trigger_else = {{
-                 any_in_list = {{
-                    variable =  {this.ListVariable()}
-                    save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
-                    save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
-                    scope:to_test = 1
-                    count = {Elements.Length}
+            set_local_variable = {{ name = acs_counter value = 0 }}
+            while = {{
+                limit = {{
+                    local_var:acs_counter < {Elements.Length * 2}
                 }}
+                remove_list_global_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
+                add_to_global_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
             }}
         }}
-        
-    }}     
-    effect = {{
-        dummy_male = {{
-            acs_save_undo_0_filters = yes
-            if = {{
+        else = {{
+            set_local_variable = {{ name = acs_counter value = 0 }}
+            while = {{
                 limit = {{
-                    NOT = {{
-                        any_in_list = {{
-                            variable = {this.ListVariable()}
-                            always = yes
-                        }}
-                    }}
+                    local_var:acs_counter < {Elements.Length * 2}
                 }}
-                set_local_variable = {{ name = acs_counter value = 0 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_counter < {Elements.Length * 2}
-                    }}
-                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 2 }}
-                }}
-                add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+                remove_list_global_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
             }}
-            else_if = {{
-                limit = {{
-                    any_in_list = {{
-                        variable =  {this.ListVariable()}
-                        save_temporary_scope_value_as = {{ name = to_get_modulo value = this }}
-                        save_temporary_scope_value_as = {{ name = to_test value = acs_modulo_2 }}
-                        scope:to_test = 0
-                        count = {Elements.Length}
-                    }}
-                }}
-                set_local_variable = {{ name = acs_counter value = 0 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_counter < {Elements.Length * 2}
-                    }}
-                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                }}
-            }}
-            else = {{
-                set_local_variable = {{ name = acs_counter value = 0 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_counter < {Elements.Length * 2}
-                    }}
-                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                }}
-                remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
-            }}
-            acs_auto_apply_sorting_and_filters = yes
+            remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
         }}
-    }}    
+        acs_auto_apply_sorting_and_filters = yes
+    }} 
 }}";
         
         private string ScripterGroupGuiForEducationGeneral => 
@@ -328,13 +313,62 @@ $@"{ScriptedGuiName} = {{
         position
     }}
     is_shown = {{
-        dummy_male = {{
-            trigger_if = {{
-                limit = {{ 
-                    scope:ctrl_value = 0
+        trigger_if = {{
+            limit = {{ 
+                scope:ctrl_value = 0
+            }}
+            NOT = {{
+                any_in_global_list = {{
+                    variable = {this.ListVariable()}
+                    AND = {{
+                        this >= scope:position
+                        save_temporary_scope_value_as = {{ name = offset value = 7 }}
+                        this <= acs_position_offset
+                    }}
                 }}
+            }}    
+        }} 
+        trigger_else_if = {{
+            limit = {{ 
+                scope:ctrl_value = 1
+            }}
+            any_in_global_list = {{
+                variable =  {this.ListVariable()}
+                OR = {{
+                    this = scope:position
+                    save_temporary_scope_value_as = {{ name = offset value = 2 }}
+                    this = acs_position_offset
+                    save_temporary_scope_value_as = {{ name = offset value = 4 }}
+                    this = acs_position_offset
+                    save_temporary_scope_value_as = {{ name = offset value = 6 }}
+                    this = acs_position_offset
+                }}
+                count = 4
+            }}
+        }}
+        trigger_else = {{
+             any_in_global_list = {{
+                variable =  {this.ListVariable()}
+                OR = {{
+                    save_temporary_scope_value_as = {{ name = offset value = 1 }}
+                    this = acs_position_offset
+                    save_temporary_scope_value_as = {{ name = offset value = 3 }}
+                    this = acs_position_offset
+                    save_temporary_scope_value_as = {{ name = offset value = 5 }}
+                    this = acs_position_offset
+                    save_temporary_scope_value_as = {{ name = offset value = 7 }}
+                    this = acs_position_offset
+                }}
+                count = 4
+            }}
+        }}
+    }}     
+    effect = {{
+        acs_save_undo_0_filters = yes
+        if = {{
+            limit = {{
                 NOT = {{
-                    any_in_list = {{
+                    any_in_global_list = {{
                         variable = {this.ListVariable()}
                         AND = {{
                             this >= scope:position
@@ -342,13 +376,22 @@ $@"{ScriptedGuiName} = {{
                             this <= acs_position_offset
                         }}
                     }}
-                }}    
-            }} 
-            trigger_else_if = {{
-                limit = {{ 
-                    scope:ctrl_value = 1
                 }}
-                any_in_list = {{
+            }}
+            set_local_variable = {{ name = acs_counter value = scope:position }}
+            set_local_variable = {{ name = acs_total_left value = 4 }}
+            while = {{
+                limit = {{
+                    local_var:acs_total_left > 0
+                }}
+                add_to_global_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 2 }}
+                change_local_variable = {{ name = acs_total_left add = -1 }}
+            }}
+        }}
+        else_if = {{
+            limit = {{
+                any_in_global_list = {{
                     variable =  {this.ListVariable()}
                     OR = {{
                         this = scope:position
@@ -362,108 +405,44 @@ $@"{ScriptedGuiName} = {{
                     count = 4
                 }}
             }}
-            trigger_else = {{
-                 any_in_list = {{
-                    variable =  {this.ListVariable()}
-                    OR = {{
-                        save_temporary_scope_value_as = {{ name = offset value = 1 }}
-                        this = acs_position_offset
-                        save_temporary_scope_value_as = {{ name = offset value = 3 }}
-                        this = acs_position_offset
-                        save_temporary_scope_value_as = {{ name = offset value = 5 }}
-                        this = acs_position_offset
-                        save_temporary_scope_value_as = {{ name = offset value = 7 }}
-                        this = acs_position_offset
-                    }}
-                    count = 4
-                }}
-            }}
-        }}  
-    }}     
-    effect = {{
-        dummy_male = {{
-            acs_save_undo_0_filters = yes
-            if = {{
+            set_local_variable = {{ name = acs_counter value = scope:position }}
+            set_local_variable = {{ name = acs_total_left value = 4 }}
+            while = {{
                 limit = {{
-                    NOT = {{
-                        any_in_list = {{
-                            variable = {this.ListVariable()}
-                            AND = {{
-                                this >= scope:position
-                                save_temporary_scope_value_as = {{ name = offset value = 7 }}
-                                this <= acs_position_offset
-                            }}
-                        }}
-                    }}
+                    local_var:acs_total_left > 0
                 }}
-                set_local_variable = {{ name = acs_counter value = scope:position }}
-                set_local_variable = {{ name = acs_total_left value = 4 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_total_left > 0
-                    }}
-                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 2 }}
-                    change_local_variable = {{ name = acs_total_left add = -1 }}
-                }}
+                remove_list_global_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
+                add_to_global_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
+                change_local_variable = {{ name = acs_total_left add = -1 }}
             }}
-            else_if = {{
-                limit = {{
-                    any_in_list = {{
-                        variable =  {this.ListVariable()}
-                        OR = {{
-                            this = scope:position
-                            save_temporary_scope_value_as = {{ name = offset value = 2 }}
-                            this = acs_position_offset
-                            save_temporary_scope_value_as = {{ name = offset value = 4 }}
-                            this = acs_position_offset
-                            save_temporary_scope_value_as = {{ name = offset value = 6 }}
-                            this = acs_position_offset
-                        }}
-                        count = 4
-                    }}
-                }}
-                set_local_variable = {{ name = acs_counter value = scope:position }}
-                set_local_variable = {{ name = acs_total_left value = 4 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_total_left > 0
-                    }}
-                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                    add_to_variable_list = {{ name =  {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                    change_local_variable = {{ name = acs_total_left add = -1 }}
-                }}
-            }}
-            else = {{
-                set_local_variable = {{ name = acs_counter value = scope:position }}
-                set_local_variable = {{ name = acs_total_left value = 8 }}
-                while = {{
-                    limit = {{
-                        local_var:acs_total_left > 0
-                    }}
-                    remove_list_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
-                    change_local_variable = {{ name = acs_counter add = 1 }}
-                    change_local_variable = {{ name = acs_total_left add = -1 }}
-                }}
-            }}
-            dummy_male = {{
-                if = {{
-                    limit = {{
-                        any_in_list = {{
-                            variable = {this.ListVariable()}
-                            always = yes
-                        }}
-                    }}
-                    add_to_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
-                }}
-                else = {{
-                    remove_list_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
-                }}
-            }}
-            acs_auto_apply_sorting_and_filters = yes
         }}
+        else = {{
+            set_local_variable = {{ name = acs_counter value = scope:position }}
+            set_local_variable = {{ name = acs_total_left value = 8 }}
+            while = {{
+                limit = {{
+                    local_var:acs_total_left > 0
+                }}
+                remove_list_global_variable = {{ name = {this.ListVariable()} target = local_var:acs_counter }}
+                change_local_variable = {{ name = acs_counter add = 1 }}
+                change_local_variable = {{ name = acs_total_left add = -1 }}
+            }}
+        }}
+        if = {{
+            limit = {{
+                any_in_global_list = {{
+                    variable = {this.ListVariable()}
+                    always = yes
+                }}
+            }}
+            add_to_global_variable_list = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+        }}
+        else = {{
+            remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
+        }}
+        acs_auto_apply_sorting_and_filters = yes
     }}
 }}";
         public string ScriptedGui => IsSmall ? "" : ScripterGuiForLargeGroups + 
