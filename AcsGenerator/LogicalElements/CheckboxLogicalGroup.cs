@@ -205,7 +205,7 @@ $@"{ScriptedGuiName} = {{
         else = {{
             remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
         }}
-        acs_auto_apply_sorting_and_filters = yes
+        acs_se_auto_apply_sorting_and_filters = yes
     }}
 }}";
         
@@ -302,7 +302,7 @@ $@"{ScriptedGuiName} = {{
             }}
             remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
         }}
-        acs_auto_apply_sorting_and_filters = yes
+        acs_se_auto_apply_sorting_and_filters = yes
     }} 
 }}";
         
@@ -442,7 +442,7 @@ $@"{ScriptedGuiName} = {{
         else = {{
             remove_list_global_variable = {{ name = {MainSavable.Instance.ListVariable()} target = {Index} }}
         }}
-        acs_auto_apply_sorting_and_filters = yes
+        acs_se_auto_apply_sorting_and_filters = yes
     }}
 }}";
         public string ScriptedGui => IsSmall ? "" : ScripterGuiForLargeGroups + 

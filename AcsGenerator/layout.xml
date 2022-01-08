@@ -12,7 +12,7 @@
         <DropDown Name="acs_filter_no_heritage"/>
         <DropDown Name="acs_filter_parents"/>
     </VisualOrganizationGroup>
-    <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="acs_game_concept_personality_traits" Localization="$game_concept_personality_traits$" IsDropDown="true">
+    <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="acs_game_concept_personal" Localization="$game_concept_personal$" IsDropDown="true">
         <DropDown Name="acs_filter_adult"/>
         <DropDown Name="acs_filter_gender"/>
         <DropDown Name="acs_filter_martial_status"/>

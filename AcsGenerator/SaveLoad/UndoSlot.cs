@@ -23,7 +23,7 @@ namespace Vipl.AcsGenerator.SaveLoad
             has_global_variable = asc_save_slot_undo_{Slot}_used
         }}
         {Items.Select(i => i.LoadFromSlot(Slot, "_undo", !IsFirst)).Join(2)}
-        {(IsLast ? RemoveCurrentSlot : LoadFromNextSlot).Intend(2)}{(IsFirst? "\nacs_auto_apply_sorting_and_filters = yes" : "").Intend(2)}
+        {(IsLast ? RemoveCurrentSlot : LoadFromNextSlot).Intend(2)}{(IsFirst? "\nacs_se_auto_apply_sorting_and_filters = yes" : "").Intend(2)}
     }}
    
 }}";

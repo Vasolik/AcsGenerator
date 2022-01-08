@@ -48,7 +48,7 @@ namespace Vipl.AcsGenerator.SaveLoad
             acs_save_undo_0_filters = yes
         }}
         {Items.Select(i => i.LoadFromSlot(Slot)).Join(2)}
-        acs_auto_apply_sorting_and_filters = yes
+        acs_se_auto_apply_sorting_and_filters = yes
     }}  
 }}";
 
@@ -57,21 +57,22 @@ namespace Vipl.AcsGenerator.SaveLoad
     if = {{
         limit = {{ 
             NOR = {{
-                NOT = {{ has_global_variable = acs_auto_apply_sorting_and_filters }}
+                NOT = {{ has_global_variable = acs_first_time_setup_v8_1 }}
                 acs_current_slot_used = -2 
             }}
         }}
         acs_save_undo_0_filters = yes
     }}
     set_global_variable = {{ name = acs_sort_by value = 0  }}
-    set_global_variable = {{ name = acs_sort_by_ascending value = 1  }}
+    set_global_variable = acs_sort_by_ascending
     set_global_variable = {{ name = acs_select_count value = 100 }}
     {Items.Select(i => i.ResetValue).Join(1)}  
     if = {{
         limit = {{
-            NOT = {{ has_global_variable = acs_auto_apply_sorting_and_filters }}
+            NOT = {{ has_global_variable = acs_first_time_setup_v8_1 }}
         }}
-        set_global_variable = {{ name = acs_auto_apply_sorting_and_filters value = yes }}
+        set_global_variable = acs_gv_auto_apply_sorting_and_filters
+        set_global_variable = acs_first_time_setup_v8_1
     }}
 }}";
         public string MakeReducedListAndCount => 
