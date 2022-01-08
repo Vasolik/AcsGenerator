@@ -1,13 +1,12 @@
 ﻿using Vipl.AcsGenerator.SaveLoad;
 
-namespace Vipl.AcsGenerator.LogicalElements
+namespace Vipl.AcsGenerator.LogicalElements;
+
+public interface ILogicalElement 
 {
-    public interface ILogicalElement 
-    {
-        string SwitchTrigger { get; }
-        ISavable Owner { get;  }
-        int NumberOfFlagsNeeded { get; }
-        int Index { get; set; }
-        int IndexInGroup { get; set; }
-    }
+    string SwitchTrigger { get; }
+    ISavable Owner { get;  }
+    int NumberOfFlagsNeeded { get; }
+    int Index { get; set; }
+    int IndexInGroup { get; set; }
 }

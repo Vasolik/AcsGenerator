@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>AcsGenerator</AssemblyName>
         <RootNamespace>Vipl.AcsGenerator</RootNamespace>
         <Authors>Vipl</Authors>
@@ -11,6 +11,9 @@
         <Product>Vipl</Product>
         <Configurations>Debug;Release;DebugSingle;ReleaseSingle</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSingle|AnyCPU'">

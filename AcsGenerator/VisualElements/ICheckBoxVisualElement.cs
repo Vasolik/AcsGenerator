@@ -1,9 +1,8 @@
-﻿namespace Vipl.AcsGenerator.VisualElements
+﻿namespace Vipl.AcsGenerator.VisualElements;
+
+public interface ICheckBoxVisualElement : IVisualElementWithScriptedGui
 {
-    public interface ICheckBoxVisualElement : IVisualElementWithScriptedGui
-    {
-        string CheckBoxFrameSelector { get; }
-        string GetGuiElement(string style);
+    string CheckBoxFrameSelector { get; }
+    string GetGuiElement(string style);
         
-    }
 }

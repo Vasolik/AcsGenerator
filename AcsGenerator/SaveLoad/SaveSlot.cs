@@ -1,30 +1,28 @@
-﻿using System.Linq;
+﻿namespace Vipl.AcsGenerator.SaveLoad;
 
-namespace Vipl.AcsGenerator.SaveLoad
+public class SaveSlot
 {
-    public class SaveSlot
+    public SaveSlot(ISavable[] items, int slot)
     {
-        public SaveSlot(ISavable[] items, int slot)
-        {
-            Items = items;
-            Slot = slot;
-        }
+        Items = items;
+        Slot = slot;
+    }
 
-        public ISavable[] Items { get; }
-        public int Slot { get; }
-        public bool IsDefault => Slot < 0;
+    public ISavable[] Items { get; }
+    public int Slot { get; }
+    public bool IsDefault => Slot < 0;
 
-        public string IsSlotUsed
-            =>
-                $@"{(IsDefault? "": "else_")}if = {{
+    public string IsSlotUsed
+        =>
+            $@"{(IsDefault? "": "else_")}if = {{
     limit = {{{(!IsDefault ? $"\n        has_global_variable = asc_save_slot_{Slot}_used": "")}
         {(IsDefault ? Items.Select(i => i.DefaultCheck) : Items.Select(i => i.GetSlotCheck(Slot))).Join(2)}
     }}
     add = { ( IsDefault ? Slot : Slot + 1)}
 }}";
 
-        public string SaveToSlot
-            => $@"acs_save_{Slot}_filters = {{
+    public string SaveToSlot
+        => $@"acs_save_{Slot}_filters = {{
     if = {{
         limit = {{
             NOT = {{ acs_current_slot_used = -2 }}
@@ -37,8 +35,8 @@ namespace Vipl.AcsGenerator.SaveLoad
     }}
 }}";
         
-        public string LoadFromSlot
-            => $@"acs_load_{Slot}_filters = {{
+    public string LoadFromSlot
+        => $@"acs_load_{Slot}_filters = {{
     if = {{
         limit = {{
             has_global_variable = asc_save_slot_{Slot}_used
@@ -52,8 +50,8 @@ namespace Vipl.AcsGenerator.SaveLoad
     }}  
 }}";
 
-        public string Reset => 
-            $@"acs_reset_filters_and_sorting = {{
+    public string Reset => 
+        $@"acs_reset_filters_and_sorting = {{
     if = {{
         limit = {{ 
             NOR = {{
@@ -75,9 +73,8 @@ namespace Vipl.AcsGenerator.SaveLoad
         set_global_variable = acs_first_time_setup_v8_1
     }}
 }}";
-        public string MakeReducedListAndCount => 
-$@"acs_make_reduced_and_count = {{
+    public string MakeReducedListAndCount => 
+        $@"acs_make_reduced_and_count = {{
     {Items.Select(i => i.MakeReducedListAndCount).Join(1)}
 }}";    
-    }
 }

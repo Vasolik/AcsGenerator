@@ -1,11 +1,8 @@
 ﻿using Vipl.AcsGenerator.VisualElements;
 
-namespace Vipl.AcsGenerator.Layouts
+namespace Vipl.AcsGenerator.Layouts;
+
+public interface ILayout:  IVisualElement
 {
-
-    public interface ILayout:  IVisualElement
-    {
-        string GuiElement { get; }
-    }
+    string GuiElement { get; }
 }
-

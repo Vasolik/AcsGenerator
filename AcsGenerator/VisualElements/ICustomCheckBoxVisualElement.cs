@@ -1,12 +1,12 @@
-﻿namespace Vipl.AcsGenerator.VisualElements
+﻿namespace Vipl.AcsGenerator.VisualElements;
+
+public interface ICustomCheckBoxVisualElement : ICheckBoxVisualElement
 {
-    public interface ICustomCheckBoxVisualElement : ICheckBoxVisualElement
-    {
-        public string Icon { get; }
-        public string Variable { get; }
+    public string Icon { get; }
+    public string Variable { get; }
         
-        string GetCustomCheckBox(string style) =>
-            $@"acs_trait_item_custom_{style} = {{
+    string GetCustomCheckBox(string style) =>
+        $@"acs_trait_item_custom_{style} = {{
         datacontext = ""[GetScriptedGui( '{ScriptedGuiName}' )]""  
     blockoverride ""acs_trait_item_action"" {{
         onclick = ""[ScriptedGui.Execute( {GetSetScopes(0)} )]""
@@ -21,5 +21,4 @@
         texture = ""{Icon}""
     }}
 }}";
-    }
 }

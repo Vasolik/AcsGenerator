@@ -1,23 +1,21 @@
-﻿using System.Linq;
+﻿namespace Vipl.AcsGenerator.SaveLoad;
 
-namespace Vipl.AcsGenerator.SaveLoad
+public class UndoSlot
 {
-    public class UndoSlot
+    public UndoSlot(ISavable[] items, int slot, bool isLast)
     {
-        public UndoSlot(ISavable[] items, int slot, bool isLast)
-        {
-            Items = items;
-            Slot = slot;
-            IsLast = isLast;
-        }
+        Items = items;
+        Slot = slot;
+        IsLast = isLast;
+    }
 
-        public ISavable[] Items { get; }
-        public int Slot { get; }
-        public bool IsLast { get; }
-        public bool IsFirst => Slot == 0;
+    public ISavable[] Items { get; }
+    public int Slot { get; }
+    public bool IsLast { get; }
+    public bool IsFirst => Slot == 0;
 
-        public string LoadFromSlot
-            => $@"acs_load_undo_{Slot}_filters = {{
+    public string LoadFromSlot
+        => $@"acs_load_undo_{Slot}_filters = {{
     if = {{
         limit = {{
             has_global_variable = asc_save_slot_undo_{Slot}_used
@@ -28,8 +26,8 @@ namespace Vipl.AcsGenerator.SaveLoad
    
 }}";
 
-        public string LoadFromNextSlot
-            => @$"if = {{
+    public string LoadFromNextSlot
+        => @$"if = {{
     limit = {{
         NOT = {{ has_global_variable = asc_save_slot_undo_{Slot + 1}_used }}
     }}
@@ -37,21 +35,20 @@ namespace Vipl.AcsGenerator.SaveLoad
 }}
 acs_load_undo_{Slot + 1}_filters = yes";
 
-        public string SaveToNextSlot => !IsLast ? $@"
+    public string SaveToNextSlot => !IsLast ? $@"
 if = {{
     limit = {{
         has_global_variable = asc_save_slot_undo_{Slot}_used    
     }}
     acs_save_undo_{Slot + 1}_filters = yes
 }}": "";
-        public string RemoveCurrentSlot
-            => $"remove_global_variable = asc_save_slot_undo_{Slot}_used";
+    public string RemoveCurrentSlot
+        => $"remove_global_variable = asc_save_slot_undo_{Slot}_used";
         
         
-        public string SaveToSlot
-            =>  $@"acs_save_undo_{Slot}_filters = {{{SaveToNextSlot.Intend(1)}
+    public string SaveToSlot
+        =>  $@"acs_save_undo_{Slot}_filters = {{{SaveToNextSlot.Intend(1)}
     {Items.Select(i => i.SaveToSlot(Slot, "_undo", !IsFirst)).Join(1)}
     set_global_variable = asc_save_slot_undo_{Slot}_used
 }}";
-    }
 }

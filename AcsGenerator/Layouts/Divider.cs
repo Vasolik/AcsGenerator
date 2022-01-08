@@ -1,12 +1,10 @@
-﻿using System;
-using Vipl.AcsGenerator.VisualElements;
+﻿using Vipl.AcsGenerator.VisualElements;
 
-namespace Vipl.AcsGenerator.Layouts
+namespace Vipl.AcsGenerator.Layouts;
+
+public class Divider : ILayout
 {
-    public class Divider : ILayout
-    {
 
-        public LocalizationEntry[] Localizations => Array.Empty<LocalizationEntry>();
-        public string GuiElement => "divider = { size = { 482 4 } }";
-    }
+    public LocalizationEntry[] Localizations => Array.Empty<LocalizationEntry>();
+    public string GuiElement => "divider = { size = { 482 4 } }";
 }

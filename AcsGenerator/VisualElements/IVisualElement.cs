@@ -1,8 +1,7 @@
-﻿namespace Vipl.AcsGenerator.VisualElements
+﻿namespace Vipl.AcsGenerator.VisualElements;
+
+public interface IVisualElement : ILocalizable
 {
-    public interface IVisualElement : ILocalizable
-    {
         
 
-    }
 }

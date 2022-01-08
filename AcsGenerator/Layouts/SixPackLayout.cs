@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml;
+﻿using System.Xml;
 using Vipl.AcsGenerator.VisualElements;
 
-namespace Vipl.AcsGenerator.Layouts
+namespace Vipl.AcsGenerator.Layouts;
+
+public class SixPackLayout : ILayout
 {
-    public class SixPackLayout : ILayout
+    public SixPackLayout(XmlElement element)
     {
-        public SixPackLayout(XmlElement element)
-        {
-            Name = element.GetAttribute("LocalizationKey");
-            Localization = new LocalizationEntry(){Key = Name, Localization = element.GetAttribute("Localization"), File = LocalizationFiles.TraitFile };
-            Elements = element.ChildNodes.OfType<XmlElement>()
-                .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("Name")])
-                .Cast<ICheckBoxVisualElement>()
-                .ToArray();
-        }
-        private string Name { get; }
-        private LocalizationEntry Localization { get; }
-        public ICheckBoxVisualElement[] Elements { get; }
+        Name = element.GetAttribute("LocalizationKey");
+        Localization = new LocalizationEntry(){Key = Name, Localization = element.GetAttribute("Localization"), File = LocalizationFiles.TraitFile };
+        Elements = element.ChildNodes.OfType<XmlElement>()
+            .Select(x => SimpleCheckBoxVisualElement.All[x.GetAttribute("Name")])
+            .Cast<ICheckBoxVisualElement>()
+            .ToArray();
+    }
+    private string Name { get; }
+    private LocalizationEntry Localization { get; }
+    public ICheckBoxVisualElement[] Elements { get; }
    
-        public string GuiElement =>
-            $@"flowcontainer = {{
+    public string GuiElement =>
+        $@"flowcontainer = {{
     widget = {{
         size = {{ 69 65 }}
         text_single = {{
@@ -50,8 +46,7 @@ namespace Vipl.AcsGenerator.Layouts
     }}
 }}";
 
-        public LocalizationEntry[] Localizations
-            => Localization.MakeArray(Elements.SelectMany(e => e.Localizations));
+    public LocalizationEntry[] Localizations
+        => Localization.MakeArray(Elements.SelectMany(e => e.Localizations));
 
-    }
 }
