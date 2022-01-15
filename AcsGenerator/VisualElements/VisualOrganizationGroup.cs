@@ -72,7 +72,7 @@ public class VisualOrganizationGroup : ILayout
     public string Variable { get; }
     public bool IsDropDown { get; }
         
-    public LocalizationEntry Localization { get; }
+    public LocalizationEntry? Localization { get; }
         
     private string HeaderBlockOverrides =>
         $@"
@@ -119,7 +119,7 @@ blockoverride ""acs_filter_visible"" {{
     {
         foreach (var visualOrganisation in All)
         {
-            File.WriteAllText($"{path}gui/{visualOrganisation.Variable}.gui",visualOrganisation.GuiElement, new System.Text.UTF8Encoding(true));
+            File.WriteAllText($"{path}gui/gen/gen_{visualOrganisation.Variable}.gui",visualOrganisation.GuiElement, new System.Text.UTF8Encoding(true));
         }
     }
 

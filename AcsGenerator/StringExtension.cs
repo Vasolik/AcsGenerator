@@ -1,4 +1,6 @@
-﻿namespace Vipl.AcsGenerator;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Vipl.AcsGenerator;
 
 public static class StringExtension
 {
@@ -19,12 +21,12 @@ public static class StringExtension
             .ToArray();
     }
 
-    public static string Join (this IEnumerable<string> values, int intend = 0,  bool first = false, string separator = "\n")
+    public static string Join (this IEnumerable<string?> values, int intend = 0,  bool first = false, string separator = "\n")
     {
         return string.Join(separator, values.Where(v => v is not null)).Intend(intend, first);
     }
         
-    public static bool IsNullOrEmpty (this string value)
+    public static bool IsNullOrEmpty ([NotNullWhen(false)]this string? value)
     {
         return string.IsNullOrEmpty(value);
     }
@@ -34,7 +36,7 @@ public static class StringExtension
         return string.IsNullOrEmpty(value) ? 0 : int.Parse(value);
     }
         
-    public static bool ToBool(this string value)
+    public static bool ToBool(this string? value)
     {
         return !string.IsNullOrEmpty(value) && bool.Parse(value);
     }

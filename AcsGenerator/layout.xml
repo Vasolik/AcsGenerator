@@ -3,27 +3,27 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.vipl.in.rs/layout layout.xsd">
     <VisualOrganizationGroup Name="acs_filter_main" IsDropDown="true">
-        <DropDown Name="acs_filter_relation"/>
-        <DropDown Name="acs_filter_diplomatic_range"/>
+        <DropDown Name="relation"/>
+        <DropDown Name="diplomatic_range"/>
     </VisualOrganizationGroup>
     <VisualOrganizationGroup Name="acs_filter_dropdown_authority_and_heritage" LocalizationKey="acs_filter_dropdown_authority_and_heritage" Localization="Authority and Heritage" IsDropDown="true">
-        <DropDown Name="acs_filter_ruler"/>
-        <DropDown Name="acs_filter_heritage"/>
-        <DropDown Name="acs_filter_no_heritage"/>
-        <DropDown Name="acs_filter_parents"/>
+        <DropDown Name="ruler"/>
+        <DropDown Name="heritage"/>
+        <DropDown Name="no_heritage"/>
+        <DropDown Name="parents"/>
     </VisualOrganizationGroup>
     <VisualOrganizationGroup Name="acs_filter_dropdown_personal" LocalizationKey="acs_game_concept_personal" Localization="$game_concept_personal$" IsDropDown="true">
-        <DropDown Name="acs_filter_adult"/>
-        <DropDown Name="acs_filter_gender"/>
-        <DropDown Name="acs_filter_martial_status"/>
-        <DropDown Name="acs_filter_imprisonment_status"/>
-        <DropDown Name="acs_filter_hooks"/>
-        <DropDown Name="acs_filter_sexuality"/>
+        <DropDown Name="adult"/>
+        <DropDown Name="gender"/>
+        <DropDown Name="martial_status"/>
+        <DropDown Name="imprisonment_status"/>
+        <DropDown Name="hooks"/>
+        <DropDown Name="sexuality"/>
     </VisualOrganizationGroup>
     <VisualOrganizationGroup Name="acs_filter_dropdown_membership" LocalizationKey="acs_membership_filter_category" Localization="$membership_filter_category$" IsDropDown="true">
-        <DropDown Name="acs_filter_religion"/>
-        <DropDown Name="acs_filter_culture"/>
-        <DropDown Name="acs_filter_dynasty"/>
+        <DropDown Name="religion"/>
+        <DropDown Name="culture"/>
+        <DropDown Name="dynasty"/>
     </VisualOrganizationGroup>
     <VisualOrganizationGroup Name="any_trait_of_kind"
                              Localization="Trait groups">

@@ -1,10 +1,9 @@
 ﻿using System.Xml;
-using Vipl.AcsGenerator.Layouts;
 using Vipl.AcsGenerator.LogicalElements;
 using Vipl.AcsGenerator.SaveLoad;
 using Vipl.AcsGenerator.VisualElements;
 
-namespace Vipl.AcsGenerator;
+namespace Vipl.AcsGenerator.Layouts;
 
 public class Option: ILocalizable, ILogicalElement
 {
@@ -17,7 +16,7 @@ public class Option: ILocalizable, ILogicalElement
     public LocalizationEntry Localization { get;  }
     public LocalizationEntry[] Localizations => Localization.Localization.IsNullOrEmpty() ? Array.Empty<LocalizationEntry>() : Localization.MakeArray();
     public string Trigger { get;  }
-    public string SwitchTrigger => IndexInGroup > 0 ?
+    public string? SwitchTrigger => IndexInGroup > 0 ?
         $@"{Index+ IndexInGroup - 1} = {{
     {Trigger.Intend(1)}
 }}" : null;
@@ -60,6 +59,9 @@ public class DropDown : ISavable, ILogicalElement, IVisualElementWithScriptedGui
     public LocalizationEntry Localization { get; }
     public LocalizationEntry[] Localizations => Localization.Localization.IsNullOrEmpty() ? Options.SelectMany(o => o.Localizations).ToArray() : Localization.MakeEnumerable().Concat(Options.SelectMany(o => o.Localizations)).ToArray();
     public string Name { get;  }
+
+    public string Variable => $"acs_v_filter_{Name}";
+    public string ScriptedGui => IsSpecial ? $"acs_sg_filter_{Name}" : "acs_filter_simple_dropdown";
     public int DefaultValue { get; }
         
     public Option[] Options { get; }
@@ -69,6 +71,8 @@ public class DropDown : ISavable, ILogicalElement, IVisualElementWithScriptedGui
 
     public List<ILogicalElement> Elements => Options.Cast<ILogicalElement>().ToList();
     public string ScriptedGuiName => null;
+
+
     public string GetSetScopes(int value)
         => $"GuiScope.AddScope( 'ctrl_value',  {this.GetDigit(value)} )" +
            (!IsSpecial ? $".AddScope( 'position' , {this.GetDigit(Index)} )" +
@@ -77,18 +81,21 @@ public class DropDown : ISavable, ILogicalElement, IVisualElementWithScriptedGui
         
 
 
-    public string DefaultCheck => $"global_var:{Name} = {DefaultValue}";
+    public string? DefaultCheck => $"var:{Variable} = {DefaultValue}";
 
-    public string ResetValue
-        => $"set_global_variable = {{ name = {Name} value = {DefaultValue} }}";
+    public string? ResetValue
+        => $"set_variable = {{ name = {Variable} value = {DefaultValue} }}";
 
-    public string GetSlotCheck(int slot, string slotPrefix = "")
-        => $"global_var:{Name} = global_var:{this.MakeVariable(slot, slotPrefix)}";
-    public string SaveToSlot(int slot, string slotPrefix = "", bool fromPrev = false)
-        => $"set_global_variable = {{ name = {this.MakeVariable(slot, slotPrefix)} value = global_var:{this.MakePrevVariable(slot, slotPrefix, fromPrev)} }}";
+    public string GetSlotCheck
+        => $"var:{Variable} = $SLOT2$.var:{Variable}";
 
-    public string LoadFromSlot(int slot, string slotPrefix = "", bool toPrev = false)
-        => @$"set_global_variable = {{ name = {this.MakePrevVariable(slot, slotPrefix, toPrev)} value = global_var:{this.MakeVariable(slot, slotPrefix)} }}";
+    public string CopySlots => 
+$@"if = {{
+    limit = {{ has_variable = {Variable} }}
+    $TO$ = {{ set_variable = {{ name = {Variable} value = $FROM$.var:{Variable} }} }}
+}}";
+
+    public string ClearSlot => $"remove_variable = {Variable}";
 
     public bool HaveSomethingToSave => false;
     public string SwitchTrigger => IsSpecial ? null : Options.Select(o => o.SwitchTrigger).Join();
@@ -112,7 +119,7 @@ public class DropDown : ISavable, ILogicalElement, IVisualElementWithScriptedGui
 
     public int IndexInGroup { get; set; }
     public string GuiElement =>@$"acs_filter_item = {{
-    datacontext = ""[GetScriptedGui( '{(IsSpecial ? Name : "acs_filter_simple_dropdown")}' )]""
+    datacontext = ""[GetScriptedGui( '{ScriptedGui}' )]""
     blockoverride ""filter_name"" {{  
         text = ""{Localization.Key}""
     }}

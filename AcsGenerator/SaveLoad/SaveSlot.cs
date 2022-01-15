@@ -12,69 +12,44 @@ public class SaveSlot
     public int Slot { get; }
     public bool IsDefault => Slot < 0;
 
-    public string IsSlotUsed
-        =>
-            $@"{(IsDefault? "": "else_")}if = {{
-    limit = {{{(!IsDefault ? $"\n        has_global_variable = asc_save_slot_{Slot}_used": "")}
-        {(IsDefault ? Items.Select(i => i.DefaultCheck) : Items.Select(i => i.GetSlotCheck(Slot))).Join(2)}
-    }}
-    add = { ( IsDefault ? Slot : Slot + 1)}
+    public string CopySlots
+        => $@"acs_set_copy_save_slots = {{ # FROM : scope, TO : scope
+    $FROM$ = {{
+        {Items.Select(i => i.CopySlots).Join(2)}
+    }} 
 }}";
-
-    public string SaveToSlot
-        => $@"acs_save_{Slot}_filters = {{
-    if = {{
-        limit = {{
-            NOT = {{ acs_current_slot_used = -2 }}
-        }}
-        {Items.Select(i => i.SaveToSlot(Slot)).Join(2)} 
-        set_global_variable = asc_save_slot_{Slot}_used
-    }}
-    else = {{
-        remove_global_variable = asc_save_slot_{Slot}_used
-    }}
-}}";
-        
-    public string LoadFromSlot
-        => $@"acs_load_{Slot}_filters = {{
-    if = {{
-        limit = {{
-            has_global_variable = asc_save_slot_{Slot}_used
-        }}
-        if = {{
-            limit = {{  NOT = {{ acs_current_slot_used = {Slot} }} }}
-            acs_save_undo_0_filters = yes
-        }}
-        {Items.Select(i => i.LoadFromSlot(Slot)).Join(2)}
-        acs_se_auto_apply_sorting_and_filters = yes
-    }}  
+    
+    public string ClearSlot
+=> $@"acs_set_clear_save_slot = {{ # SLOT : scope
+    $SLOT$ = {{
+        {Items.Select(i => i.ClearSlot).Join(2)}
+    }} 
 }}";
 
     public string Reset => 
-        $@"acs_reset_filters_and_sorting = {{
-    if = {{
-        limit = {{ 
-            NOR = {{
-                NOT = {{ has_global_variable = acs_first_time_setup_v8_1 }}
-                acs_current_slot_used = -2 
-            }}
-        }}
-        acs_save_undo_0_filters = yes
-    }}
-    set_global_variable = {{ name = acs_sort_by value = 0  }}
-    set_global_variable = acs_sort_by_ascending
-    set_global_variable = {{ name = acs_select_count value = 100 }}
-    {Items.Select(i => i.ResetValue).Join(1)}  
-    if = {{
-        limit = {{
-            NOT = {{ has_global_variable = acs_first_time_setup_v8_1 }}
-        }}
-        set_global_variable = acs_gv_auto_apply_sorting_and_filters
-        set_global_variable = acs_first_time_setup_v8_1
+$@"acs_set_reset_save_slot_to_default = {{ # SLOT : scope
+    $SLOT$ = {{ 
+        {Items.Select(i => i.ResetValue).Join(2)}  
     }}
 }}";
     public string MakeReducedListAndCount => 
-        $@"acs_make_reduced_and_count = {{
+        $@"acs_make_reduced_and_count = {{ 
     {Items.Select(i => i.MakeReducedListAndCount).Join(1)}
-}}";    
+}}";
+
+    public string SlotEqualTrigger => IsDefault ? SlotEqualTriggerDefault : SlotEqualTriggerNormal;
+    public string SlotEqualTriggerNormal =>
+$@"acs_stt_equal_slots = {{ # SLOT1 : scope, SLOT2 : scope
+    $SLOT1$ = {{
+        {Items.Select(i => i.GetSlotCheck).Join(2)}
+    }}
+}}";
+
+    public string SlotEqualTriggerDefault =>
+$@"acs_stt_is_slot_default = {{ # SLOT : scope
+    $SLOT$ = {{
+        {Items.Select(i => i.DefaultCheck).Join(2)}
+    }}
+}}";
+    
 }

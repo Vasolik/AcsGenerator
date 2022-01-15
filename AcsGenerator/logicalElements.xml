@@ -2,7 +2,7 @@
 <Main xmlns="http://www.vipl.in.rs/logical_elements"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.vipl.in.rs/logical_elements logicalElements.xsd">
-    <DropDown LocalizationKey="relation_filter" IsSpecial="true" Name="acs_filter_relation" DefaultValue="4">
+    <DropDown LocalizationKey="relation_filter" IsSpecial="true" Name="relation" DefaultValue="4">
         <Option LocalizationKey="any_filter_option"/>
         <Option LocalizationKey="acs_any_close_realm_and_this" Localization="Top Realm and Close Realms"/>
 		<Option LocalizationKey="acs_any_neighboring_realm_and_this_aw" Localization="Top Realm and Neighboring realms+"/>
@@ -19,7 +19,7 @@
 		<Option LocalizationKey="acs_any_neighboring_realm_awc" Localization="Neighboring realms+ courts"/>
 		<Option LocalizationKey="acs_any_neighboring_realm_c" Localization="Neighboring realms courts"/>
     </DropDown>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_education_general" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_education_general" IsOwnerMain="false">
         <Trait Name="education_intrigue_1" Variable="acs_filter_trait_education_intrigue_1"/>
         <Trait Name="education_intrigue_2" Variable="acs_filter_trait_education_intrigue_2"/>
         <Trait Name="education_intrigue_3" Variable="acs_filter_trait_education_intrigue_3"/>
@@ -41,82 +41,82 @@
         <Trait Name="education_learning_3" Variable="acs_filter_trait_education_learning_3"/>
         <Trait Name="education_learning_4" Variable="acs_filter_trait_education_learning_4"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_education_martial" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_education_martial" IsOwnerMain="false">
         <Trait Name="education_martial_prowess_1" Variable="acs_filter_trait_education_martial_prowess_1"/>
         <Trait Name="education_martial_prowess_2" Variable="acs_filter_trait_education_martial_prowess_2"/>
         <Trait Name="education_martial_prowess_3" Variable="acs_filter_trait_education_martial_prowess_3"/>
         <Trait Name="education_martial_prowess_4" Variable="acs_filter_trait_education_martial_prowess_4"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_lust" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_lust" IsOwnerMain="true">
         <Trait Name="lustful" Variable="acs_filter_trait_personality_lustful"/>
         <Trait Name="chaste" Variable="acs_filter_trait_personality_chaste"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_food" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_food" IsOwnerMain="true">
         <Trait Name="gluttonous" Variable="acs_filter_trait_personality_gluttonous"/>
         <Trait Name="temperate" Variable="acs_filter_trait_personality_temperate"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_greed" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_greed" IsOwnerMain="true">
         <Trait Name="greedy" Variable="acs_filter_trait_personality_greedy"/>
         <Trait Name="generous" Variable="acs_filter_trait_personality_generous"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_work" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_work" IsOwnerMain="true">
         <Trait Name="lazy" Variable="acs_filter_trait_personality_lazy"/>
         <Trait Name="diligent" Variable="acs_filter_trait_personality_diligent"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_calmness" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_calmness" IsOwnerMain="true">
         <Trait Name="wrathful" Variable="acs_filter_trait_personality_wrathful"/>
         <Trait Name="calm" Variable="acs_filter_trait_personality_calm"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_patience" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_patience" IsOwnerMain="true">
         <Trait Name="patient" Variable="acs_filter_trait_personality_patient"/>
         <Trait Name="impatient" Variable="acs_filter_trait_personality_impatient"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_arrogance" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_arrogance" IsOwnerMain="true">
         <Trait Name="arrogant" Variable="acs_filter_trait_personality_arrogant"/>
         <Trait Name="humble" Variable="acs_filter_trait_personality_humble"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_lies" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_lies" IsOwnerMain="true">
         <Trait Name="deceitful" Variable="acs_filter_trait_personality_deceitful"/>
         <Trait Name="honest" Variable="acs_filter_trait_personality_honest"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_bravery" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_bravery" IsOwnerMain="true">
         <Trait Name="craven" Variable="acs_filter_trait_personality_craven"/>
         <Trait Name="brave" Variable="acs_filter_trait_personality_brave"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_shyness" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_shyness" IsOwnerMain="true">
         <Trait Name="shy" Variable="acs_filter_trait_personality_shy"/>
         <Trait Name="gregarious" Variable="acs_filter_trait_personality_gregarious"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_ambition" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_ambition" IsOwnerMain="true">
         <Trait Name="ambitious" Variable="acs_filter_trait_personality_ambitious"/>
         <Trait Name="content" Variable="acs_filter_trait_personality_content"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_justice" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_justice" IsOwnerMain="true">
         <Trait Name="arbitrary" Variable="acs_filter_trait_personality_arbitrary"/>
         <Trait Name="just" Variable="acs_filter_trait_personality_just"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_faith" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_faith" IsOwnerMain="true">
         <Trait Name="cynical" Variable="acs_filter_trait_personality_cynical"/>
         <Trait Name="zealous" Variable="acs_filter_trait_personality_zealous"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_trust" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_trust" IsOwnerMain="true">
         <Trait Name="paranoid" Variable="acs_filter_trait_personality_paranoid"/>
         <Trait Name="trusting" Variable="acs_filter_trait_personality_trusting"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_compassion" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_compassion" IsOwnerMain="true">
         <Trait Name="compassionate" Variable="acs_filter_trait_personality_compassionate"/>
         <Trait Name="callous" Variable="acs_filter_trait_personality_callous"/>
         <Trait Name="sadistic" Variable="acs_filter_trait_personality_sadistic"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_stubborness" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_stubborness" IsOwnerMain="true">
         <Trait Name="stubborn" Variable="acs_filter_trait_personality_stubborn"/>
         <Trait Name="fickle" Variable="acs_filter_trait_personality_fickle"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_personality_vengefulness" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_personality_vengefulness" IsOwnerMain="true">
         <Trait Name="vengeful" Variable="acs_filter_trait_personality_vengeful"/>
         <Trait Name="forgiving" Variable="acs_filter_trait_personality_forgiving"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_fame_born_status" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_fame_born_status" IsOwnerMain="false">
         <Trait Name="bastard" Variable="acs_filter_trait_fame_born_status_bastard"/>
         <Trait Name="legitimized_bastard" Variable="acs_filter_trait_fame_born_status_legitimized_bastard"/>
         <Trait Name="disputed_heritage" Variable="acs_filter_trait_fame_born_status_disputed_heritage"/>
@@ -125,7 +125,7 @@
         <Trait Name="wild_oat" Variable="acs_filter_trait_fame_born_status_wild_oat"/>
         <Trait Name="bastard_founder" Variable="acs_filter_trait_fame_born_status_bastard_founder"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_fame_kinslayer" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_fame_kinslayer" IsOwnerMain="true">
         <Trait Name="kinslayer_1" Variable="acs_filter_trait_fame_kinslayer_1"/>
         <Trait Name="kinslayer_2" Variable="acs_filter_trait_fame_kinslayer_2"/>
         <Trait Name="kinslayer_3" Variable="acs_filter_trait_fame_kinslayer_3"/>
@@ -171,27 +171,27 @@
     <Trait Name="cautious_leader" Variable="acs_filter_trait_commander_cautious_leader"/>
     <Trait Name="organizer" Variable="acs_filter_trait_commander_organizer"/>
     <Trait Name="winter_soldier" Variable="acs_filter_trait_commander_winter_soldier"/>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_reveler" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_lifestyle_reveler" IsOwnerMain="true">
         <Trait Name="reveler_1" Variable="acs_filter_trait_lifestyle_reveler_1"/>
         <Trait Name="reveler_2" Variable="acs_filter_trait_lifestyle_reveler_2"/>
         <Trait Name="reveler_3" Variable="acs_filter_trait_lifestyle_reveler_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_blademaster" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_lifestyle_blademaster" IsOwnerMain="true">
         <Trait Name="blademaster_1" Variable="acs_filter_trait_lifestyle_blademaster_1"/>
         <Trait Name="blademaster_2" Variable="acs_filter_trait_lifestyle_blademaster_2"/>
         <Trait Name="blademaster_3" Variable="acs_filter_trait_lifestyle_blademaster_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_hunter" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_lifestyle_hunter" IsOwnerMain="true">
         <Trait Name="hunter_1" Variable="acs_filter_trait_lifestyle_hunter_1"/>
         <Trait Name="hunter_2" Variable="acs_filter_trait_lifestyle_hunter_2"/>
         <Trait Name="hunter_3" Variable="acs_filter_trait_lifestyle_hunter_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_mystic" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_lifestyle_mystic" IsOwnerMain="true">
         <Trait Name="mystic_1" Variable="acs_filter_trait_lifestyle_mystic_1"/>
         <Trait Name="mystic_2" Variable="acs_filter_trait_lifestyle_mystic_2"/>
         <Trait Name="mystic_3" Variable="acs_filter_trait_lifestyle_mystic_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_lifestyle_physician" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_lifestyle_physician" IsOwnerMain="true">
         <Trait Name="physician_1" Variable="acs_filter_trait_lifestyle_physician_1"/>
         <Trait Name="physician_2" Variable="acs_filter_trait_lifestyle_physician_2"/>
         <Trait Name="physician_3" Variable="acs_filter_trait_lifestyle_physician_3"/>
@@ -231,7 +231,7 @@
     <Trait Name="journaller" Variable="acs_filter_trait_stress_journaller"/>
     <Trait Name="confider" Variable="acs_filter_trait_stress_confider"/>
     <Trait Name="athletic" Variable="acs_filter_trait_stress_athletic"/>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_health_wounded" IsOwnerMain="true">
+    <CheckboxLogicalGroup Variable="trait_health_wounded" IsOwnerMain="true">
         <Trait Name="wounded_1" Variable="acs_filter_trait_health_wounded_1"/>
         <Trait Name="wounded_2" Variable="acs_filter_trait_health_wounded_2"/>
         <Trait Name="wounded_3" Variable="acs_filter_trait_health_wounded_3"/>
@@ -268,7 +268,7 @@
     <Trait Name="scarred" Variable="acs_filter_trait_health_scarred"/>
     <Trait Name="eunuch" Variable="acs_filter_trait_health_eunuch"/>
     <Trait Name="blind" Variable="acs_filter_trait_health_blind"/>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_beauty" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_physical_beauty" IsOwnerMain="false">
         <Trait Name="beauty_bad_1" Variable="acs_filter_trait_physical_beauty_bad_1"/>
         <Trait Name="beauty_bad_2" Variable="acs_filter_trait_physical_beauty_bad_2"/>
         <Trait Name="beauty_bad_3" Variable="acs_filter_trait_physical_beauty_bad_3"/>
@@ -276,7 +276,7 @@
         <Trait Name="beauty_good_2" Variable="acs_filter_trait_physical_beauty_good_2"/>
         <Trait Name="beauty_good_3" Variable="acs_filter_trait_physical_beauty_good_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_intellect" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_physical_intellect" IsOwnerMain="false">
         <Trait Name="intellect_bad_1" Variable="acs_filter_trait_physical_intellect_bad_1"/>
         <Trait Name="intellect_bad_2" Variable="acs_filter_trait_physical_intellect_bad_2"/>
         <Trait Name="intellect_bad_3" Variable="acs_filter_trait_physical_intellect_bad_3"/>
@@ -284,7 +284,7 @@
         <Trait Name="intellect_good_2" Variable="acs_filter_trait_physical_intellect_good_2"/>
         <Trait Name="intellect_good_3" Variable="acs_filter_trait_physical_intellect_good_3"/>
     </CheckboxLogicalGroup>
-    <CheckboxLogicalGroup Variable="acs_filter_trait_physical_physique" IsOwnerMain="false">
+    <CheckboxLogicalGroup Variable="trait_physical_physique" IsOwnerMain="false">
         <Trait Name="physique_bad_1" Variable="acs_filter_trait_physical_physique_bad_1"/>
         <Trait Name="physique_bad_2" Variable="acs_filter_trait_physical_physique_bad_2"/>
         <Trait Name="physique_bad_3" Variable="acs_filter_trait_physical_physique_bad_3"/>
@@ -444,12 +444,12 @@
 }</NegativeTrigger>
     </CheckBox>
 
-    <DropDown LocalizationKey="rule_diplomatic_range" IsSpecial="false" Name="acs_filter_diplomatic_range">
+    <DropDown LocalizationKey="rule_diplomatic_range" IsSpecial="false" Name="diplomatic_range">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="in_range_filter">in_diplomatic_range = scope:acs_filter_diplomatic_range_root</Option>
         <Option LocalizationKey="not_in_range_filter">NOT = { in_diplomatic_range = scope:acs_filter_diplomatic_range_root }</Option>
     </DropDown>
-    <DropDown LocalizationKey="ruler_filter" IsSpecial="false" Name="acs_filter_ruler">
+    <DropDown LocalizationKey="ruler_filter" IsSpecial="false" Name="ruler">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="ruler_filter_option">is_ruler = yes</Option>
         <Option LocalizationKey="landed_ruler_filter_option">holds_landed_title = yes
@@ -459,7 +459,7 @@ is_ruler = yes</Option>
         <Option LocalizationKey="not_ruler_filter_option">is_ruler = no</Option>
         <Option LocalizationKey="acs_independent_filter" Localization="Independent Ruler">is_independent_ruler = yes</Option>
     </DropDown>
-    <DropDown LocalizationKey="acs_filter_trait_fame_born_status" IsSpecial="false" Name="acs_filter_heritage">
+    <DropDown LocalizationKey="acs_filter_trait_fame_born_status" IsSpecial="false" Name="heritage">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="acs_filter_heir_to_empire" Localization="Heir to Empire">any_heir_to_title = { tier = tier_empire }</Option>
         <Option LocalizationKey="acs_filter_heir_to_kingdom" Localization="Heir to Kingdom+">any_heir_to_title = { tier >= tier_kingdom }</Option>
@@ -674,7 +674,7 @@ is_ruler = yes</Option>
 	} 
 }</Option>
 	</DropDown>
-	<DropDown LocalizationKey="acs_filter_no_heritage" IsSpecial="false" Name="acs_filter_no_heritage" Localization="No Heritage">
+	<DropDown LocalizationKey="acs_filter_no_heritage" IsSpecial="false" Name="no_heritage" Localization="No Heritage">
 		<Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="acs_filter_heir_to_empire.not" Localization="Not Heir to Empire">any_heir_to_title = { tier = tier_empire count = 0 }</Option>
         <Option LocalizationKey="acs_filter_heir_to_kingdom.not" Localization="Not Heir to Kingdom+">any_heir_to_title = { tier >= tier_kingdom count = 0 }</Option>
@@ -889,7 +889,7 @@ is_ruler = yes</Option>
 	} 
 }</Option>
 	</DropDown>
-    <DropDown LocalizationKey="acs_filter_parents" IsSpecial="false" Name="acs_filter_parents" Localization="Parents">
+    <DropDown LocalizationKey="acs_filter_parents" IsSpecial="false" Name="parents" Localization="Parents">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="acs_filter_parents_alive" Localization="Living both parents">any_parent = { count = 2 is_alive = yes } </Option>
 		<Option LocalizationKey="acs_filter_1pparents_alive" Localization="Any living parent">any_parent = { count >= 1 is_alive = yes } </Option>
@@ -928,7 +928,7 @@ is_ruler = yes</Option>
     NOT = { exists = mother }
 }</Option>
     </DropDown>
-    <DropDown LocalizationKey="adult_filter" IsSpecial="false" Name="acs_filter_adult">
+    <DropDown LocalizationKey="adult_filter" IsSpecial="false" Name="adult">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="child_filter_option">is_adult = no</Option>
         <Option LocalizationKey="adult_filter_option">is_adult = yes</Option>
@@ -937,12 +937,12 @@ age &lt; 35</Option>
         <Option LocalizationKey="acs_older_adult" Localization="Older Adult">is_adult = yes
 age >= 35</Option>
     </DropDown>
-    <DropDown LocalizationKey="gender_filter" IsSpecial="false" Name="acs_filter_gender">
+    <DropDown LocalizationKey="gender_filter" IsSpecial="false" Name="gender">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="female_gender_filter">is_male = no</Option>
         <Option LocalizationKey="male_gender_filter">is_male = yes</Option>
     </DropDown>
-    <DropDown LocalizationKey="married_filter" IsSpecial="false" Name="acs_filter_martial_status">
+    <DropDown LocalizationKey="married_filter" IsSpecial="false" Name="martial_status">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="is_married_filter">is_married = yes</Option>
         <Option LocalizationKey="not_married_filter">is_married = no</Option>
@@ -950,12 +950,12 @@ age >= 35</Option>
         <Option LocalizationKey="acs_not_betrothed_filter" Localization="Not Betrothed">is_betrothed = no
 is_married = no</Option>
     </DropDown>
-    <DropDown LocalizationKey="imprisoned_filter" IsSpecial="false" Name="acs_filter_imprisonment_status">
+    <DropDown LocalizationKey="imprisoned_filter" IsSpecial="false" Name="imprisonment_status">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="is_imprisoned_filter">is_imprisoned = yes</Option>
         <Option LocalizationKey="not_imprisoned_filter">is_imprisoned = no</Option>
     </DropDown>
-    <DropDown LocalizationKey="hook_filter" IsSpecial="false" Name="acs_filter_hooks">
+    <DropDown LocalizationKey="hook_filter" IsSpecial="false" Name="hooks">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="has_hook_filter">scope:acs_filter_hooks_root = { has_hook = prev }</Option>
         <Option LocalizationKey="no_hook_filter">NOT = { scope:acs_filter_hooks_root = { has_hook = prev } }</Option>
@@ -963,28 +963,28 @@ is_married = no</Option>
         <Option LocalizationKey="acs_no_hook_no_secret_filter" Localization="No hook and no secret">NOT = { scope:acs_filter_hooks_root = { has_hook = prev } }
 NOT = { any_secret_knower = { this = scope:acs_filter_hooks_root } }</Option>
     </DropDown>
-    <DropDown LocalizationKey="acs_filter_sexuality" IsSpecial="false" Name="acs_filter_sexuality" Localization="Sexuality">
+    <DropDown LocalizationKey="acs_filter_sexuality" IsSpecial="false" Name="sexuality" Localization="Sexuality">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="acs_heterosexual" Localization="Heterosexual">has_sexuality = heterosexual</Option>
         <Option LocalizationKey="acs_homosexual" Localization="Homosexual">has_sexuality = homosexual</Option>
         <Option LocalizationKey="acs_bisexual" Localization="Bisexual">has_sexuality = bisexual</Option>
         <Option LocalizationKey="acs_asexual" Localization="Asexual">has_sexuality = asexual</Option>
     </DropDown>
-    <DropDown LocalizationKey="religion_filter" IsSpecial="false" Name="acs_filter_religion">
+    <DropDown LocalizationKey="religion_filter" IsSpecial="false" Name="religion">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="same_faith_filter_option">faith = scope:acs_filter_faith</Option>
         <Option LocalizationKey="same_religion_filter_option">religion = scope:acs_filter_religion</Option>
         <Option LocalizationKey="not_same_faith_filter_option">NOT = { faith = scope:acs_filter_faith }</Option>
         <Option LocalizationKey="not_same_religion_filter_option">NOT = { religion = scope:acs_filter_religion }</Option>
     </DropDown>
-    <DropDown LocalizationKey="culture_filter" IsSpecial="false" Name="acs_filter_culture">
+    <DropDown LocalizationKey="culture_filter" IsSpecial="false" Name="culture">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="same_culture_group_filter_option">culture_group = scope:acs_filter_culture_root.culture_group</Option>
         <Option LocalizationKey="same_culture_filter_option">culture = scope:acs_filter_culture_root.culture</Option>
         <Option LocalizationKey="not_same_culture_group_filter_option">NOT = { culture_group = scope:acs_filter_culture_root.culture_group }</Option>
         <Option LocalizationKey="not_same_culture_filter_option">NOT = { culture = scope:acs_filter_culture_root.culture }</Option>
     </DropDown>
-    <DropDown LocalizationKey="dynasty_filter" IsSpecial="false" Name="acs_filter_dynasty">
+    <DropDown LocalizationKey="dynasty_filter" IsSpecial="false" Name="dynasty">
         <Option LocalizationKey="any_filter_option" />
         <Option LocalizationKey="player_dynasty_filter">dynasty = scope:acs_filter_dynasty_root.dynasty</Option>
         <Option LocalizationKey="not_player_dynasty_filter">NOT = { dynasty = scope:acs_filter_dynasty_root.dynasty }</Option>
