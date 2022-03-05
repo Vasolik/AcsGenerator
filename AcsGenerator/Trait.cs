@@ -7,16 +7,7 @@ namespace Vipl.AcsGenerator;
 [DebuggerDisplay("{" + nameof(Name) + "} - {" + nameof(Variable) + "}")]
 public sealed class Trait : SimpleCheckBoxVisualElement
 {
-    public Trait(string variable, string name)
-        : base(name)
-    {
-        Variable = variable;
-        HiddenTraits = new List<string>();
-        Name = name;
-        All[name] = this;
-    }
-        
-    public Trait(XmlElement element)
+ public Trait(XmlElement element)
         : base(element.GetAttribute("Name"))
     {
         Variable = element.GetAttribute("Variable");

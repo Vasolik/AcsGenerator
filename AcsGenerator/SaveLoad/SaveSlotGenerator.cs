@@ -2,19 +2,15 @@
 
 public static class SaveSlotGenerator
 {
-    public static List<SaveSlot> Slots { get; } = new();
-    public static IEnumerable<SaveSlot> SlotsWithDefault => new[] {DefaultSlot}.Concat(Slots);
-    public static SaveSlot DefaultSlot { get; private set; }
+
+    private static SaveSlot DefaultSlot { get; set; } = null!;
 
     public static void GenerateSaveSlot()
     {
-        var allSavable = ISavable.All.ToArray();
-        DefaultSlot = new SaveSlot(allSavable, -1);
-        Slots.AddRange(Enumerable.Range(0, 13)
-            .Select(i => new SaveSlot(allSavable, i)));
+        DefaultSlot = new SaveSlot(ISavable.All.ToArray());
     }
 
-    public static string CopySlots => Slots.First(s => !s.IsDefault).CopySlots;
+    public static string CopySlots => DefaultSlot.CopySlots;
 
     public static string SlotManipulation =>
         $@"{CopySlots}
@@ -26,7 +22,7 @@ public static class SaveSlotGenerator
     public static string ClearSlot => DefaultSlot.ClearSlot;
     public static string MakeReducedListAndCount => DefaultSlot.MakeReducedListAndCount;
 
-    public static string? SlotEqualTrigger => @$"{DefaultSlot.SlotEqualTrigger}
-{Slots.First(s => !s.IsDefault).SlotEqualTrigger}";
+    public static string SlotEqualTrigger => @$"{DefaultSlot.SlotEqualTriggerDefault}
+{DefaultSlot.SlotEqualTriggerNormal}";
     
 }

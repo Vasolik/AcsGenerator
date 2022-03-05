@@ -5,7 +5,7 @@ using Vipl.AcsGenerator.VisualElements;
 
 namespace Vipl.AcsGenerator.LogicalElements;
 
-public class LogicalOrganisationGroup
+public static class LogicalOrganisationGroup
 {
     public static void Parse(XmlDocument document)
     {
@@ -35,6 +35,10 @@ public class LogicalOrganisationGroup
                 case nameof(DropDown):
                     var dropdown = new DropDown(element){Owner = MainSavable.Instance};
                     MainSavable.Instance.Elements.Add(dropdown);
+                    break;;
+                case nameof(ReligionFilter):
+                    var family = new ReligionFilter(element);
+                    ISavable.All.Add(family);
                     break;;
             }
         }

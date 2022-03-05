@@ -8,7 +8,6 @@ public sealed class CustomCheckBoxVisualGroup : CheckBoxVisualGroup, ICustomChec
 
     public CustomCheckBoxVisualGroup(XmlElement element)
     {
-
         Variable = element.GetAttribute(nameof(Variable));
         Elements = element.ChildNodes.OfType<XmlElement>().Select(t => Trait.All[t.GetAttribute("Name")]).Cast<SimpleCheckBoxVisualElement>().ToArray();
         Icon = element.GetAttribute(nameof(Icon));
@@ -16,7 +15,7 @@ public sealed class CustomCheckBoxVisualGroup : CheckBoxVisualGroup, ICustomChec
         All[Variable] = this;
     }
     public LocalizationEntry Localization;
-        
+    public string Variable { get;  init; }
     public string Icon { get;  }
     protected override string GetGroupGuiElement(string style) 
         => ((ICustomCheckBoxVisualElement)this).GetCustomCheckBox(style);
@@ -39,8 +38,9 @@ public sealed class CustomCheckBoxVisualGroup : CheckBoxVisualGroup, ICustomChec
         var layoutsDocument = new XmlDocument();
         layoutsDocument.Load("visual_groups.xml");
             
-        foreach (var element in layoutsDocument.GetElementsByTagName("Main").OfType<XmlElement>().First()!.ChildNodes.OfType<XmlElement>())
+        foreach (var element in layoutsDocument.GetElementsByTagName("Main").OfType<XmlElement>().First().ChildNodes.OfType<XmlElement>())
         {
+            // ReSharper disable once ObjectCreationAsStatement
             new CustomCheckBoxVisualGroup(element);
         }
             

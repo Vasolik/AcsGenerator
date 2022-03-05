@@ -51,12 +51,22 @@
     <xs:attribute type="xs:string" name="Localization" />
     <xs:attribute type="xs:int" name="DefaultValue" />
   </xs:complexType>
+  <xs:complexType name="ReligionFamily">
+    <xs:attribute type="xs:string" name="IsOther" use="required"/>
+    <xs:attribute type="xs:string" name="Family" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ReligionFilter">
+    <xs:sequence>
+      <xs:element type="ReligionFamily" name="ReligionFamily" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="Main">
     <xs:choice maxOccurs="unbounded" minOccurs="0">
       <xs:element type="CheckboxLogicalGroup" name="CheckboxLogicalGroup" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element type="Trait" name="Trait" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element type="CheckBox" name="CheckBox" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element type="DropDown" name="DropDown" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="ReligionFilter" name="ReligionFilter" minOccurs="0"/>
     </xs:choice>
   </xs:complexType>
 </xs:schema>

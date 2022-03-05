@@ -4,7 +4,6 @@ namespace Vipl.AcsGenerator.VisualElements;
 
 public abstract class CheckBoxVisualGroup : ICheckBoxVisualElement
 {
-    public virtual string Variable { get; protected init; }
     protected abstract string  GetGroupGuiElement(string style);
         
     protected abstract SimpleCheckBoxVisualElement[] Elements { get; }

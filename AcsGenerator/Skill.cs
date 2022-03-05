@@ -37,7 +37,6 @@ public class Skill : CheckBoxVisualGroup
        
     public string Name { get; }
     public int Index { get; }
-    public override string Variable => $"acs_filter_trait_education_{Name}";
     public override LocalizationEntry[] Localizations
         => Elements.SelectMany(e => e.Localizations).ToArray();
 
@@ -61,7 +60,7 @@ public class Skill : CheckBoxVisualGroup
     {
 
         return new CustomLayout( 
-            new ICheckBoxVisualElement[]{All[element["LeftSkill"].GetAttribute("Name")]}, 
-            new ICheckBoxVisualElement[]{All[element["RightSkill"].GetAttribute("Name")]});
+            new ICheckBoxVisualElement[]{All[element["LeftSkill"]!.GetAttribute("Name")]}, 
+            new ICheckBoxVisualElement[]{All[element["RightSkill"]!.GetAttribute("Name")]});
     }
 }

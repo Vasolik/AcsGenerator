@@ -2,16 +2,12 @@
 
 public class SaveSlot
 {
-    public SaveSlot(ISavable[] items, int slot)
+    public SaveSlot(ISavable[] items)
     {
         Items = items;
-        Slot = slot;
     }
 
     public ISavable[] Items { get; }
-    public int Slot { get; }
-    public bool IsDefault => Slot < 0;
-
     public string CopySlots
         => $@"acs_set_copy_save_slots = {{ # FROM : scope, TO : scope
     $FROM$ = {{
@@ -34,10 +30,10 @@ $@"acs_set_reset_save_slot_to_default = {{ # SLOT : scope
 }}";
     public string MakeReducedListAndCount => 
         $@"acs_make_reduced_and_count = {{ 
-    {Items.Select(i => i.MakeReducedListAndCount).Join(1)}
-}}";
-
-    public string SlotEqualTrigger => IsDefault ? SlotEqualTriggerDefault : SlotEqualTriggerNormal;
+    {Items.Where(i=> !i.IsMakeReducedListAndCountSeparate).Select(i => i.MakeReducedListAndCount).Join(1)}
+}}
+{Items.Where(i=> i.IsMakeReducedListAndCountSeparate).Select(i => i.MakeReducedListAndCount).Join()}";
+    
     public string SlotEqualTriggerNormal =>
 $@"acs_stt_equal_slots = {{ # SLOT1 : scope, SLOT2 : scope
     $SLOT1$ = {{

@@ -979,9 +979,9 @@ NOT = { any_secret_knower = { this = scope:acs_filter_hooks_root } }</Option>
     </DropDown>
     <DropDown LocalizationKey="culture_filter" IsSpecial="false" Name="culture">
         <Option LocalizationKey="any_filter_option" />
-        <Option LocalizationKey="same_culture_group_filter_option">culture_group = scope:acs_filter_culture_root.culture_group</Option>
+        <Option LocalizationKey="same_heritage_filter_option">culture = { has_same_culture_heritage = scope:acs_filter_culture_root.culture }</Option>
         <Option LocalizationKey="same_culture_filter_option">culture = scope:acs_filter_culture_root.culture</Option>
-        <Option LocalizationKey="not_same_culture_group_filter_option">NOT = { culture_group = scope:acs_filter_culture_root.culture_group }</Option>
+        <Option LocalizationKey="not_same_heritage_filter_option">NOT = { culture = { has_same_culture_heritage = scope:acs_filter_culture_root.culture } }</Option>
         <Option LocalizationKey="not_same_culture_filter_option">NOT = { culture = scope:acs_filter_culture_root.culture }</Option>
     </DropDown>
     <DropDown LocalizationKey="dynasty_filter" IsSpecial="false" Name="dynasty">
@@ -995,4 +995,12 @@ NOT = { any_secret_knower = { this = scope:acs_filter_hooks_root } }</Option>
         <Option LocalizationKey="acs_filter_dynasty_not_lowborn_different_dynasty" Localization="Not Lowborn Not [GetPlayer.GetHouse.GetDynasty.GetNameNoTooltip|U]">is_lowborn = no
 NOT = { dynasty = scope:acs_filter_dynasty_root.dynasty }</Option>
     </DropDown>
+    <ReligionFilter>
+        <ReligionFamily Family="rf_pagan" IsOther="false"/>
+        <ReligionFamily Family="rf_eastern" IsOther="false"/>
+        <ReligionFamily Family="rf_abrahamic" IsOther="false"/>
+        <ReligionFamily Family="rf_other" IsOther="true"/>
+    </ReligionFilter>
+
+    
 </Main>

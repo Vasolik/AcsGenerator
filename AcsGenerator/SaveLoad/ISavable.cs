@@ -12,6 +12,7 @@ public interface ISavable
     public string GetSlotCheck { get; }
     bool HaveSomethingToSave { get; }
     public string MakeReducedListAndCount { get; }
+    public bool IsMakeReducedListAndCountSeparate => false;
     bool IsMain => false;
     public List<ILogicalElement> Elements { get; }
         
